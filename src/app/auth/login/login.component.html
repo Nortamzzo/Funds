@@ -1,0 +1,59 @@
+<div style="height: 90vh; width: 100vw;">
+  <div class="centered">
+    <div class="row">
+      <div 
+        style="width: 250px;" 
+        class="form-group">
+
+        <form 
+          [formGroup]="loginForm" 
+          (ngSubmit)="login()" 
+          autocomplete="off"
+          >
+          <!-- <app-input-text></app-input-text> -->
+          <div 
+            class="form-floating" 
+            style="width: 250px;"
+            >
+            <input 
+              type="email" 
+              class="form-control" 
+              id="email" 
+              formControlName="Email" 
+              #Email
+              >
+            <label for="email">
+              Email
+            </label>
+          </div>
+          
+          <div 
+            class="form-floating" 
+            style="width: 250px;"
+            >
+            <input 
+              type="password" 
+              class="form-control" 
+              id="password" 
+              placeholder="Password" 
+              formControlName="Password"
+              #Password
+              >
+            <label for="userPassword">
+              Password
+            </label>
+          </div>
+          <div class="btn-toolbar">
+            <button 
+              type="submit" 
+              class="btn btn-primary text-center me-2" 
+              style="width: 100px;"
+              >Log In
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+

@@ -1,0 +1,92 @@
+.xbackground {
+  background-color: rgb(165, 165, 165);
+}
+
+.header-main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.header-left {
+  align-self: flex-start;
+  width: 75%;
+}
+
+.header-right {
+  align-self: flex-end;
+  display: flex;
+  width: 25%;
+  margin-top: auto;
+}
+
+.money {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 500;
+  font-family: 'Zen Antique Soft', serif;
+  margin: auto;
+}
+
+.negative {
+  color: red;
+}
+
+.positive {
+  color: green;
+}
+
+.header-tl {
+  display: flex;
+}
+
+.header-button {
+  align-items: center;
+  appearance: none;
+  background-color: #FCFCFD;
+  border-radius: 4px;
+  border-width: 0;
+  box-shadow: rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+  box-sizing: border-box;
+  color: #36395A;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: 'Zen Antique Soft', serif;
+  height: 35px;
+  justify-content: center;
+  line-height: 1;
+  list-style: none;
+  overflow: hidden;
+  padding-left: 16px;
+  padding-right: 16px;
+  position: relative;
+  text-align: left;
+  text-decoration: none;
+  transition: box-shadow .15s, transform .15s;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  white-space: nowrap;
+  will-change: box-shadow, transform;
+  font-size: 18px;
+  margin-top: auto;
+  margin-bottom: auto;
+  margin-right: 5px;
+  width: 150px;
+}
+
+.header-button:focus {
+  box-shadow: #D6D6E7 0 0 0 1.5px inset, rgba(45, 35, 66, 0.4) 0 2px 4px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #D6D6E7 0 -3px 0 inset;
+}
+
+.header-button:hover {
+  box-shadow: rgba(45, 35, 66, 0.4) 0 4px 8px, rgba(45, 35, 66, 0.3) 0 7px 13px -3px, #bfbfff 0 -3px 0 inset;
+  transform: translateY(-2px);
+  background-color: #8b8bf7;
+  transition: background-color .35s linear;
+}
+
+.header-button:active {
+  box-shadow: #D6D6E7 0 3px 7px inset;
+  transform: translateY(2px);
+}

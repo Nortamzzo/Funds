@@ -1,0 +1,124 @@
+<div class="overflow-auto">
+
+  <div class="sb-buttons">
+    <button 
+      *ngIf="!addSubMode"
+      class="add-button hpointer"
+      (click)="toggleAddCategory()"
+      >
+      {{ (addMode) ? "Cancel" : "+Category"}}
+    </button>
+    <button 
+      *ngIf="!addCatMode"
+      class="add-button hpointer"
+      (click)="toggleAddSubcategory()"
+      >
+      {{ (addMode) ? "Cancel" : "+Subcategory"}}
+    </button>
+    <button 
+      *ngIf="filtered"
+      (click)="resetFilter()"
+      >
+      Reset
+    </button>
+  </div>
+ 
+  <div [ngSwitch]="view">
+    <ng-container *ngSwitchCase="'table'">
+      <ng-template [ngTemplateOutlet]="subTable"></ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'add'">
+      <ng-template [ngTemplateOutlet]="addCatSub"></ng-template>
+    </ng-container>
+  </div>
+
+  <ng-template #subTable>
+    <table class="table">
+      <thead>
+        <tr>
+          <th class="col-1-2" colspan="2">Category</th>
+          <th class="col-3">Budget</th>
+          <th 
+            (click)="MonthToDate = !MonthToDate"
+            class="col-4 pointer"
+            >
+            <ng-container *ngIf="MonthToDate">
+              This Month
+            </ng-container>
+            <ng-container *ngIf="!MonthToDate">
+              Last Month
+            </ng-container>
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let category of categoryData; let i = index">
+          <tr 
+            class="subCatRow"
+            (click)="selectCategory(category.CategoryId)"
+            >
+            <td class="col-1-2" colspan="2">{{ category.CategoryTitle }}</td>
+            <td 
+              class="col-3"
+              >
+              {{ category.Budget | currency: 'USD' }}</td>
+            <td class="col-4">
+              <ng-container *ngIf="MonthToDate">
+                {{ category.MonthToDate | currency: 'USD' }}
+              </ng-container>
+              <ng-container *ngIf="!MonthToDate">
+                {{ category.LastMonth | currency: 'USD' }}
+              </ng-container>
+            </td>
+          </tr>
+          <ng-container *ngIf="selectedCategory === category.CategoryId">
+            <tr *ngFor="let subcategory of subcategoryData">
+              <td class="col-1">-</td>
+              <td class="col-2">{{ subcategory.SubcategoryTitle }}</td>
+              <td 
+                (click)="editBudget(subcategory.SubcategoryId)"
+                class="col-3"
+                >
+                <ng-container 
+                  *ngIf="editSubcategory != subcategory.SubcategoryId"
+                  >
+                  {{ subcategory.Budget | currency: 'USD' }}
+                </ng-container>
+                <ng-container *ngIf="editSubcategory === subcategory.SubcategoryId">
+                  <input 
+                    class="edit-budget-cell"
+                    type="number"
+                    [(ngModel)]="subcategory.Budget" 
+                    (change)="updateBudget($event, subcategory.SubcategoryId)">
+                </ng-container>               
+              </td>
+              <td class="col-4">
+                <ng-container *ngIf="MonthToDate">
+                  {{ subcategory.MonthToDate | currency: 'USD' }}
+                </ng-container>
+                <ng-container *ngIf="!MonthToDate">
+                  {{ subcategory.LastMonth | currency: 'USD' }}
+                </ng-container>
+                </td>
+            </tr>
+          </ng-container>
+        </ng-container>
+      </tbody>
+    </table>
+  </ng-template>
+  
+  <ng-template #addCatSub>
+    <ng-container *ngIf="addCatMode">
+      <app-category-input-vertical>
+      </app-category-input-vertical>
+    </ng-container>
+    <ng-container *ngIf="addSubMode">
+      <app-subcategory-input-vertical
+        [categoryData]="categoryData"
+        >
+      </app-subcategory-input-vertical>
+    </ng-container>
+  </ng-template>
+
+</div>

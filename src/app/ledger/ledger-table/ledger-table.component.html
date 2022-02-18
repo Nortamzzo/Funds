@@ -1,0 +1,537 @@
+<table 
+  class="header-fixed table-border"
+  on-mouseleave="hoveredIndex = null"
+  >
+  <thead class="header-border">
+    <tr class="row">
+      <!-- Col 1 -->
+      <th 
+        class="col-1"
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc"
+        data-name="DateOf"
+        data-type=”date”
+        (click)="setSort('date')"
+        >Date
+        <span>
+          <i
+            *ngIf="sortedCol === 'date' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'date' && !sortUp" 
+            class="bi bi-sort-down"></i>
+        </span>
+      </th>
+      <!-- Col 2 -->
+      <th class="col-2"
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc" 
+        data-name="AccountName"
+        (click)="setSort('account')"
+        >Account
+        <span>
+          <i
+            *ngIf="sortedCol === 'account' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'account' && !sortUp" 
+            class="bi bi-sort-down">
+          </i>
+        </span>
+      </th>
+      <!-- Col 3 -->
+      <th class="col-3"
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc" 
+        data-name="Location"
+        (click)="setSort('location')"
+        >Location
+        <span>
+          <i
+            *ngIf="sortedCol === 'location' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'location' && !sortUp" 
+            class="bi bi-sort-down">
+          </i>
+        </span>
+      </th>
+      <!-- Col 4 -->
+      <th class="col-4"
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc" 
+        data-name="CategoryName"
+        (click)="setSort('category')"
+        >Category
+        <span>
+          <i
+            *ngIf="sortedCol === 'category' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'category' && !sortUp" 
+            class="bi bi-sort-down">
+          </i>
+        </span>
+      </th>
+      <!-- Col 5 -->
+      <th class="col-5"
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc" 
+        data-name="SubcategoryName"
+        (click)="setSort('subcategory')"
+        >Subcategory
+        <span>
+          <i
+            *ngIf="sortedCol === 'subcategory' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'subcategory' && !sortUp" 
+            class="bi bi-sort-down">
+          </i>
+        </span>
+      </th>
+      <!-- Col 6 -->
+      <th class="col-6 te" 
+        scope="col" 
+        [appSort]="transactionData" 
+        data-order="desc" 
+        data-name="Amount"
+        (click)="setSort('amount')"
+        >Amount
+        <span>
+          <i
+            *ngIf="sortedCol === 'amount' && sortUp"
+            class="bi bi-sort-up">
+          </i>
+          <i
+            *ngIf="sortedCol === 'amount' && !sortUp" 
+            class="bi bi-sort-down">
+          </i>
+        </span>
+      </th>
+      <!-- Col 7 -->
+      <th class="col-7 te">Balance</th>
+      <!-- Col 8 -->
+      <th class="col-8 ts">
+        <button 
+          *ngIf="sort"
+          (click)="resetSort()">
+          Reset
+        </button>
+      </th>
+    </tr>
+  </thead>
+  <tbody class="scr-style-1">
+
+    <ng-container *ngFor="let row of transactionData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let r = index">
+      <div 
+        [ngClass]="focusedRow === row.TransactionId ? 'focused-row' : 'row-border'"
+        >
+        <tr 
+          class="row"
+          on-mouseover="hoveredIndex = r"
+          [id]="r"
+          >
+          <!-- Date -->
+          <td
+            class="col-1" 
+            (click)="edit(r, 0)"
+            >
+            <ng-container *ngIf="!(editRow === r && editCol === 0)">
+              {{ row.DateOf | date: 'MM/dd/yyyy' }}
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 0">
+              <input
+                class="col-1 edit-cell"
+                type="date"
+                [(ngModel)]="row.DateOf"
+                >
+            </ng-container>
+          </td>
+          <!-- Account -->
+          <td 
+            class="col-2"
+            (click)="edit(r, 1)"
+            >
+            <ng-container *ngIf="!(editRow === r && editCol === 1)">
+              {{ row.AccountTitle }}
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 1">
+              <select 
+                class="edit-cell sel"
+                [(ngModel)]="row.AccountId"
+                >
+                <option [value]="row.AccountId">
+                  {{ row.AccountTitle }}
+                </option>
+                <option 
+                  *ngFor="let account of accountData" 
+                  [ngValue]="account.AccountId"
+                  >
+                  {{ account.AccountTitle }}
+                </option>
+              </select>
+            </ng-container>
+          </td>
+          <!-- Location -->
+          <td 
+            class="col-3" 
+            (click)="edit(r, 2)"
+            >
+            <ng-container *ngIf="!(editRow === r && editCol === 2)">
+              {{ row.LocationTitle }}
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 2">
+              <input 
+                class="col-3 edit-cell" 
+                type="text"
+                [(ngModel)]="row.LocationTitle"
+                >
+            </ng-container>
+          </td>
+          <!-- Category -->
+          <td 
+            class="col-4" 
+            (click)="edit(r, 3); getCategoryData()"
+            >
+            <ng-container *ngIf="!(editRow === r && editCol === 3)">
+              {{ row.CategoryTitle }}
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 3">
+              <select 
+                class="col-4 edit-cell sel"
+                [(ngModel)]="row.CategoryId"
+                >
+                <option [value]="row.CategoryId">
+                  {{ row.CategoryTitle }}
+                </option>
+                <option 
+                  *ngFor="let category of categoryData" 
+                  [ngValue]="category.CategoryId"
+                  >
+                  {{ category.CategoryTitle }}
+                </option>
+              </select>
+            </ng-container>
+          </td>
+          <!-- Subcategory -->
+          <td 
+            class="col-5" 
+            (click)="edit(r, 4); getSubcategoryData(row.CategoryId);"
+            >
+            <ng-container 
+              *ngIf="!(editRow === r && editCol === 4)"
+              >
+              {{ row.SubcategoryTitle }}
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 4">
+              <select 
+                class="col-5 edit-cell sel"
+                [(ngModel)]="row.SubcategoryId"
+                >
+                <option [value]="row.SubcategoryId">
+                  {{ row.SubcategoryTitle }}
+                </option>
+                <option 
+                  *ngFor="let subcategory of subcategoryData" 
+                  [ngValue]="subcategory.SubcategoryId">
+                  {{ subcategory.SubcategoryTitle }}
+                </option>
+              </select>
+            </ng-container>
+          </td>
+          <!-- Amount -->
+          <td 
+            class="col-6 te"
+            (click)="edit(r, 5)"
+            >
+            <ng-container 
+              *ngIf="!(editRow === r && editCol === 5)"
+              >
+              <span 
+                *ngIf="!(editRow === r && editCol === 5)"
+                [class]="(row.FlowId === 1) ? 'positive' : 'negative'"
+              >
+                {{ row.Amount | currency: 'USD' }}
+              </span>
+            </ng-container>
+            <ng-container *ngIf="editRow === r && editCol === 5">
+              <input
+                class="col-6 te edit-cell" 
+                type="text"
+                [(ngModel)]="row.Amount" 
+                >
+            </ng-container>
+          </td>
+          <!-- Balance -->
+          <td class="col-7 te">
+            {{ row.Balance | currency: 'USD' }}
+          </td>
+          <!-- Action -->
+          <td 
+            class="col-8"
+            (click)="edit(r, 9)" 
+            >
+            <ng-container class="action-group">
+              <span (click)="setFocusedRow(row.TransactionId)">
+                <ng-container *ngIf="row.Information === ''">
+                  <i class="bi bi-info-circle s-button"></i>
+                </ng-container>
+                <ng-container *ngIf="row.Information != ''">
+                  <i class="bi bi-info-circle-fill s-button"></i>
+                </ng-container>
+              </span>
+              <span>
+                <ng-container *ngIf="row.Reconcile === true">
+                  <i 
+                    class="bi bi-arrow-up-right-circle-fill ms-1 s-button"
+                    (click)="unreconcileTransaction(row.TransactionId)"
+                    >
+                </i>
+                </ng-container>
+                <ng-container *ngIf="row.Reconcile === false">
+                  <i 
+                    class="bi bi-arrow-up-right-circle ms-1 s-button"
+                    (click)="reconcileTransaction(row.TransactionId)"
+                    >
+                </i>
+                </ng-container>
+              </span>
+              <span>
+                {{ row.FlowId === 1 ? 'De' : 'Cr' }}
+              </span>
+              <span>
+                {{ row.HasReceipt ? 'Hr' : 'Nr' }}
+              </span>
+              <span>
+                {{ row.Future === '1' ? 'Fu' : 'Cu' }}
+              </span>
+              <span 
+                *ngIf="hoveredIndex === r"
+                class="badge bg-danger upd-btn delbtn"
+                (click)="deleteTransaction(row.TransactionId)"
+                >
+                Delete
+            </span>
+            </ng-container>
+          </td>
+        </tr>
+
+        <!-- Update Buttons Row -->
+        <tr *ngIf="editRow === r" class="row">
+        <!-- <tr class="row"> -->
+          <!-- u col 1 -->
+          <td class="col-1 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 0"
+              class="upd-btn-grp">
+                <span 
+                class="badge bg-success upd-btn"
+                (click)="updateTransaction(row.DateOf, row.TransactionId, 'DateOf')"
+                >
+                Update
+              </span>
+              <span 
+                class="badge bg-secondary upd-btn"
+                (click)="cancel()"
+                >
+                Cancel
+              </span>
+            </ng-container>
+          </td>
+          <!-- u col 2 -->
+          <td class="col-2 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 1"
+              class="upd-btn-grp"
+              >
+              <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.AccountId, row.TransactionId, 'Account')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancel()"
+              >
+              Cancel
+            </span>
+            </ng-container>
+          </td>
+          <!-- u col 3 -->
+          <td class="col-3 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 2"
+              class="upd-btn-grp"
+              >
+              <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.LocationTitle, row.TransactionId, 'Location')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancel()"
+              >
+              Cancel
+            </span>
+            </ng-container>
+          </td>
+          <!-- u col 4 -->
+          <td class="col-4 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 3"
+              class="upd-btn-grp"
+              >
+              <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.CategoryId, row.TransactionId, 'Category')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancel()"
+              >
+              Cancel
+            </span>
+            </ng-container>
+          </td>
+          <!-- u col 5 -->
+          <td class="col-5 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 4"
+              class="upd-btn-grp"
+              >
+              <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.SubcategoryId, row.TransactionId, 'Subcategory')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancel()"
+              >
+              Cancel
+            </span>
+            </ng-container>
+          </td>
+          <!-- u col 6 -->
+          <td class="col-6 upd-cell">
+            <ng-container 
+              *ngIf="editRow === r && editCol === 5"
+              class="upd-btn-grp"
+              >
+              <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.Amount, row.TransactionId, 'Amount')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancel()"
+              >
+              Cancel
+            </span>
+            </ng-container>
+          </td>
+          <!-- u col 7 -->
+          <td class="col-7 upd-cell"></td>
+          <!-- u col 8 -->
+          <td class="col-8 upd-cell"></td>
+        </tr>
+
+        <!-- Information Row-->
+        <tr 
+          *ngIf="focusedRow === row.TransactionId"
+          class="expanded-row">
+          <!-- i col 1 -->
+          <td class="col-1">
+            Information: 
+          </td>
+          <!-- i col 2 -->
+          <td 
+            class="col-2 "
+            colspan="3"
+            (click)="edit(r, 10)"
+            >
+            <ng-container *ngIf="!(editRow === r && editCol === 10)">
+              {{ row.Information }}
+            </ng-container>
+            <ng-container 
+              *ngIf="editRow === r && editCol === 10"
+              >
+              <input
+                class="edit-cell-info"
+                type="text" 
+                [(ngModel)]="row.Information"
+                >
+            </ng-container>
+          </td>
+          <!-- i col 5 -->
+          <td 
+            class="col-5"
+            *ngIf="editRow === r && editCol === 10"
+            >
+            <span 
+              class="badge bg-success upd-btn"
+              (click)="updateTransaction(row.Information, row.TransactionId, 'Information')"
+              >
+              Update
+            </span>
+            <span 
+              class="badge bg-secondary upd-btn"
+              (click)="cancelInformation()"
+              >
+              Cancel
+            </span>
+          </td>
+          <!-- i col 6 -->
+          <td class="col-6"></td>
+          <!-- i col 7 -->
+          <td class="col-7"></td>
+          <!-- i col 8 -->
+          <td
+            class="col-8"
+            >
+            Test
+          </td>
+        </tr>
+      </div>
+      </ng-container>
+  </tbody>
+  <tfoot>
+    <tr class="footer-container">
+      <td></td>
+      <td class="paginator">
+        <ngb-pagination
+          aria-label="Default pagination"
+          [collectionSize]="collectionSize" 
+          [maxSize]="maxSize"
+          [(page)]="page"
+          (click)=cancel()>
+        </ngb-pagination>
+      </td>
+      <td>
+        <h4 class="total">
+          {{ total | currency: 'USD' }}
+        </h4>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+

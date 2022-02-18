@@ -1,0 +1,68 @@
+<div>
+  <table class="bud-tab">
+    <thead>
+      <tr>
+        <th class="col-lab">Category</th>
+        <th class="col-bud">Budget</th>
+        <th class="col-bud">January</th>
+        <th class="col-bud">February</th>
+        <th class="col-bud">March</th>
+        <th class="col-bud">April</th>
+        <th class="col-bud">May</th>
+        <th class="col-bud">June</th>
+        <th class="col-bud">July</th>
+        <th class="col-bud">August</th>
+        <th class="col-bud">September</th>
+        <th class="col-bud">October</th>
+        <th class="col-bud">November</th>
+        <th class="col-bud">December</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let category of categoryData; let i = index">
+        <tr 
+          class="subCatRow"
+          (click)="selectCategory(category.CategoryId)"
+          >
+          <td class="col-lab-c">{{ category.CategoryTitle }}</td>
+          <td class="col-bud-c">{{ category.Budget != 0 ? (category.Budget | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.January != 0 ? (category.January | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.February != 0 ? (category.February | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.March != 0 ? (category.March | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.April != 0 ? (category.April | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.May != 0 ? (category.May | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.June != 0 ? (category.June | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.July != 0 ? (category.July | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.August != 0 ? (category.August | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.September != 0 ? (category.September | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.October != 0 ? (category.October | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.November != 0 ? (category.November | currency: 'USD') : '-' }}</td>
+          <td class="col-bud-c">{{ category.December != 0 ? (category.December | currency: 'USD') : '-' }}</td>
+        </tr>
+
+        <ng-container *ngIf="selectedCategory === category.CategoryId">
+          <tr *ngFor="let row of budgetData">
+            <td class="col-lab-s" *ngIf="row.CategoryId === selectedCategory"><span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>{{ row.SubcategoryTitle }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.Budget != 0 ? (row.Budget | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.January != 0 ? (row.January | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.February != 0 ? (row.February | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.March != 0 ? (row.March | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.April != 0 ? (row.April | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.May != 0 ? (row.May | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.June != 0 ? (row.June | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.July != 0 ? (row.July | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.August != 0 ? (row.August | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.September != 0 ? (row.September | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.October != 0 ? (row.October | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.November != 0 ? (row.November | currency: 'USD') : '-' }}</td>
+            <td class="col-bud-s" *ngIf="row.CategoryId === selectedCategory">{{ row.December != 0 ? (row.December | currency: 'USD') : '-' }}</td>
+          </tr>
+        </ng-container>
+      </ng-container>
+
+
+    </tbody>
+  </table>
+</div>
+
+

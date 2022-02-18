@@ -1,0 +1,15 @@
+<ng-container [ngSwitch]="content">
+  <ng-container *ngSwitchCase="'budget'">
+    <ng-template [ngTemplateOutlet]="budget"></ng-template>
+  </ng-container>
+</ng-container>
+
+<ng-template #budget>
+  <app-budget-table
+    [categoryData]="categoryData"
+    [subcategoryData]="subcategoryData"
+    [budgetData]="budgetData"
+    >
+  </app-budget-table>
+
+</ng-template>

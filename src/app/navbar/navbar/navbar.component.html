@@ -1,0 +1,81 @@
+<ng-container>
+  <ng-template [ngTemplateOutlet]="isLoggedIn"></ng-template>
+</ng-container>
+
+<ng-template #isLoggedIn>
+  <nav 
+    class="navbar navbar-expand-lg navbar-light xbackground sticky-top header" 
+    style="height: 5vh;"
+    >
+    <div class="header-main">
+      <div class="title" style="width: 25vw;">
+        <h4 style="width: 10vw;  text-align: start;">
+          fundsUlLTRA
+        </h4>
+      </div>
+      <div 
+        class="header-left" 
+        style="width: 50vw;"
+        >
+        <button 
+          id="button-nav-content-ledger" 
+          comp="navbar" 
+          action="setContent" 
+          value="ledger" 
+          class="header-button" 
+          style="width: 150px; height: 35px;"
+          (click)="navClick($event)"
+          >Ledger
+        </button>
+        <button 
+          id="button-nav-content-config" 
+          comp="navbar" 
+          action="setContent" 
+          value="budget" 
+          class="header-button" 
+          style="width: 150px; height: 35px;"
+          (click)="navClick($event)"
+          >Budget
+        </button>
+        <button 
+          id="button-nav-content-config" 
+          comp="navbar" 
+          action="setContent" 
+          value="config" 
+          class="header-button" 
+          style="width: 150px; height: 35px;"
+          (click)="navClick($event)"
+          >Test
+        </button>
+      </div>
+      <div 
+        class="header-right" 
+        style="position: fixed; right: .5vw;"
+        >
+        <h4 
+          class="money" 
+          [class]="(balance && balance > 0) ? 'positive' : 'negative'" 
+          style="width: 10vw;"
+          >{{ balance | currency: 'USD' }}
+        </h4>
+        <button 
+          id="button-nav-logout-button" 
+          comp="navbar" 
+          action="doLogout" 
+          class="header-button"
+          routerLink="auth/signup"
+          >Sign Up
+        </button>
+        <button 
+          *ngIf="appService.isLoggedIn" 
+          id="button-nav-logout-button" 
+          comp="navbar" 
+          action="doLogout" 
+          class="header-button"
+          (click)="logout()"
+          >Log Out
+        </button>
+      </div>
+    </div>
+  </nav>
+</ng-template>

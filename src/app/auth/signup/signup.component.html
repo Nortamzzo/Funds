@@ -1,0 +1,79 @@
+<form [formGroup]="signupForm" (ngSubmit)="signup()">
+  <div class="centered">
+    <!-- First Name -->
+    <div 
+      class="form-floating" 
+      style="width: 175px;"
+      >
+      <input 
+        type="text" 
+        class="form-control" 
+        id="firstname" 
+        formControlName="FirstName" 
+        #FirstName
+        tabindex="60"
+        autofocus
+        >
+      <label for="firstname">
+        First Name
+      </label>
+    </div>
+    <!-- Last Name -->
+    <div 
+      class="form-floating" 
+      style="width: 175px;">
+      <input 
+        type="text" 
+        class="form-control" 
+        id="lastname" 
+        formControlName="LastName" 
+        #LastName
+        tabindex="61"
+        >
+      <label for="lastname"
+        >Last Name
+      </label>
+    </div>
+    <!-- Email -->
+    <div 
+      class="form-floating" 
+      style="width: 175px;"
+      >
+      <input 
+        type="email" 
+        class="form-control" 
+        id="email" 
+        formControlName="Email" 
+        #Email
+        tabindex="62"
+        >
+      <label for="email">
+        Email
+      </label>
+    </div>
+    <!-- Password -->
+    <div 
+      class="form-floating" 
+      style="width: 250px;">
+      <input 
+        type="password" 
+        class="form-control" 
+        id="password" 
+        placeholder="Password" 
+        formControlName="Password"
+        #password
+        tabindex="63"
+        >
+      <label for="password">
+        Password
+      </label>
+    </div>
+    <!-- Submit -->
+    <input 
+      type="submit" 
+      class="btn btn-primary" 
+      style="width: 100px;"
+      tabindex="64"
+      >
+  </div>
+</form>

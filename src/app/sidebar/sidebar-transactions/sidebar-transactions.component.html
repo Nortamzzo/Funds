@@ -1,0 +1,79 @@
+<div
+  [ngSwitch]="viewMode"
+  class="sidebar-transactions-container">
+  <button (click)="setView('transaction')">Transaction</button>
+  <ng-container *ngSwitchCase="'transaction'">
+    <ng-template [ngTemplateOutlet]="sidebarTransaction"></ng-template>
+  </ng-container>
+  <button (click)="setView('preset')">Preset Transactions</button>
+  <ng-container *ngSwitchCase="'preset'">
+    <ng-template [ngTemplateOutlet]="sidebarPreset"></ng-template>
+  </ng-container>
+  <button (click)="setView('filter')">Filter Ledger</button>
+  <ng-container *ngSwitchCase="'filter'">
+    <ng-template [ngTemplateOutlet]="sidebarFilter"></ng-template>
+  </ng-container>
+  <button (click)="setView('accounts')">Accounts</button>
+  <ng-container *ngSwitchCase="'accounts'">
+    <ng-template [ngTemplateOutlet]="sidebarAccounts"></ng-template>
+  </ng-container>
+  <button (click)="setView('categories')">Categories</button>
+  <ng-container *ngSwitchCase="'categories'">
+    <ng-template [ngTemplateOutlet]="sidebarCategories"></ng-template>
+  </ng-container>
+  <button (click)="setView('subcategories')">Subcategories</button>
+  <ng-container *ngSwitchCase="'subcategories'">
+    <ng-template [ngTemplateOutlet]="sidebarSubcategories"></ng-template>
+  </ng-container>
+</div>
+
+<ng-template #sidebarTransaction>
+  <app-sidebar-transaction-input
+    [accountData]="accountData"
+    [categoryData]="categoryData"
+    >
+  </app-sidebar-transaction-input>
+</ng-template>
+
+<ng-template #sidebarPreset>
+  <app-sidebar-preset-transactions
+    [presetData]="presetData"
+    [accountData]="accountData"
+    [categoryData]="categoryData"
+    [subcategoryData]="subcategoryData"
+    [locationData]="locationData"
+    >
+</app-sidebar-preset-transactions>
+</ng-template>
+
+<ng-template #sidebarFilter>
+  <app-sidebar-ledger-filter
+    [accountData]="accountData"
+    [categoryData]="categoryData"
+    [locationData]="locationData"
+    >
+  </app-sidebar-ledger-filter>
+</ng-template>
+
+<ng-template #sidebarAccounts>
+  <app-sidebar-accounts
+    [accountData]="accountData"
+    [accountTypeData]="accountTypeData"
+    [total]="total"
+    >
+  </app-sidebar-accounts>
+</ng-template>
+
+<ng-template #sidebarCategories>
+  <app-sidebar-categories 
+    [categoryData]="categoryData"
+    >
+  </app-sidebar-categories>
+</ng-template>
+
+<ng-template #sidebarSubcategories>
+  <app-sidebar-subcategories
+    [categoryData]="categoryData"
+    >
+  </app-sidebar-subcategories>
+</ng-template>

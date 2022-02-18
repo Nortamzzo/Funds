@@ -1,0 +1,13 @@
+<app-ledger-table
+  [columns]="columns"
+  [transactionData]="transactionData"
+  [accountData]="accountData"
+  [categoryData]="categoryData"
+  [subcategoryData]="subcategoryData"
+  [locationData]="locationData"
+  [total]="total"
+  (callGetSubcategoryData)="getSubcategoryData($event)"
+  (callDeleteTransaction)="deleteTransaction($event)"
+  (callUpdateTransaction)="updateTransaction($event)"
+  >
+</app-ledger-table>

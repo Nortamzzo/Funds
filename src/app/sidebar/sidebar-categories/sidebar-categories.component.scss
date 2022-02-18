@@ -1,0 +1,55 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.col-1 {
+  width: 10%;
+  text-align: start;
+}
+
+.col-1-2 {
+  width: 50%;
+  text-align: start;
+}
+
+.col-2 {
+  width: 40%;
+  text-align: start;
+}
+
+.col-3 {
+  width: 25%;
+  text-align: end;
+}
+
+.col-4 {
+  width: 50%;
+  text-align: end;
+}
+
+.subCatRow {
+  cursor: pointer;
+}
+
+.edit-budget-cell {
+  width: 100px;
+}
+
+input[type=number] {
+  width: 100px;
+  text-align: right;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.sb-buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sb-buttons button {
+  margin-right: 5px;
+}

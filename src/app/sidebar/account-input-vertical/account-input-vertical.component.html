@@ -1,0 +1,95 @@
+<div class="box">
+    <form 
+        [formGroup]="accountForm" 
+        (ngSubmit)="submit()"
+        >
+        
+        <hr style="width: 10vw;">
+
+        <div 
+            class="title" 
+            style="margin: auto;"
+            >
+            <label>
+                Account Name
+            </label>
+            <input 
+                style="width: 90%; height: 50px; text-align: start;"
+                class=""
+                type="text"
+                id="title"
+                formControlName="Title"
+                #Title
+                tabindex="1"
+                >
+        </div>
+       
+
+        <label>
+            Account Type
+        </label>
+        <select 
+            style="width: 90%; height: 50px;"
+            class=""
+            id="type"
+            formControlName="AccountTypeId"
+            #AccountTypeId
+            tabindex="2">
+            <option 
+                *ngFor="let type of accountTypes; let i = index;"
+                [value]="type.AccountTypeId"
+                >
+                {{ type.AccountType }}
+            </option>
+        </select>
+
+        <label>
+            Initial Balance
+        </label>
+        <input 
+            style="width: 90%; height: 50px;"
+            class=""
+            type="number"
+            id="initial"
+            formControlName="StartAmount"
+            #StartAmount
+            tabindex="3"
+            >
+
+        <label>
+            Information
+        </label>
+        <input 
+            style="width: 90%; height: 50px;"
+            class=""    
+            type="text"
+            id="info"
+            formControlName="Information"
+            #Information
+            tabindex="4"
+            >
+        
+        <div class="block">
+        <label>
+            Tracking
+        </label>
+        <div class="form-check form-switch">
+            <input 
+                class="form-check-input" 
+                type="checkbox" 
+                id="flexSwitchCheckChecked" 
+                checked
+                formControlName="Tracking"
+                #Tracking
+                >
+          </div>
+        </div>
+
+        <div class="block">
+            <button type="submit">
+                Submit
+            </button>
+        </div>
+        
+    </form>
+</div> 

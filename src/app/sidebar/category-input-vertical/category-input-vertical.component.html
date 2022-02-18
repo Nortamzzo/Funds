@@ -1,0 +1,48 @@
+<div>
+  <form 
+    [formGroup]="categoryForm" 
+    (ngSubmit)="submit()">
+
+    <hr style="width: 100%;">
+        
+    <input 
+      style="width: 100%; height: 50px; text-align: start;"
+      class=""
+      type="text"
+      id="title"
+      formControlName="Title"
+      #title
+      tabindex="5000"
+      placeholder="Category Name">
+
+    <input 
+      style="width: 100%; height: 50px;"
+      class=""    
+      type="text"
+      placeholder="Information"
+      id="info"
+      formControlName="Information"
+      #info
+      tabindex="5001">
+
+    <select 
+      style="width: 100%; height: 50px;"
+      class=""
+      id="type"
+      formControlName="FlowId"
+      #flow
+      tabindex="5003">
+      <option value="" selected disabled hidden>Choose Category Flow</option>
+      <option value="1">Debit</option>
+      <option value="2">Credit</option>
+    </select>
+
+    <button 
+      id="catSubmitButton"
+      tabindex="5004"
+      class="btn btn-outline-success"
+      type="submit">
+      Submit
+    </button>
+  </form>
+</div>

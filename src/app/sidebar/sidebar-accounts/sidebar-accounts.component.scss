@@ -1,0 +1,190 @@
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.col-1 {
+  width: 25%;
+  text-align: start;
+}
+
+.col-1-2 {
+  width: 50%;
+  text-align: start;
+}
+
+.col-2 {
+  width: 25%;
+  text-align: start;
+}
+
+.col-2-3 {
+  width: 50%;;
+}
+
+.col-3 {
+  width: 25%;
+  text-align: end;
+}
+
+.col-4 {
+  width: 25%;
+  text-align: end;
+}
+
+.subCatRow {
+  cursor: pointer;
+}
+
+.edit-budget-cell {
+  width: 100px;
+}
+
+input[type=number] {
+  width: 100px;
+  text-align: right;
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.sb-buttons {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.sb-buttons button {
+  margin-right: 5px;
+}
+
+.acct-details-label {
+  text-align: start;
+  padding-left: 25px;
+  font-style: italic;
+}
+
+.acct-details-value {
+  text-align: end;
+  font-style: italic;
+}
+
+.te {
+  text-align: end;
+}
+
+// .editMode {
+//   border: solid 2px orange;
+// }
+
+// .fade {
+//   transition: all 0.5s ease-in;
+// }
+
+// .sba-container {
+//   width: 24vw;
+// }
+
+// .sab {
+//   width: 90%;
+//   height: 25px;
+//   margin: auto;
+//   // border: solid gray 1px;
+//   margin-top: 1px;
+//   margin-bottom: 3px;
+//   direction: ltr;
+// }
+
+// .settings {
+//   cursor: pointer;
+// }
+
+// .title {
+//   font-family: 'Zen Antique Soft', serif;
+// }
+
+// .balance {
+//   float: right;
+//   text-decoration: fade-in($color: #000000, $amount: 0);
+// }
+
+// // .editMode {
+// //     border: solid .5px orange;
+// // }
+
+// .editMode:hover {
+//   background-color: orange;
+//   transition: 0.3s all;
+// }
+
+// .viewMode:hover {
+//   background-color: rgb(116, 199, 255);
+//   transition: 0.3s all;
+// }
+
+// .sidebar-accounts-track-toggle {}
+
+// .switch {
+//   position: relative;
+//   display: inline-block;
+//   width: 45px;
+//   height: 20px;
+// }
+
+// .switch input {
+//   opacity: 0;
+//   width: 0;
+//   height: 0;
+// }
+
+// .slider {
+//   position: absolute;
+//   cursor: pointer;
+//   top: 0;
+//   left: 0;
+//   right: 0;
+//   bottom: 0;
+//   background-color: #ccc;
+//   -webkit-transition: .4s;
+//   transition: .4s;
+// }
+
+// .slider:before {
+//   position: absolute;
+//   content: "";
+//   height: 10px;
+//   width: 10px;
+//   left: 4px;
+//   bottom: 4px;
+//   background-color: white;
+//   -webkit-transition: .4s;
+//   transition: .4s;
+// }
+
+// input:checked+.slider {
+//   background-color: #2196F3;
+// }
+
+// input:focus+.slider {
+//   box-shadow: 0 0 1px #2196F3;
+// }
+
+// input:checked+.slider:before {
+//   -webkit-transform: translateX(26px);
+//   -ms-transform: translateX(26px);
+//   transform: translateX(26px);
+// }
+
+// /* Rounded sliders */
+// .slider.round {
+//   border-radius: 34px;
+// }
+
+// .slider.round:before {
+//   border-radius: 50%;
+// }
+
+// .add-button {
+//   height: 30px;
+//   width: 85px;
+// }

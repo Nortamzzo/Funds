@@ -1,0 +1,31 @@
+.reset-button {
+  margin-left: 20px;
+  height: 30px;
+}
+
+.filter-container {
+  display: block;
+}
+
+.filter-row {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.filter-input {
+  width: 75%; 
+}
+
+.filter-input select {
+  width: 50%;
+  height: 35px;
+}
+
+.filter-input input {
+  width: 50%;
+  height: 35px;
+}
+
+.filter-reset {
+  width: 25%;
+}

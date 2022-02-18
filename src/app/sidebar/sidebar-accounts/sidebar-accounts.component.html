@@ -1,0 +1,132 @@
+<div class="overflow-auto">
+
+  <div class="sb-buttons">
+    <button 
+      class="add-button hpointer"
+      (click)="toggleAddMode()"
+      >
+      {{ (addMode) ? "Cancel" : "+Account"}}
+    </button>
+    <button 
+      *ngIf="filtered"
+      (click)="resetFilter()"
+      >
+      Reset
+    </button>
+  </div>
+
+  <div [ngSwitch]="addMode">
+    <ng-container *ngSwitchCase="false">
+      <ng-template [ngTemplateOutlet]="acctTable"></ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="true">
+      <ng-template [ngTemplateOutlet]="addAcct"></ng-template>
+    </ng-container>
+  </div>
+
+</div>
+
+<ng-template #acctTable>
+  <table class="table">
+    <thead>
+      <tr>
+        <th class="col-1-2" colspan="3">Account</th>
+        <th 
+          (click)="toggleAccountBalance()"
+          class="col-4 pointer"
+          >
+          <ng-container *ngIf="balanceView === 'current'">
+            Current
+          </ng-container>
+          <ng-container *ngIf="balanceView === 'future'">
+            Future
+          </ng-container>
+        </th>
+        <th class="col-4">
+          This Month
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let row of accountData; let i = index">
+        <tr>
+          <td 
+            class="col-1-2" 
+            colspan="2"
+            (click)="selectAccount(row.AccountId)"
+            >
+            {{ row.AccountTitle }}
+          </td>
+          <td 
+            class="col-3 te"
+            colspan="2"
+            >
+            <ng-container *ngIf="balanceView === 'current'">
+              {{ row.Balance | currency: 'USD' }}
+            </ng-container>
+            <ng-container *ngIf="balanceView === 'future'">
+              {{ row.Future | currency: 'USD' }}
+            </ng-container>
+            </td>
+          <td class="col-4">
+            {{ row.ThisMonth | currency: 'USD' }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Account Name: 
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.AccountTitle }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Account Open Date: 
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.OpenDate | date: 'MM/dd/yyyy' }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Initial Balance: 
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.StartAmount }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Account Type:
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.AccountType }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Account Category:
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.AccountCategory }}
+          </td>
+        </tr>
+        <tr *ngIf="selectedAccount === row.AccountId">
+          <td colspan="2" class="col-1 acct-details-label">
+            Account Info:
+          </td>
+          <td colspan="3" class="col-2 acct-details-value">
+            {{ row.Information }}
+          </td>
+        </tr>
+      </ng-container>
+    </tbody>
+  </table>
+</ng-template>
+
+<ng-template #addAcct>
+  <app-account-input-vertical>
+  </app-account-input-vertical>
+</ng-template>

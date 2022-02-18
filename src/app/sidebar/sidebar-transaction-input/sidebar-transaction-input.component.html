@@ -1,0 +1,140 @@
+<div style="display: flex; margin-left: .25vw; margin-top: .5vh;">
+  <form
+    [formGroup]="transactionForm"
+    (ngSubmit)="submitTransaction()"
+    style="justify-content: center;">
+
+    <input
+      style="width: 90%; height: 35px;"
+      type="date"
+      id="date"
+      formControlName="DateOf"
+      #date
+      tabindex="1000"
+      >
+
+    <select
+      style="width: 90%; height: 35px;"
+      class
+      id="account"
+      formControlName="AccountId"
+      #account
+      data-input="account"
+      tabindex="1001"
+      >
+      <option 
+        value="" 
+        disabled 
+        selected 
+        hidden
+        >Account...
+      </option>
+      <option
+        *ngFor="let account of accountData; let i = index;"
+        [value]="account.AccountId"
+        >{{ account.AccountTitle }}
+      </option>
+    </select>
+
+    <input
+      style="width: 90%; height: 35px;"
+      class="me-2"
+      type="number"
+      step="0.01"
+      placeholder="Amount"
+      id="amount"
+      formControlName="Amount"
+      #amount
+      tabindex="1002"
+      >
+
+    <input
+      style="width: 90%; height: 35px;"
+      id="typeahead-basic"
+      type="text"
+      class
+      placeholder="Location"
+      [editable]="true"
+      tabindex="1003"
+      [ngbTypeahead]="searchLocations"
+      formControlName="Location"
+      name="location"
+      #location
+      >
+
+    <select
+      style="width: 90%; height: 35px;"
+      class
+      id="cat"
+      formControlName="CategoryId"
+      #category
+      tabindex="1004"
+      (change)="getSubcategoryData($event)"
+      >
+      <option 
+        value="" 
+        disabled 
+        selected 
+        hidden
+        >Category...
+      </option>
+      <option
+        *ngFor="let cat of categoryData; let i = index;"
+        [value]="cat.CategoryId"
+        >{{ cat.CategoryTitle }}
+      </option>
+    </select>
+
+    <select
+      style="width: 90%; height: 35px;"
+      class
+      id="sub"
+      formControlName="SubcategoryId"
+      #account
+      tabindex="1005">
+      <option 
+        value="" 
+        disabled 
+        selected 
+        hidden
+        >Subcategory...
+      </option>
+      <option
+        *ngFor="let sub of subcategoryData; let i = index;"
+        [value]="sub.SubcategoryId"
+        >{{ sub.SubcategoryTitle }}
+      </option>
+    </select>
+
+    <textarea
+      style="width: 90%; height: 70px;"
+      name="text"
+      placeholder="Information"
+      id="info"
+      formControlName="Information"
+      tabindex="1006"
+      >
+    </textarea>
+
+    <input
+      class="btn btn-outline-success text-center m-auto"
+      style="width: 100px; height: 35px; margin: auto;"
+      tabindex="1007"
+      type="submit"
+      >
+
+  </form>
+
+  <button
+      class="btn btn-outline-secondary text-center m-auto"
+      style="width: 100px; height: 35px; margin: auto;"
+      (click)="cancelTransaction()"
+      tabindex="1008"
+      >Cancel
+    </button>
+  <!-- <button
+    (click)="cancelTransaction()"
+    tabindex="1008">
+    Cancel
+  </button> -->
+</div>

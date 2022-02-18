@@ -1,0 +1,131 @@
+<div *ngFor="let preset of presetData; let p = index"> 
+  <button 
+    style="width: 70%;"
+    class="preset-title-button"
+    (click)="showOverview(preset.PresetTransactionId)"
+    >{{ preset.PresetName }}
+  </button>
+  <span class="submit-button">
+    <button>Submit</button>
+  </span>
+  <div 
+    *ngIf="showOverviewCell === preset.PresetTransactionId"
+    class="preset-overview"
+    >
+
+    <span style="width: 3vw;">
+      <i 
+        class="bi bi-gear-wide-connected me-2 hpointer" 
+        (click)="editPreset(preset.PresetTransactionId)"
+        >
+      </i>
+    </span>
+
+    <div 
+      *ngIf="editDateCell != preset.PresetTransactionId"
+      style="width: 7vw; height: 30px;"
+      class="overview-cell-border"
+      (click)="editDate(preset.PresetTransactionId)"
+      >
+      {{ preset.DateOf | date:'yyyy-MM-dd' }}
+    </div>
+    
+    <span>
+      <input
+      *ngIf="editDateCell === preset.PresetTransactionId"
+      class="edit-cell-date overview-cell-border" 
+      type="date" 
+      name="date" 
+      style="width: 7vw; height: 30px;"
+      [(ngModel)]="preset.DateOf">
+    </span>
+    
+    <span>
+      <input
+      style="width: 5vw; height: 30px;" 
+      class="edit-cell overview-cell-border" 
+      type="text"
+      name="amount"
+      [(ngModel)]="preset.Amount">
+    </span>
+    
+  </div>
+  <div
+      *ngIf="editPresetTrans === preset.PresetTransactionId"
+      >
+
+      <input
+        style="width: 10vw; height: 30px;" 
+        class="edit-cell" 
+        type="text"
+        [(ngModel)]="preset.PresetName">
+
+      <select 
+        style="width: 10vw; height: 30px;"
+        class="edit-cell"
+        [(ngModel)]="preset.AccountId">
+          <option [value]="preset.AccountId">
+            {{ preset.AccountTitle }}
+          </option>
+          <option 
+            *ngFor="let account of accountData" 
+            [value]="account.AccountId"
+            >{{ account.AccountTitle }}
+          </option>
+      </select>
+
+      <input
+        style="width: 10vw; height: 30px;"
+        class="edit-cell l-td" 
+        type="text"
+        name="amount" [(ngModel)]="preset.Amount">
+
+      <select 
+        style="width: 10vw; height: 30px;"
+        class="edit-cell"
+        [(ngModel)]="preset.CategoryId">
+        <option [value]="preset.CategoryId">
+          {{ preset.CategoryTitle }}
+        </option>
+        <option 
+          *ngFor="let cat of categoryData" 
+          [value]="cat.CategoryId"
+          >{{ cat.CategoryTitle }}
+        </option>
+      </select>
+
+      <select
+        style="width: 10vw; height: 30px;"
+        class="edit-cell l-td subcategory" 
+        [(ngModel)]="preset.SubcategoryId">
+        <option [value]="preset.SubcategoryId">
+          {{ preset.SubcategoryTitle }}
+        </option>
+        <option 
+          *ngFor="let sub of subcategoryData" 
+          [value]="sub.SubcategoryId"
+          >{{ sub.SubcategoryTitle }}
+        </option>
+      </select>
+
+      <textarea
+        style="width: 10vw; height: 60px;"
+        class="edit-cell l-td bi-chat-left-dots-fill" 
+        type="text" 
+        [(ngModel)]="preset.Information"
+        >
+        </textarea>
+      
+      <div>
+        <button (click)=updatePreset(preset)>Save</button>
+        <button (click)="cancelEdit()">Cancel</button>
+      </div>
+      
+      
+    </div>
+</div>
+<button 
+  class="add-button hpointer"
+  (click)="addmode = !addmode">
+  {{ (addmode) ? "Cancel" : "+Preset"}}
+</button>
