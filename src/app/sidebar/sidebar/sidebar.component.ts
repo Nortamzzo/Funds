@@ -5,6 +5,7 @@ import { ConfigService } from '@app/app-services/data/config.service';
 import { LocationService } from '@app/app-services/data/location.service';
 import { PresetTransactionService } from '@app/app-services/data/preset-transaction.service';
 import { SubcategoryService } from '@app/app-services/data/subcategory.service';
+import { TransactionService } from '@app/app-services/data/transaction.service';
 import { NotificationService } from '@app/app-services/notification.service';
 import { Account } from 'src/app/app-models/account-models';
 import { Category } from 'src/app/app-models/category-models';
@@ -27,6 +28,7 @@ export class SidebarComponent implements OnInit {
   public subcategoryData: Subcategory[] = [];
   public locationData: Location[] = [];
   public userConfigData: any = [];
+  public yearList!: number[];
   public content: string | null = null;
   public viewMode: string | null = null;
   public total: number = 0;
@@ -39,7 +41,8 @@ export class SidebarComponent implements OnInit {
     private acct: AccountService,
     private loc: LocationService,
     private preService: PresetTransactionService,
-    private conService: ConfigService
+    private conService: ConfigService,
+    private transService: TransactionService
   ) {
     this.notif.getTransNotif().subscribe(
       data => {
@@ -92,8 +95,8 @@ export class SidebarComponent implements OnInit {
     this.getPresetData();
     this.getAccountTypeData();
     this.getUserConfigData();
+    this.getYearList();
     setTimeout(() => {
-      console.log(this.userConfigData)
       this.viewMode = this.userConfigData[0].SidebarSelection;
     }, 500);
   }
@@ -151,6 +154,15 @@ export class SidebarComponent implements OnInit {
     this.preService.getPresetTransactionData().subscribe(
       data => {
         this.presetData = JSON.parse(JSON.stringify(data));
+      }
+    )
+  }
+
+  getYearList() {
+    this.transService.getDateRange().subscribe(
+      data => {
+        this.yearList = JSON.parse(JSON.stringify(data));
+        console.log(this.yearList)
       }
     )
   }

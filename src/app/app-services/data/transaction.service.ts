@@ -33,9 +33,9 @@ export class TransactionService {
    */
   getTransactionData(): Observable<any> {
     return this.http.post<TransactionDataRequest>(
-      this.https.apiUrl + 'api/Transaction/GetTransactionDataFilter', this.filterData
-    )
-      .pipe(catchError(this.app.processError));
+      this.https.apiUrl + 'api/Transaction/GetTransactionDataFilter',
+      this.filterData
+    ).pipe(catchError(this.app.processError));
   }
 
   /**
@@ -51,8 +51,7 @@ export class TransactionService {
     return this.http.post<TransactionSubmission>(
       this.https.apiUrl + 'api/Transaction/CreateTransaction',
       transaction
-    )
-      .pipe(
+    ).pipe(
         map((data => {
           this.notif.sendTransNotif(true);
         })),
@@ -137,17 +136,34 @@ export class TransactionService {
    * @returns 
    */
   unreconcileTransaction(id: number): Observable<any> {
+    let url = this.https.apiUrl + 'api/Transaction/UnreconcileTransaction';
     let req = {
       UserId: this.app.getUserId(),
       TransactionId: id
     };
     return this.http.put(
-      this.https.apiUrl + 'api/Transaction/UnreconcileTransaction',
+      url,
       req
     ).pipe(
       map((data => {
         this.notif.sendTransNotif(true);
       })),
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
+   * Gets date range from transactions
+   * Does not include account opening dates
+   * @returns YearList
+   */
+  getDateRange(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Transaction/GetDateRange';
+    let req = { UserId : this.app.getUserId() };
+    return this.http.post(
+      url,
+      req
+    ).pipe(
       catchError(this.app.processError)
     );
   }
