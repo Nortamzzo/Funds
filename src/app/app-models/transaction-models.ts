@@ -51,7 +51,7 @@ export interface TransactionFilter {
     DateMonth?: string | null;
     DateYear?: number | null;
     AccountId?: number | null;
-    LocationTitle?: string | null;
+    Location?: string | null;
     CategoryId?: number | null;
     SubcategoryId?: number | null;
     Information?: string | null;

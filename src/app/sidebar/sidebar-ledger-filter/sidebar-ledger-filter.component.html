@@ -1,15 +1,19 @@
- <!-- DateOf -->
-<div class="filter-row">
-  <span class="filter-input">
+<!-- DateOf -->
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-dateof">
+      Date Of
+    </label>
+  </div>
+  <div class="filter-row">
     <input
+      id="filter-dateof"
       type="text"
-      placeholder="Date Of..."
+      placeholder="dd/mm/yyyy"
       onfocus="(this.type='date')"
       [(ngModel)]="dateof"
       (change)="updateDateof($event)"
     >
-  </span>
-  <span class="filter-reset">
     <button 
       *ngIf="dateof"
       class="reset-button"
@@ -17,22 +21,26 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
 
 <!-- Date From -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-datefrom">
+      From Date
+    </label>
+  </div>
+  <div class="filter-row">
     <input
+      id="filter-fromdate"
       class="filter-input"
       type="text"
-      placeholder="Date From..."
+      placeholder="dd/mm/yyyy"
       onfocus="(this.type='date')"
       [(ngModel)]="datemin"
       (change)="updateDatemin($event)"
       >
-  </span>
-  <span class="filter-reset" class="filter-reset">
     <button 
       *ngIf="datemin"
       class="reset-button"
@@ -40,21 +48,25 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
 
 <!-- Date To -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-dateto">
+      To Date
+    </label>
+  </div>
+  <div class="filter-row">
     <input
+      id="filter-dateto"
       type="text"
-      placeholder="Date To..."
+      placeholder="dd/mm/yyyy"
       onfocus="(this.type='date')"
       [(ngModel)]="datemax"
       (change)="updateDatemax($event)"
       >
-  </span>
-  <span class="filter-reset">
     <button 
       *ngIf="datemax"
       class="reset-button"
@@ -62,21 +74,35 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
 
 <!-- Year -->
-<div class="filter-row">
-  <span class="filter-input">
-    <input
-      type="number"
-      placeholder="Year..."
-      step="1"
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-year">
+      Year
+    </label>
+  </div>
+  <div class="filter-row">
+    <select
+      id="filter-year"
+      tabindex="1004"
       [(ngModel)]="dateyear"
-      (change)="updateDateyear($event)"
       >
-  </span>
-  <span class="filter-reset">
+      <option
+        *ngFor="let year of yearList; let i = index;"
+        [value]="year.Year"
+        >{{ year.Year }}
+      </option>
+    </select>
+    <button 
+      *ngIf="dateyear"
+      class="filter-button go-button"
+      (click)="updateDateyear()"
+      >
+      Go
+    </button>
     <button 
       *ngIf="dateyear"
       class="reset-button"
@@ -84,23 +110,29 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
   
 <!-- Month -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-month">
+      Month
+    </label>
+  </div>
+  <div class="filter-row">
     <select
-      (change)=updateDatemonth($event)
+      id="filter-month"
+      tabindex="1005"
       [value]="datemonth"
       >
-      <option 
+      <!-- <option 
         *ngIf="datemonth === null"
         disabled 
         selected 
         hidden
         >Month...
-      </option>
+      </option> -->
       <option>January</option>
       <option>February</option>
       <option>March</option>
@@ -114,8 +146,13 @@
       <option>November</option>
       <option>December</option>
     </select>
-  </span>
-  <span class="filter-reset">
+    <button 
+      *ngIf="datemonth"
+      class="filter-button go-button"
+      (click)="updateDatemonth()"
+      >
+      Go
+    </button>
     <button 
       *ngIf="datemonth"
       class="reset-button"
@@ -123,25 +160,26 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
 
 <!-- Account -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-account">
+      Account
+    </label>
+  </div>
+  <div class="filter-row">
     <select
-      tabindex="1003"
-      [value]="accountid"
-      (change)="updateAccountid($event)"
+      id="filter-account"
+      tabindex="1006"
+      [(ngModel)]="accountid"
       >
       <option 
-        *ngIf="accountid === null"
-        value="" 
-        disabled 
-        selected 
-        hidden
-        [value]="accountid"
-        >Account...
+        selected="true" 
+        style='display: none'
+        >
       </option>
       <option
         *ngFor="let acc of accountData; let i = index;"
@@ -149,8 +187,13 @@
         >{{ acc.AccountTitle }}
       </option>
     </select>
-  </span>
-  <span class="filter-reset">
+    <button 
+      *ngIf="accountid"
+      class="filter-button go-button"
+      (click)="updateAccountid()"
+      >
+      Go
+    </button>
     <button 
       *ngIf="accountid"
       class="reset-button"
@@ -158,25 +201,27 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
-  
+
 <!-- Location -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-location">
+      Location
+    </label>
+  </div>
+  <div class="filter-row">
     <select
-      tabindex="1003"
-      [value]="location"
-      (click)="getLocations()"
-      (change)="updateLocation($event)"
+      id="filter-location"
+      class="filter-input"
+      tabindex="1007"
+      [(ngModel)]="location"
       >
       <option 
-        *ngIf="location === null"
-        value="" 
-        disabled 
-        selected 
-        hidden
-        >Location...
+        selected="true" 
+        style='display: none'
+        >
       </option>
       <option
         *ngFor="let loc of locationData; let i = index;"
@@ -184,41 +229,47 @@
         >{{ loc.Location }}
       </option>
     </select>
-  </span>
-  <span class="filter-reset">
     <button 
       *ngIf="location"
-      class="reset-button"
+      class="filter-button go-button"
+      (click)="updateLocation()"
+      >
+      Go
+    </button>
+    <button 
+      *ngIf="location"
+      class="filter-button reset-button"
       (click)="resetLocation()"
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
   
 <!-- Category -->
-<div class="filter-row">
- <span class="filter-input">
-  <select
-    tabindex="1003"
-    [value]="categoryid"
-    (change)="getSubcategoryData($event); updateCategoryId($event)">
-    <option 
-      *ngIf="categoryid === null"
-      value="" 
-      disabled 
-      selected 
-      hidden
-      >Category...
-    </option>
-    <option
-      *ngFor="let cat of categoryData; let i = index;"
-      [value]="cat.CategoryId"
-      >{{ cat.CategoryTitle }}
-    </option>
-  </select>
- </span>
-  <span class="filter-reset">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-category">
+      Category
+    </label>
+  </div>
+  <div class="filter-row">
+    <select
+      id="filter-category"
+      tabindex="1008"
+      [value]="categoryid"
+      (change)="getSubcategoryData($event); updateCategoryId($event)">
+      <option 
+        selected="true" 
+        style='display: none'
+        >
+      </option>
+      <option
+        *ngFor="let cat of categoryData; let i = index;"
+        [value]="cat.CategoryId"
+        >{{ cat.CategoryTitle }}
+      </option>
+    </select>
     <button 
       *ngIf="categoryid"
       class="reset-button"
@@ -226,25 +277,28 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
   
 <!-- Subcategory -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-subcategory">
+      Subcategory
+    </label>
+  </div>
+  <div class="filter-row">
     <select
-      tabindex="1004"
+      id="filter-subcategory"
+      tabindex="1009"
       [disabled]="!categoryid"
       [value]="subcategoryid"
       (change)="updateSubcategoryId($event)"
       >
       <option 
-        *ngIf="subcategoryid === null"
-        value="" 
-        disabled 
-        selected 
-        hidden
-        >Subcategory...
+        selected="true" 
+        style='display: none'
+        >
       </option>
       <option
         *ngFor="let sub of subcategoryData; let i = index;"
@@ -252,8 +306,6 @@
         {{ sub.SubcategoryTitle }}
       </option>
     </select>
-  </span>
-  <span class="filter-reset">
     <button 
       *ngIf="subcategoryid"
       class="reset-button"
@@ -261,21 +313,23 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
 
 <!-- Information -->
-<div class="filter-row">
-  <span class="filter-input">
+<div class="filter-container">
+  <div class="filter-input-label">
+    <label for="filter-information">
+      Information
+    </label>
+  </div>
+  <div class="filter-row">
     <input
       name="text"
-      placeholder="Information"
-      tabindex="1005"
+      tabindex="1010"
       [(ngModel)]="information"
       (keyup)="detectInformation()"
       >
-  </span>
-  <span class="filter-reset">
     <button 
       *ngIf="information"
       class="reset-button"
@@ -283,5 +337,6 @@
       >
       Reset
     </button>
-  </span>
+  </div>
 </div>
+

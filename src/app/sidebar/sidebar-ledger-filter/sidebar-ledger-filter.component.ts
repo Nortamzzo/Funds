@@ -6,8 +6,6 @@ import { LocationService } from '@app/app-services/data/location.service';
 import { SubcategoryService } from '@app/app-services/data/subcategory.service';
 import { FilterService } from '@app/app-services/filter.service';
 import { NotificationService } from '@app/app-services/notification.service';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-sidebar-ledger-filter',
@@ -19,6 +17,7 @@ export class SidebarLedgerFilterComponent implements OnInit {
   @Input() public categoryData: Category[] = [];
   @Input() public subcategoryData: Subcategory[] = [];
   @Input() public locationData: any[] = [];
+  @Input() public yearList!: any[];
 
   // filter variables
   public dateof: Date | null = null;
@@ -40,13 +39,22 @@ export class SidebarLedgerFilterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.getLocations();
+  }
+
+  getLocations() {
+    this.locService.getLocationList().subscribe(
+      data => {
+        this.locationData = data;
+      }
+    )
   }
 
   getSubcategoryData($event: any) {
     this.notService.sendCategoryId($event.target.value);
     this.sub.getSubcategoryData().subscribe(
       data => {
-        this.subcategoryData = JSON.parse(JSON.stringify(data.Value));
+        this.subcategoryData = data.Value;
       }
     )
   };
@@ -76,35 +84,39 @@ export class SidebarLedgerFilterComponent implements OnInit {
     this.filService.resetDateMax();
   }
 
-  updateDatemonth($event: any) {
-    this.datemonth = $event.target.value;
-    this.filService.setDateMonth($event.target.value);
+  updateDatemonth() {
+    this.filService.setDateMonth(this.datemonth);
   }
   resetDatemonth() {
     this.datemonth = null;
     this.filService.resetDateMonth();
   }
 
-  updateDateyear($event: any) {
-    this.filService.setDateYear($event.target.value);
+  updateDateyear() {
+    this.filService.setDateYear(this.dateyear);
   }
   resetDateyear() {
     this.dateyear = null;
     this.filService.resetDateYear();
   }
 
-  updateAccountid($event: any) {
-    this.accountid = $event.target.value;
-    this.filService.setAccountId($event.target.value);
+  updateAccountid() {
+    this.filService.setAccountId(this.accountid);
   }
   resetAccountid() {
     this.accountid = null;
     this.filService.resetAccountId();
   }
 
-  updateLocation($event: any) {
+  setLocation($event: any) {
+    console.log($event.target.value)
     this.location = $event.target.value;
-    this.filService.setLocation($event.target.value);
+  }
+
+  updateLocation() {
+    console.trace()
+    console.log(this.location)
+    this.filService.setLocation(this.location);
   }
   resetLocation() {
     this.location = null;
@@ -149,13 +161,4 @@ export class SidebarLedgerFilterComponent implements OnInit {
     this.filService.resetInformation();
   }
 
-  getLocations() {
-    this.locService.getLocationList().subscribe(
-      data => {
-        console.log(data)
-        this.locationData = data;
-      }
-    )
-  }
- 
 }

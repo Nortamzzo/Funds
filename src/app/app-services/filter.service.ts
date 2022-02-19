@@ -22,7 +22,7 @@ export class FilterService {
     DateMonth: null,
     DateYear: null,
     AccountId: null,
-    LocationTitle: null,
+    Location: null,
     CategoryId: null,
     SubcategoryId: null,
     Information: null
@@ -53,7 +53,7 @@ export class FilterService {
     this.filterBase.DateMonth = null;
     this.filterBase.DateYear = null;
     this.filterBase.AccountId = null;
-    this.filterBase.LocationTitle = null;
+    this.filterBase.Location = null;
     this.filterBase.CategoryId = null;
     this.filterBase.SubcategoryId = null;
     this.filterBase.Information = null;
@@ -99,7 +99,7 @@ export class FilterService {
    * sets dateMonth
    * @param data 
    */
-  setDateMonth(data: string) {
+  setDateMonth(data: string | null) {
     this.filterBase.DateMonth = data;
     this.notif.sendTransNotif(true);
   }
@@ -116,7 +116,7 @@ export class FilterService {
    * set dateYear
    * @param data 
    */
-  setDateYear(data: number) {
+  setDateYear(data: number | null) {
     this.filterBase.DateYear = data;
     this.notif.sendTransNotif(true);
   }
@@ -133,7 +133,7 @@ export class FilterService {
    * set AccountId
    * @param data number = account id number
    */
-  setAccountId(data: number) {
+  setAccountId(data: number | null) {
     this.filterBase.AccountId = data;
     this.notif.sendTransNotif(true);
   }
@@ -150,15 +150,15 @@ export class FilterService {
    * set Location
    * @param data string = location to filter
    */
-  setLocation(data: string) {
-    this.filterBase.LocationTitle = data;
+  setLocation(data: string | null) {
+    this.filterBase.Location = data;
     this.notif.sendTransNotif(true);
   }
   /**
    * set Location to null
    */
   resetLocation() {
-    this.filterBase.LocationTitle = null;
+    this.filterBase.Location = null;
     this.notif.sendTransNotif(true);
   }
 
