@@ -1,0 +1,26 @@
+.receipt-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+}
+
+.receipt-column {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  flex-basis: 100%;
+  flex: 1;
+}
+
+.rc-border {
+  border: solid 3px black;
+}
+
+.receipt-view-container {
+  padding-top: 5%;
+  height: 90%;
+  overflow-y: hidden;
+}

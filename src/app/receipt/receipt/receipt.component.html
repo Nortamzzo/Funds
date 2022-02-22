@@ -1,0 +1,21 @@
+<div class="receipt-container">
+  <div class="receipt-column rc-border">
+    <app-receipt-list
+      (receiptIdOutput)="setReceiptViewId($event)"
+      (newReceiptOutput)="addNewReceipt($event)"
+      >
+    </app-receipt-list>
+  </div>
+  <div class="receipt-column rc-border">
+    <div class="receipt-view-container">
+      <app-receipt-view
+        (newBlankReceiptItem)="addNewBlankReceiptItem($event)"
+        [receiptView]="receiptView"
+        [receiptData]="receiptData"
+        [receiptItemData]="receiptItemData"
+        [itemData]="itemData"
+        >
+      </app-receipt-view>
+    </div>
+  </div>
+</div>

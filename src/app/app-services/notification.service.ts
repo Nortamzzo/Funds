@@ -142,4 +142,13 @@ export class NotificationService {
   getUserConfigNotif() {
     return this.userConfigSub.asObservable();
   }
+
+  // ReceiptItem
+  private receiptItemSub = new Subject<any>();
+  sendReceiptItemNotif(value: any) {
+    this.receiptItemSub.next({ text: value })
+  }
+  getReceiptItemNotif() {
+    return this.receiptItemSub.asObservable();
+  }
 }

@@ -1,0 +1,121 @@
+<div 
+  *ngIf="receiptView"
+  id="receipt">
+  <div id="top">
+    <div class="info">
+      <div class="top-row">
+        <h3>{{ receiptData[0].LocationTitle }}</h3>
+        <h5>{{ receiptData[0].DateOf | date: 'fullDate' }}</h5>
+      </div>
+      <div class="info">
+        <span><p>www.publix.com</p></span>
+        <span><p>Promenade Plaza</p></span>
+        <span><p>Palm Beach Gardens, FL</p></span>
+      </div>
+    </div>
+  </div>
+  <div id="bot">
+    <div id="table">
+      <table>
+        <thead>
+          <tr class="tabletitle">
+            <td class="item">
+              <h6>Item</h6>
+            </td>
+            <td class="quantity">
+              <h6>Qty</h6>
+            </td>
+            <td class="cost">
+              <h6>Sub Total</h6>
+            </td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr 
+            *ngFor="let item of receiptItemData; let r = index;"  
+            class="itemrow">
+            <td 
+              [attr.id]="'title-row-' + r"
+              class="itemtd"
+              (click)="editTitle(r)"
+              >
+              <ng-container *ngIf="!(titleRow === r)">
+                <p class="itemtext">
+                  {{ item.ItemTitle }}
+                </p>
+              </ng-container>
+              <ng-container *ngIf="titleRow === r || !(item.ItemTitle)">
+                <input
+                  id="typeahead-basic"
+                  class="item-input form-control"
+                  type="text"
+                  [editable]="true"
+                  [(ngModel)]="model"
+                  [ngbTypeahead]="search"
+                  (change)="editTitleValue($event)"
+                  >
+              </ng-container>
+            </td>
+            <td class="itemtd">
+              <p class="itemtext">
+                {{ item.Quantity }}
+              </p>
+            </td>
+            <td 
+              [attr.id]="'title-row-' + r"
+              class="itemtd"
+              (click)="editAmount(r)"
+              >
+              <ng-container *ngIf="!(amountRow === r)">
+                <p class="itemtext">
+                  {{ item.Amount }}
+                </p>
+              </ng-container>
+              <ng-container *ngIf="amountRow === r || !(item.Amount)">
+                <input 
+                  [attr.id]="'amount-input-' + r"
+                  class="item-amount"
+                  type="text"
+                  [(ngModel)]="item.Amount"
+                  (change)="editAmountValue($event)"
+                  >
+              </ng-container>
+            </td>
+          </tr>
+          <tr class="total-row">
+            <td class="new-item">
+              <button 
+                id="plus-item-button"
+                (click)="insertNewItem()">+ Item</button>
+            </td>
+            <td class="tax-total">
+              <div class="total-block">
+                <p>Tax</p>
+                <p>Total</p>
+              </div>
+            </td>
+            <td class="totals">
+              <div class="total-block">
+                <ng-container 
+                  *ngIf="!(editTaxMode)"
+                  >
+                  <p (click)="editTax()">{{ receiptData[0].Tax }}</p>
+                </ng-container>
+                <ng-container *ngIf="editTaxMode">
+                  <input 
+                    id="tax-input"
+                    class="col-3"
+                    type="number"
+                    [(ngModel)]="receiptData[0].Tax"
+                  >
+                </ng-container>
+                <p>{{ receiptData[0].Amount }}</p>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

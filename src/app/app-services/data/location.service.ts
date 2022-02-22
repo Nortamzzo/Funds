@@ -49,7 +49,7 @@ export class LocationService {
         Term : loc 
       })
     .pipe(
-      map( kv => kv.map( k => k.Title) )
+      map( keyValue => keyValue.map( key => key.Title) )
     )
   }
 }

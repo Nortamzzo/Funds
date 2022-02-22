@@ -56,3 +56,26 @@ export interface TransactionFilter {
     SubcategoryId?: number | null;
     Information?: string | null;
 }
+
+export interface ReceiptList {
+    ReceiptId: number;
+    TransactionId: number;
+    DateOf: Date;
+    LocationTitle: string;
+    Amount: number;
+}
+
+export interface NoReceiptList {
+    TransactionId: number;
+    DateOf: Date;
+    LocationTitle: string;
+    Amount: number;
+}
+
+export interface Receipt {
+    ReceiptId: number;
+    TransactionId: number;
+    LocationTitle: string;
+    DateOf: Date;
+    Information: string;
+}
