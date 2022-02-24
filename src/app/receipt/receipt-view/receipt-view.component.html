@@ -9,7 +9,7 @@
       </div>
       <div class="info">
         <span><p>www.publix.com</p></span>
-        <span><p>Promenade Plaza</p></span>
+        <span><p>{{ receiptData[0].Information }}</p></span>
         <span><p>Palm Beach Gardens, FL</p></span>
       </div>
     </div>
@@ -19,13 +19,13 @@
       <table>
         <thead>
           <tr class="tabletitle">
-            <td class="item">
+            <td class="item-title">
               <h6>Item</h6>
             </td>
-            <td class="quantity">
+            <td class="item-quantity">
               <h6>Qty</h6>
             </td>
-            <td class="cost">
+            <td class="item-amount">
               <h6>Sub Total</h6>
             </td>
           </tr>
@@ -33,10 +33,10 @@
         <tbody>
           <tr 
             *ngFor="let item of receiptItemData; let r = index;"  
-            class="itemrow">
+            class="item-row">
             <td 
               [attr.id]="'title-row-' + r"
-              class="itemtd"
+              class="item-title"
               (click)="editTitle(r)"
               >
               <ng-container *ngIf="!(titleRow === r)">
@@ -44,40 +44,61 @@
                   {{ item.ItemTitle }}
                 </p>
               </ng-container>
-              <ng-container *ngIf="titleRow === r || !(item.ItemTitle)">
-                <input
-                  id="typeahead-basic"
-                  class="item-input form-control"
-                  type="text"
-                  [editable]="true"
-                  [(ngModel)]="model"
-                  [ngbTypeahead]="search"
-                  (change)="editTitleValue($event)"
+              <ng-container *ngIf="titleRow === r || (receiptItemData[0].ItemTitle === null)">
+                <div class="input-group">
+                  <span 
+                    class="badge bg-success me-1 mb-1 add-new-item"
+                    (click)="addNewItem(item)"
+                    >
+                    +Item
+                  </span>
+                  <span 
+                    class="badge bg-secondary me-1 mb-1"
+                    (click)="cancelTitle()"
+                    >
+                    Cancel
+                  </span>
+                  <span 
+                    class="badge bg-danger me-1 mb-1"
+                    (click)="deleteItem($event)"
+                    >
+                    Delete
+                  </span>
+                </div>
+                <app-item-title-auto-complete
+                  #autocomplete
+                  [list]="itemList"
+                  [row]="r"
+                  [object]="item"
+                  [value]="item.ItemTitle"
+                  (optionOutput)="setItemTitle($event)"
+                  (textOutput)="this.test = $event"
                   >
+                </app-item-title-auto-complete>
               </ng-container>
             </td>
-            <td class="itemtd">
+            <td class="item-quantity">
               <p class="itemtext">
                 {{ item.Quantity }}
               </p>
             </td>
             <td 
               [attr.id]="'title-row-' + r"
-              class="itemtd"
+              class="item-amount"
               (click)="editAmount(r)"
               >
               <ng-container *ngIf="!(amountRow === r)">
                 <p class="itemtext">
-                  {{ item.Amount }}
+                  {{ item.Amount | currency: 'USD' }}
                 </p>
               </ng-container>
               <ng-container *ngIf="amountRow === r || !(item.Amount)">
                 <input 
                   [attr.id]="'amount-input-' + r"
-                  class="item-amount"
-                  type="text"
+                  class="item-amount-edit"
+                  type="number"
                   [(ngModel)]="item.Amount"
-                  (change)="editAmountValue($event)"
+                  (change)="editAmountValue(item)"
                   >
               </ng-container>
             </td>
@@ -86,7 +107,10 @@
             <td class="new-item">
               <button 
                 id="plus-item-button"
-                (click)="insertNewItem()">+ Item</button>
+                (click)="insertNewItem()"
+                >
+                + Item
+              </button>
             </td>
             <td class="tax-total">
               <div class="total-block">
@@ -96,17 +120,18 @@
             </td>
             <td class="totals">
               <div class="total-block">
-                <ng-container 
-                  *ngIf="!(editTaxMode)"
-                  >
-                  <p (click)="editTax()">{{ receiptData[0].Tax }}</p>
+                <ng-container *ngIf="!(editTaxMode) || !(receiptData[0].Tax === 0)">
+                  <p (click)="editTax()">
+                    {{ receiptData[0].Tax }}
+                  </p>
                 </ng-container>
-                <ng-container *ngIf="editTaxMode">
+                <ng-container *ngIf="(editTaxMode) || receiptData[0].Tax === null">
                   <input 
                     id="tax-input"
-                    class="col-3"
+                    class="tax-input"
                     type="number"
                     [(ngModel)]="receiptData[0].Tax"
+                    (change)="editTaxValue(receiptData[0])"
                   >
                 </ng-container>
                 <p>{{ receiptData[0].Amount }}</p>

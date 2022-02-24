@@ -10,10 +10,14 @@
     <div class="receipt-view-container">
       <app-receipt-view
         (newBlankReceiptItem)="addNewBlankReceiptItem($event)"
+        (sendNewItem)="receiveNewItem($event)"
+        (sendUpdateQuantity)="receiveUpdateQuantity($event)"
+        (sendUpdateAmount)="receiveUpdateAmount($event)"
         [receiptView]="receiptView"
         [receiptData]="receiptData"
         [receiptItemData]="receiptItemData"
         [itemData]="itemData"
+        [itemList]="itemList"
         >
       </app-receipt-view>
     </div>

@@ -151,4 +151,18 @@ export class NotificationService {
   getReceiptItemNotif() {
     return this.receiptItemSub.asObservable();
   }
+
+  // AddReceiptItem
+  private addReceiptItemSub = new Subject<any>();
+  sendAddReceiptItemSubNotif(status: any, id: number) {
+    this.addReceiptItemSub.next(
+      {
+        status: status,
+        ReceiptId: id
+      }
+    )
+  }
+  getAddReceiptItemSubNotif() {
+    return this.addReceiptItemSub.asObservable();
+  }
 }

@@ -43,7 +43,7 @@
         >
         <td class="rl-td col-1">{{ item.DateOf | date:'fullDate' }}</td>
         <td class="rl-td col-2">{{ item.LocationTitle }}</td>
-        <td class="rl-td col-3">{{ item.Amount }}</td>
+        <td class="rl-td col-3">{{ item.Amount | currency: 'USD' }}</td>
       </tr>
     </tbody>
   </table>

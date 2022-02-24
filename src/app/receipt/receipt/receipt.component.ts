@@ -4,6 +4,7 @@ import { ReceiptData, ReceiptItemData } from '@app/app-models/receipt-models';
 import { NoReceiptList } from '@app/app-models/transaction-models';
 import { ItemService } from '@app/app-services/data/item.service';
 import { ReceiptService } from '@app/app-services/data/receipt.service';
+import { TransactionService } from '@app/app-services/data/transaction.service';
 import { NotificationService } from '@app/app-services/notification.service';
 
 @Component({
@@ -23,16 +24,42 @@ export class ReceiptComponent implements OnInit {
   constructor(
     private recService: ReceiptService,
     private itemService: ItemService,
+    private transService: TransactionService,
     private notif: NotificationService
   ) {
+    /**
+     * Update ReceiptItemData when adding new blank item to receipt
+     */
     this.notif.getReceiptItemNotif().subscribe(
       data => {
         if (data) {
           this.getReceiptItemData(this.receiptViewId!);
         }
       }
+    );
+    /**
+     * Update transactionList after adding new transaction
+     */
+    this.notif.getTransNotif().subscribe(
+      data => {
+        if (data) {
+          this.getNoReceiptList();
+        }
+      }
+    );
+    /**
+     * Update receiptItem and receiptItemData when adding new Item from receipt
+     * Update receiptItem and receiptItemData when adding new Item from list
+     */
+    this.notif.getAddReceiptItemSubNotif().subscribe(
+      data => {
+        if (data.status) {
+          this.getReceiptData(data.ReceiptId);
+          this.getReceiptItemData(data.ReceiptId);
+        }
+      }
     )
-   }
+  }
 
   ngOnInit(): void {
     this.getItemList();
@@ -109,6 +136,10 @@ export class ReceiptComponent implements OnInit {
     )
   }
 
+  /**
+   * Add ReceiptItem with null Itemid
+   * @param $event 
+   */
   addNewBlankReceiptItem($event: number | null) {
     console.log(this.receiptViewId)
     if ($event) {
@@ -120,12 +151,58 @@ export class ReceiptComponent implements OnInit {
     }
   }
 
+  /**
+   * Get itemList
+   */
   getItemList() {
     this.itemService.getItemList().subscribe(
       data => {
-        this.itemList = JSON.stringify(data);
+        this.itemList = data;
       }
     )
+  }
+
+  /**
+   * Handle output from app-receipt-view
+   * Add new item to Item, add ItemId to ReceiptItem
+   * @param $event 
+   */
+  receiveNewItem($event: any) {
+    this.itemService.addNewItemFromReceipt($event).subscribe();
+    this.getReceiptItemData($event.ReceiptId);
+  }
+
+  /**
+   * Update receiptItem quantity
+   * @param $event UserId, ReceiptItemId, UpdateValue
+   */
+  receiveUpdateQuantity($event: any) {
+    this.recService.updateReceiptItemQuantity($event).subscribe();
+  }
+
+  /**
+   * Update receiptItem amount
+   * @param $event UserId, ReceiptItemId, UpdateValue
+   */
+  receiveUpdateAmount($event: any) {
+    let request = {
+      ReceiptItemId : $event.ReceiptItemId,
+      UpdateValue : $event.Amount
+    }
+    this.recService.updateReceiptItemAmount(request).subscribe();
+  }
+
+  /**
+   * Update Transation Tax
+   * @param $event TransactionId, UpdateValue
+   */
+  receiveUpdateTax($event: any) {
+    let request = {
+      transactionId: $event.Transactionid,
+      column: "Tax",
+      value: $event.value
+    }
+    this.transService.updateTransaction(request).subscribe();
   }
 
 }

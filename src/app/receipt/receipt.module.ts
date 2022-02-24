@@ -4,22 +4,27 @@ import { ReceiptComponent } from './receipt/receipt.component';
 import { ReceiptListComponent } from './receipt-list/receipt-list.component';
 import { ReceiptViewComponent } from './receipt-view/receipt-view.component';
 import { OrdinalDatePipe } from '@app/app-utils/ordinal-dates';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-
-
+import { MaterialModule } from '@app/mat/material/material.module';
+import { TabDirective } from '@app/app-utils/auto-tab.directive';
+import { ItemTitleAutoCompleteComponent } from './item-title-auto-complete/item-title-auto-complete.component';
 
 @NgModule({
   declarations: [
     ReceiptComponent,
     ReceiptListComponent,
     ReceiptViewComponent,
-    OrdinalDatePipe,
+    TabDirective,
+    ItemTitleAutoCompleteComponent
   ],
   imports: [
     CommonModule,
     FormsModule,
-    NgbModule
+    ReactiveFormsModule,
+    NgbModule,
+    MaterialModule
   ],
   exports: [
     ReceiptComponent

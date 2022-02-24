@@ -29,3 +29,22 @@
   border: solid 1px black;
   border-radius: 5px;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.dropdown-menu {
+  max-height: 500px;
+  position: relative;
+}
+
+::ng-deep .dropdown-menu.show {
+  overflow: hidden !important;
+}
+
+.ngb-typeahead-window ::ng-deep {
+  height: 500px !important;
+  max-height: 500px !important;
+  background-color: rebeccapurple;
+}
+

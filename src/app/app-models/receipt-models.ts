@@ -5,9 +5,12 @@ export interface ReceiptData {
   LocationTitle: string;
   Tax: number;
   Amount: number;
+  Information: string;
 }
 
 export interface ReceiptItemData {
+  ReceiptId: number;
+  ReceiptItemId: number;
   ItemId: number;
   ItemTitle: string;
   Quantity: number;

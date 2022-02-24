@@ -122,7 +122,6 @@ export class ReceiptService {
    * @returns ReceiptItemId
    */
   addBlankReceiptItem(data: number): Observable<any> {
-    console.log("RID: ", data)
     let url = this.https.apiUrl + 'api/Receipt/AddBlankReceiptItem';
     let req = {
       UserId : this.app.getUserId(),
@@ -131,6 +130,44 @@ export class ReceiptService {
     return this.http.post(
       url,
       req
+    ).pipe(
+      map((data => {
+        this.notif.sendReceiptItemNotif(true);
+      })),
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
+   * Update ReceiptItem.Quantity
+   * @param data 
+   * @returns 
+   */
+  updateReceiptItemQuantity(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemQuantity';
+    data.UserId = this.app.getUserId();
+    return this.http.put(
+      url,
+      data
+    ).pipe(
+      map((data => {
+        this.notif.sendReceiptItemNotif(true);
+      })),
+      catchError(this.app.processError)
+    );
+  }
+
+    /**
+   * Update ReceiptItem.Amount
+   * @param data 
+   * @returns 
+   */
+  updateReceiptItemAmount(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemAmount';
+    data.UserId = this.app.getUserId();
+    return this.http.put(
+      url,
+      data
     ).pipe(
       map((data => {
         this.notif.sendReceiptItemNotif(true);
