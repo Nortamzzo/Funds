@@ -19,6 +19,9 @@
         <ng-container *ngSwitchCase="'receipt'">
           <ng-template [ngTemplateOutlet]="receipt"></ng-template>
         </ng-container>
+        <ng-container *ngSwitchCase="'items'">
+          <ng-template [ngTemplateOutlet]="items"></ng-template>
+        </ng-container>
       </ng-container>
     </div>
   </div>
@@ -37,4 +40,8 @@
 
 <ng-template #receipt>
   <app-receipt></app-receipt>
+</ng-template>
+
+<ng-template #items>
+  <app-items></app-items>
 </ng-template>
