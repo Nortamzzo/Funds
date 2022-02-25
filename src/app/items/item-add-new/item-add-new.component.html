@@ -1,0 +1,34 @@
+<div class="new-item-container">
+  <form 
+    [formGroup]="itemForm"
+    (ngSubmit)="submitNewItem()"
+    >
+    <div class="input-container">
+      <div class="input-wrapper">
+        <div class="item-input-group">
+          <label for="itemTitle">Item Name</label>
+          <input name="itemTitle" type="text" class="title-input" placeholder="e.g. Milk" formControlName="Title" required>
+        </div>
+        <div class="item-input-group">
+          <label for="itemInfo">Item Information</label>
+          <input name="itemInfo" type="text" class="info-input" placeholder="some info..." formControlName="Information" required>
+        </div>
+      </div>
+      <div class="input-toolbar">
+        <button 
+          class="glossy-button"
+          type="reset"
+          >
+          Reset
+        </button>
+        <button 
+          class="glossy-button glossy-button--green"
+          (click)="submitNewItem()"
+          >
+          Add Item
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
+

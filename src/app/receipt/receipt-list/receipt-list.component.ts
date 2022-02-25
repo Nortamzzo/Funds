@@ -26,22 +26,11 @@ export class ReceiptListComponent implements OnInit {
   }
 
   /**
-   * Toggles new receipt mode. 
+   * Adds new blank receipt to db
+   * Date: 2/20/22
    */
-  selectTransaction() {
-    this.transSelectMode = !this.transSelectMode;
-  }
-
-  /**
-   * Gets list of Receipts
-   * 2/20/22
-   */
-  getReceiptList() {
-    this.recService.getReceiptList().subscribe(
-      data => {
-        this.receiptList = JSON.parse(JSON.stringify(data));
-      }
-    )
+  addNewReceipt($event: any) {
+    this.newReceiptOutput.emit($event);
   }
 
   /**
@@ -57,6 +46,25 @@ export class ReceiptListComponent implements OnInit {
   }
 
   /**
+   * Gets list of Receipts
+   * 2/20/22
+   */
+  getReceiptList() {
+    this.recService.getReceiptList().subscribe(
+      data => {
+        this.receiptList = JSON.parse(JSON.stringify(data));
+      }
+    )
+  }
+
+  /**
+   * Toggles new receipt mode. 
+   */
+  selectTransaction() {
+    this.transSelectMode = !this.transSelectMode;
+  }
+
+  /**
    * Emits receipt view id
    * Emitter: receiptIdOutput
    * 2/20/22
@@ -64,14 +72,6 @@ export class ReceiptListComponent implements OnInit {
    */
   setViewId(data: number) {
     this.receiptIdOutput.emit(data);
-  }
-
-  /**
-   * Adds new blank receipt to db
-   * Date: 2/20/22
-   */
-  addNewReceipt($event: any) {
-    this.newReceiptOutput.emit($event);
   }
 
 }

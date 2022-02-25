@@ -1,0 +1,87 @@
+.header-fixed {
+  width: 100%;
+}
+
+.header-fixed>thead,
+.header-fixed>tbody,
+.header-fixed>thead>tr,
+.header-fixed>tbody>tr,
+.header-fixed>thead>tr>th,
+.header-fixed>tbody>tr>td {
+  display: block;
+  white-space: nowrap;
+  // overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.header-fixed>tbody>tr:after,
+.header-fixed>thead>tr:after {
+  content: ' ';
+  display: block;
+  visibility: hidden;
+  clear: both;
+}
+
+.header-fixed>tbody {
+  overflow-y: auto;
+  height: 100%;
+}
+
+.header-fixed>tbody>tr>td,
+.header-fixed>thead>tr>th {
+  float: left;
+  line-height: 31px;
+}
+
+.header-fixed>thead {
+  font-size: 1.25rem;
+}
+
+.header-border {
+  border: solid 3px rgb(136, 136, 136);
+  border-radius: 7px;
+}
+
+.col-1 {
+  width: 40%;
+}
+
+.col-2 {
+  width: 40%;
+}
+
+.col-3 {
+  width: 20%;
+}
+
+table > tbody > tr {
+  cursor: pointer;
+}
+
+.item-tools {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.item-tools-col {
+  width: 50%;
+}
+
+.it-right {
+  text-align: start;
+}
+
+.it-left {
+  text-align: end;
+}
+
+.new-item-wrapper {
+  width: 95%;
+  height: 30%;
+  margin: 10px auto 10px auto;
+}
+
+.test2 {
+  font-size: xx-small;
+}

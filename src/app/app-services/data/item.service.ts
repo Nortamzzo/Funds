@@ -72,8 +72,31 @@ export class ItemService {
     ).pipe(
       map((data => {
         this.notif.sendAddReceiptItemSubNotif(
-            true, request.ReceiptId
-          )})),
+          true, request.ReceiptId
+        )
+      })),
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
+   * Adds new item to db
+   * @param title New item title
+   * @param info New item information
+   * @returns ItemData for new item id
+   */
+  addNewItem(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Item/AddNewItem';
+    let req = {
+      UserId: this.app.getUserId(),
+      ItemTitle: data.Title,
+      Information: data.Information
+    };
+    console.log(req)
+    return this.http.post<any>(
+      url,
+      req
+    ).pipe(
       catchError(this.app.processError)
     );
   }
