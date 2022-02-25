@@ -1,11 +1,8 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges, ViewChild, ViewEncapsulation } from '@angular/core';
-import { ItemData, ItemList } from '@app/app-models/item-models';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { ItemData } from '@app/app-models/item-models';
 import { ReceiptData, ReceiptItemData } from '@app/app-models/receipt-models';
 import { ItemService } from '@app/app-services/data/item.service';
-import { Observable } from 'rxjs';
-import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
-import { FormControl } from '@angular/forms';
-import { ItemTitleAutoCompleteComponent } from '../item-title-auto-complete/item-title-auto-complete.component';
+import { AutoCompleteComponent } from '../../shared/components/auto-complete/auto-complete.component';
 import { ReceiptService } from '@app/app-services/data/receipt.service';
 
 @Component({
@@ -14,7 +11,7 @@ import { ReceiptService } from '@app/app-services/data/receipt.service';
   styleUrls: ['./receipt-view.component.scss']
 })
 export class ReceiptViewComponent implements OnInit {
-  @ViewChild(ItemTitleAutoCompleteComponent) private autocomplete!: ItemTitleAutoCompleteComponent;
+  @ViewChild(AutoCompleteComponent) private autocomplete!: AutoCompleteComponent;
   @Output() public sendNewItem = new EventEmitter<any>();
   @Output() public newBlankReceiptItem = new EventEmitter<any>();
   @Output() public sendUpdateQuantity = new EventEmitter<any>();
@@ -140,7 +137,6 @@ export class ReceiptViewComponent implements OnInit {
   }
 
   test() {
-    console.log(this.editItemRow)
-    console.log(this.editItemCol)
+   
   }
 }

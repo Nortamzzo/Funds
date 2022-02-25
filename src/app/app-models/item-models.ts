@@ -7,3 +7,8 @@ export interface ItemData {
 export interface ItemList {
   ItemTitle: string;
 }
+
+export interface NewItem {
+  Title: string;
+  Info: string;
+}

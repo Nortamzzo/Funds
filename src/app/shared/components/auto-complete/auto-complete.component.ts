@@ -4,11 +4,11 @@ import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
 @Component({
-  selector: 'app-item-title-auto-complete',
-  templateUrl: './item-title-auto-complete.component.html',
-  styleUrls: ['./item-title-auto-complete.component.scss']
+  selector: 'app-auto-complete',
+  templateUrl: './auto-complete.component.html',
+  styleUrls: ['./auto-complete.component.scss']
 })
-export class ItemTitleAutoCompleteComponent implements OnInit {
+export class AutoCompleteComponent implements OnInit {
   @Output() optionOutput = new EventEmitter<any>();
   @Output() textOutput = new EventEmitter<any>();
   @Input() list: string[] = [];

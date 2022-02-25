@@ -94,10 +94,10 @@ export class SidebarComponent implements OnInit {
     this.getLocationData();
     this.getPresetData();
     this.getAccountTypeData();
-    this.getUserConfigData();
     this.getYearList();
+    this.getUserConfigData();
     setTimeout(() => {
-      this.viewMode = this.userConfigData[0].SidebarSelection;
+      this.viewMode = (this.userConfigData[0].SidebarSelection) ? this.userConfigData[0].SidebarSelection : 'accounts';
     }, 500);
   }
 
