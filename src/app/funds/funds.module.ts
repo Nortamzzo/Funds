@@ -8,6 +8,7 @@ import { SidebarModule } from '@app/sidebar/sidebar.module';
 import { FooterModule } from '@app/footer/footer.module';
 import { LedgerModule } from '@app/ledger/ledger.module';
 import { BudgetModule } from '@app/budget/budget.module';
+import { ReceiptModule } from '@app/receipt/receipt.module';
 
 
 @NgModule({
@@ -21,7 +22,8 @@ import { BudgetModule } from '@app/budget/budget.module';
     SidebarModule,
     FooterModule,
     LedgerModule,
-    BudgetModule
+    BudgetModule,
+    ReceiptModule
   ]
 })
 export class FundsModule { }

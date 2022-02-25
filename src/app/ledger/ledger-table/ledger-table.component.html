@@ -316,6 +316,10 @@
               <span>
                 {{ row.Future === '1' ? 'Fu' : 'Cu' }}
               </span>
+              <!-- REMOVE PROD -->
+              <span>
+                {{ row.TransactionId }}
+              </span>
               <span 
                 *ngIf="hoveredIndex === r"
                 class="badge bg-danger upd-btn delbtn"

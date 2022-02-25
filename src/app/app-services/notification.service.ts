@@ -142,4 +142,27 @@ export class NotificationService {
   getUserConfigNotif() {
     return this.userConfigSub.asObservable();
   }
+
+  // ReceiptItem
+  private receiptItemSub = new Subject<any>();
+  sendReceiptItemNotif(value: any) {
+    this.receiptItemSub.next({ text: value })
+  }
+  getReceiptItemNotif() {
+    return this.receiptItemSub.asObservable();
+  }
+
+  // AddReceiptItem
+  private addReceiptItemSub = new Subject<any>();
+  sendAddReceiptItemSubNotif(status: any, id: number) {
+    this.addReceiptItemSub.next(
+      {
+        status: status,
+        ReceiptId: id
+      }
+    )
+  }
+  getAddReceiptItemSubNotif() {
+    return this.addReceiptItemSub.asObservable();
+  }
 }

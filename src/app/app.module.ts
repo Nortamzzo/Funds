@@ -15,6 +15,9 @@ import { NavbarModule } from './navbar/navbar.module';
 import { SidebarModule } from './sidebar/sidebar.module';
 import { FooterModule } from './footer/footer.module';
 import { ShellModule } from './shell/shell.module';
+import { OrdinalDatePipe } from './app-utils/ordinal-dates';
+import { MaterialModule } from './mat/material/material.module';
+
 @NgModule({
   declarations: [
     AppComponent
@@ -26,6 +29,7 @@ import { ShellModule } from './shell/shell.module';
     FormsModule,
     BrowserAnimationsModule,
     NgbModule,
+    MaterialModule,
     NavbarModule,
     FooterModule,
     SidebarModule,
@@ -35,6 +39,7 @@ import { ShellModule } from './shell/shell.module';
   ],
   providers: [
     DatePipe,
+    OrdinalDatePipe,
     { provide: 'BASE_URL', useValue: environment.apiUrl }
   ],
   bootstrap: [AppComponent]

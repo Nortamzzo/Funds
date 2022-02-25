@@ -18,9 +18,7 @@
         style="width: 50vw;"
         >
         <button 
-          id="button-nav-content-ledger" 
-          comp="navbar" 
-          action="setContent" 
+          id="nav-ledger"
           value="ledger" 
           class="header-button" 
           style="width: 150px; height: 35px;"
@@ -28,14 +26,20 @@
           >Ledger
         </button>
         <button 
-          id="button-nav-content-config" 
-          comp="navbar" 
-          action="setContent" 
+          id="nav-budget"
           value="budget" 
           class="header-button" 
           style="width: 150px; height: 35px;"
           (click)="navClick($event)"
           >Budget
+        </button>
+        <button 
+          id="nav-receipt"
+          value="receipt" 
+          class="header-button" 
+          style="width: 150px; height: 35px;"
+          (click)="navClick($event)"
+          >Receipt
         </button>
       </div>
       <div 

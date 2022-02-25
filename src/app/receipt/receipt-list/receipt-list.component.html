@@ -1,0 +1,50 @@
+<div class=" receipt-list-container">
+  <div class="receipt-tools">
+    <select
+      id="newReceiptSelect"
+      (change)="addNewReceipt($event)"
+      >
+      <option selected disabled hidden [value]="-1">Add New Transaction</option>
+      <option 
+        *ngFor="let item of transactionList; let i = index;"
+        [attr.id]="'new-receipt-option-' + item.TransactionId"
+        [value]="item.TransactionId"
+      >
+      {{ item.DateOf | date: 'mediumDate' }}&nbsp;{{ item.LocationTitle }}
+      </option>
+    </select>
+    <button 
+      id="selectTransBtn"
+      >
+      Add Receipt
+    </button>
+    <button 
+      id="filterDateBtn"
+      >
+      Filter Date
+    </button>
+    <button id="filterLocBtn">Filter Location</button>
+  </div>
+  <table 
+    *ngIf="receiptList.length > 0"
+    class="header-fixed rl-table">
+    <thead class="rl-head">
+      <tr class="rl-head-row">
+        <th class="rl-th col-1">Date</th>
+        <th class="rl-th col-2">Location</th>
+        <th class="rl-th col-3">Total</th>
+      </tr>
+    </thead>
+    <tbody class="rl-body">
+      <tr 
+        *ngFor="let item of receiptList; let i = index"
+        class="rl-body-row"
+        (click)="setViewId(item.ReceiptId)"
+        >
+        <td class="rl-td col-1">{{ item.DateOf | date:'fullDate' }}</td>
+        <td class="rl-td col-2">{{ item.LocationTitle }}</td>
+        <td class="rl-td col-3">{{ item.Amount | currency: 'USD' }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

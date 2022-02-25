@@ -162,7 +162,6 @@ export class SidebarComponent implements OnInit {
     this.transService.getDateRange().subscribe(
       data => {
         this.yearList = JSON.parse(JSON.stringify(data));
-        console.log(this.yearList)
       }
     )
   }
