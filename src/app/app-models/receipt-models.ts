@@ -1,5 +1,5 @@
 export interface ReceiptData {
-  RecipeId: number;
+  ReceiptId: number;
   TransactionId: number;
   DateOf: Date;
   LocationTitle: string;
@@ -16,4 +16,9 @@ export interface ReceiptItemData {
   Quantity: number;
   Amount: number;
   Information: string;
+}
+
+export interface ReceiptItemDeleteRequest {
+  UserId: number;
+  ReceiptItemId: number;
 }

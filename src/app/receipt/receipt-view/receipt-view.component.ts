@@ -31,8 +31,11 @@ export class ReceiptViewComponent implements OnInit {
   public amountRow: number | null = null;
   public informationRow: number | null = null;
   public editTaxMode: boolean = false;
+  public editItemRow: number | null = null;
+  public editItemCol: number | null = null;
+  public editReceiptRow: number | null = null;
+  
 
-  public test: any;
 
   constructor(
     private itemService: ItemService,
@@ -57,41 +60,36 @@ export class ReceiptViewComponent implements OnInit {
     )
   }
 
-  insertNewItem() {
-    this.newBlankReceiptItem.emit(true);
+  setReceiptEdit(row: number) {
+    this.editReceiptRow = row;
   }
 
-  editTitle(row: number) {
-    this.getItemList();
-    this.titleRow = row;
+  setItemEdit(row: number, col: number) {
+    this.editItemRow = row;
+    this.editItemCol = col;
+  }
+
+  cancelEdit() {
+    console.log("Test Cancel")
+    this.editItemCol = 0;
+    this.editItemRow = 0;
+    this.editReceiptRow = null
+  }
+
+  insertNewItem() {
+    this.newBlankReceiptItem.emit(true);
   }
 
   editTitleValue($event: any) {
     console.log($event.target.value)
   }
 
-  editQuantity(row: number) {
-    this.quantityRow = row;
-  }
-
   editQuantityValue(data: any) {
     this.sendUpdateQuantity.emit(data);
   }
 
-  editAmount(row: number) {
-    this.amountRow = row;
-  }
-
   editAmountValue(data: any) {
     this.sendUpdateAmount.emit(data);
-  }
-
-  editInformation(row: number) {
-    this.informationRow = row;
-  }
-
-  editTax() {
-    this.editTaxMode = !this.editTaxMode;
   }
 
   editTaxValue(data: any) {
@@ -110,20 +108,17 @@ export class ReceiptViewComponent implements OnInit {
 
   }
 
-  cancelTitle() {
-    this.titleRow = null;
-  }
-
   deleteItem($event: any) {
     console.log("Delete", $event);
   }
 
+  public itemTitle!: string;
   addNewItem(item: ReceiptItemData) {
     this.autocomplete.setText();
     let req = {
       ReceiptId : item.ReceiptId,
       ReceiptItemId : item.ReceiptItemId,
-      itemTitle : this.test
+      itemTitle : this.itemTitle
     };
     this.sendNewItem.emit(req);
     this.titleRow = null;
@@ -132,4 +127,20 @@ export class ReceiptViewComponent implements OnInit {
     }, 250);
   }
 
+  deleteReceiptItemById(id: number) {
+    console.log("dddddd")
+    this.recService.deleteReceiptItem(id).subscribe(
+      // data => {
+      //   if (data) {
+      //     console.log(data)
+      //     this.getReceiptItemData(data);
+      //   }
+      // }
+    )
+  }
+
+  test() {
+    console.log(this.editItemRow)
+    console.log(this.editItemCol)
+  }
 }

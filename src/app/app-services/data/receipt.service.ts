@@ -176,6 +176,30 @@ export class ReceiptService {
     );
   }
 
+  /**
+   * Disable rectipItem by id
+   * @param data 
+   * @returns ReceiptId
+   */
+  deleteReceiptItem(data: number): Observable<any> {
+    console.log("Data: ", data)
+    let url = this.https.apiUrl + 'api/Receipt/DeleteReceiptItem';
+    let req = {
+      UserId : this.app.getUserId(),
+      ReceiptItemId : data
+    }
+    console.log(req)
+    return this.http.put<any>(
+      url,
+      req
+    ).pipe(
+      map((data => {
+        this.notif.sendReceiptItemNotif(true);
+      })),
+      catchError(this.app.processError)
+    );
+  }
+
   
 
 }

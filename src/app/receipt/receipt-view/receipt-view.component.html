@@ -33,18 +33,21 @@
         <tbody>
           <tr 
             *ngFor="let item of receiptItemData; let r = index;"  
-            class="item-row">
+            class="item-row"
+            >
             <td 
               [attr.id]="'title-row-' + r"
               class="item-title"
-              (click)="editTitle(r)"
               >
-              <ng-container *ngIf="!(titleRow === r)">
-                <p class="itemtext">
-                  {{ item.ItemTitle }}
+              <ng-container *ngIf="!(editItemRow === r && editItemCol === 1)">
+                <p 
+                  class="itemtext"
+                  (click)="setItemEdit(r, 1)"
+                >
+                  {{ item.ItemTitle ? item.ItemTitle : 'Set Item...' }}
                 </p>
               </ng-container>
-              <ng-container *ngIf="titleRow === r || (receiptItemData[0].ItemTitle === null)">
+              <ng-container *ngIf="(editItemRow === r && editItemCol === 1)">
                 <div class="input-group">
                   <span 
                     class="badge bg-success me-1 mb-1 add-new-item"
@@ -53,14 +56,14 @@
                     +Item
                   </span>
                   <span 
-                    class="badge bg-secondary me-1 mb-1"
-                    (click)="cancelTitle()"
+                    class="badge bg-secondary me-1 mb-1 cancel-button"
+                    (click)="cancelEdit()"
                     >
                     Cancel
                   </span>
                   <span 
-                    class="badge bg-danger me-1 mb-1"
-                    (click)="deleteItem($event)"
+                    class="badge bg-danger me-1 mb-1 delete-button"
+                    (click)="deleteReceiptItemById(item.ReceiptItemId)"
                     >
                     Delete
                   </span>
@@ -72,7 +75,7 @@
                   [object]="item"
                   [value]="item.ItemTitle"
                   (optionOutput)="setItemTitle($event)"
-                  (textOutput)="this.test = $event"
+                  (textOutput)="this.itemTitle = $event"
                   >
                 </app-item-title-auto-complete>
               </ng-container>
@@ -85,14 +88,14 @@
             <td 
               [attr.id]="'title-row-' + r"
               class="item-amount"
-              (click)="editAmount(r)"
+              (click)="setItemEdit(r, 3)"
               >
-              <ng-container *ngIf="!(amountRow === r)">
+              <ng-container *ngIf="!(editItemRow === r && editItemCol === 3)">
                 <p class="itemtext">
                   {{ item.Amount | currency: 'USD' }}
                 </p>
               </ng-container>
-              <ng-container *ngIf="amountRow === r || !(item.Amount)">
+              <ng-container *ngIf="editItemRow === r && editItemCol === 3">
                 <input 
                   [attr.id]="'amount-input-' + r"
                   class="item-amount-edit"
@@ -111,6 +114,7 @@
                 >
                 + Item
               </button>
+              <button (click)="test()">Test</button>
             </td>
             <td class="tax-total">
               <div class="total-block">
@@ -120,8 +124,8 @@
             </td>
             <td class="totals">
               <div class="total-block">
-                <ng-container *ngIf="!(editTaxMode) || !(receiptData[0].Tax === 0)">
-                  <p (click)="editTax()">
+                <ng-container *ngIf="!(editReceiptRow === receiptData[0].ReceiptId) || !(receiptData[0].Tax === 0)">
+                  <p (click)="setReceiptEdit(receiptData[0].ReceiptId)">
                     {{ receiptData[0].Tax }}
                   </p>
                 </ng-container>
