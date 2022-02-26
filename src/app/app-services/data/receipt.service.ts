@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TransactionDataRequest, TransactionFilter, TransactionSubmission } from 'src/app/app-models/transaction-models';
 import { AppService } from '../app.service';
@@ -20,34 +20,43 @@ export class ReceiptService {
     private notif: NotificationService
   ) { }
 
-  /**
-   * Gets list of transactions without receipts
-   * 2/20/22
-   * @returns Transaction No Receipt List
-   */
-   getTransWithoutReceipts(): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
-    let req = { UserId : this.app.getUserId() };
-    return this.http.post(
-      url,
-      req
-    ).pipe(
-      catchError(this.app.processError)
-    );
+  // States
+  private receiptViewId = new Subject<any>();
+  setReceiptViewId(status: any, id: number) {
+    this.receiptViewId.next(
+      {
+        status: status,
+        ReceiptId: id
+      }
+    )
+  }
+  getReceiptViewId() {
+    return this.receiptViewId.asObservable();
   }
 
   /**
-   * Gets list of receipts
-   * 2/20/22
-   * @returns Transaction Receipt List
+   * Adds new blank row to receiptItem
+   * 2/21/22
+   * @param data UserId, ReceiptId
+   * @returns ReceiptItemId
    */
-   getReceiptList(): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/GetReceiptList';
-    let req = { UserId : this.app.getUserId() }
+  addBlankReceiptItem(data: number | null): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/AddBlankReceiptItem';
+    let req = {
+      UserId: this.app.getUserId(),
+      ReceiptId: data
+    };
+    if (!data) {
+      return of(false)
+    };
+    console.log("rs: ", req)
     return this.http.post(
       url,
       req
     ).pipe(
+      map((data => {
+        this.notif.sendReceiptItemNotif(true);
+      })),
       catchError(this.app.processError)
     );
   }
@@ -61,8 +70,8 @@ export class ReceiptService {
   addNewReceipt(data: number): Observable<any> {
     let url = this.https.apiUrl + 'api/Receipt/AddNewReceipt';
     let req = {
-      UserId : this.app.getUserId(),
-      TransactionId : data
+      UserId: this.app.getUserId(),
+      TransactionId: data
     }
     return this.http.post(
       url,
@@ -76,6 +85,38 @@ export class ReceiptService {
   }
 
   /**
+   * Gets list of transactions without receipts
+   * 2/20/22
+   * @returns Transaction No Receipt List
+   */
+  getTransWithoutReceipts(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
+    let req = { UserId: this.app.getUserId() };
+    return this.http.post(
+      url,
+      req
+    ).pipe(
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
+   * Gets list of receipts
+   * 2/20/22
+   * @returns Transaction Receipt List
+   */
+  getReceiptList(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/GetReceiptList';
+    let req = { UserId: this.app.getUserId() }
+    return this.http.post(
+      url,
+      req
+    ).pipe(
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
    * Gets Receipt data
    * 2/20/22
    * @param data UserId, ReceiptId
@@ -84,8 +125,8 @@ export class ReceiptService {
   getReceiptData(data: number) {
     let url = this.https.apiUrl + 'api/Receipt/GetReceiptData';
     let req = {
-      UserId : this.app.getUserId(),
-      ReceiptId : data
+      UserId: this.app.getUserId(),
+      ReceiptId: data
     }
     return this.http.post(
       url,
@@ -104,8 +145,8 @@ export class ReceiptService {
   getReceiptItemData(data: number) {
     let url = this.https.apiUrl + 'api/Receipt/GetReceiptItemData';
     let req = {
-      UserId : this.app.getUserId(),
-      ReceiptId : data
+      UserId: this.app.getUserId(),
+      ReceiptId: data
     }
     return this.http.post(
       url,
@@ -116,20 +157,36 @@ export class ReceiptService {
   }
 
   /**
-   * Adds new blank row to receiptItem
-   * 2/21/22
-   * @param data UserId, ReceiptId
-   * @returns ReceiptItemId
-   */
-  addBlankReceiptItem(data: number): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/AddBlankReceiptItem';
+ * Update ReceiptItem.Amount
+ * @param data 
+ * @returns ReceiptId
+ */
+   updateReceiptItemTitle(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemTitle';
     let req = {
-      UserId : this.app.getUserId(),
-      ReceiptId : data
-    }
-    return this.http.post(
+      UserId :this.app.getUserId(),
+      ReceiptItemId : data.ReceiptItemId,
+      UpdateValue : data.UpdateValue
+    };
+    return this.http.put(
       url,
       req
+    ).pipe(
+      catchError(this.app.processError)
+    );
+  }
+
+  /**
+ * Update ReceiptItem.Amount
+ * @param data 
+ * @returns 
+ */
+  updateReceiptItemAmount(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemAmount';
+    data.UserId = this.app.getUserId();
+    return this.http.put(
+      url,
+      data
     ).pipe(
       map((data => {
         this.notif.sendReceiptItemNotif(true);
@@ -157,25 +214,6 @@ export class ReceiptService {
     );
   }
 
-    /**
-   * Update ReceiptItem.Amount
-   * @param data 
-   * @returns 
-   */
-  updateReceiptItemAmount(data: any): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemAmount';
-    data.UserId = this.app.getUserId();
-    return this.http.put(
-      url,
-      data
-    ).pipe(
-      map((data => {
-        this.notif.sendReceiptItemNotif(true);
-      })),
-      catchError(this.app.processError)
-    );
-  }
-
   /**
    * Disable rectipItem by id
    * @param data 
@@ -185,8 +223,8 @@ export class ReceiptService {
     console.log("Data: ", data)
     let url = this.https.apiUrl + 'api/Receipt/DeleteReceiptItem';
     let req = {
-      UserId : this.app.getUserId(),
-      ReceiptItemId : data
+      UserId: this.app.getUserId(),
+      ReceiptItemId: data
     }
     console.log(req)
     return this.http.put<any>(
@@ -200,6 +238,6 @@ export class ReceiptService {
     );
   }
 
-  
+
 
 }

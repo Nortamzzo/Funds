@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NoReceiptList, ReceiptList } from '@app/app-models/transaction-models';
 import { ReceiptService } from '@app/app-services/data/receipt.service';
 import { TransactionService } from '@app/app-services/data/transaction.service';
+import { NotificationService } from '@app/app-services/notification.service';
 
 @Component({
   selector: 'app-receipt-list',
@@ -34,6 +35,18 @@ export class ReceiptListComponent implements OnInit {
   }
 
   /**
+   * Gets list of Receipts
+   * 2/20/22
+   */
+   getReceiptList() {
+    this.recService.getReceiptList().subscribe(
+      data => {
+        this.receiptList = JSON.parse(JSON.stringify(data));
+      }
+    )
+  }
+
+  /**
    * Gets list of transactions without Receipt
    * 2/20/22
    */
@@ -41,18 +54,6 @@ export class ReceiptListComponent implements OnInit {
     this.recService.getTransWithoutReceipts().subscribe(
       data => {
         this.transactionList = JSON.parse(JSON.stringify(data));
-      }
-    )
-  }
-
-  /**
-   * Gets list of Receipts
-   * 2/20/22
-   */
-  getReceiptList() {
-    this.recService.getReceiptList().subscribe(
-      data => {
-        this.receiptList = JSON.parse(JSON.stringify(data));
       }
     )
   }
@@ -70,8 +71,8 @@ export class ReceiptListComponent implements OnInit {
    * 2/20/22
    * @param data ReceiptId: number
    */
-  setViewId(data: number) {
-    this.receiptIdOutput.emit(data);
+  selectReceipt(data: number) {
+    this.recService.setReceiptViewId(true, data);
   }
 
 }

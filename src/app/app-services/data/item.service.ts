@@ -101,4 +101,21 @@ export class ItemService {
     );
   }
 
+  /**
+   * Gets item data from db
+   * @returns Item[]
+   */
+  getItemData() {
+    let url = this.https.apiUrl + 'api/Item/GetItemData';
+    let req = {
+      UserId: this.app.getUserId(),
+    };
+    return this.http.post(
+      url,
+      req
+    ).pipe(
+      catchError(this.app.processError)
+    );
+  }
+
 }

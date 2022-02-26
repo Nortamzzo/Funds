@@ -61,7 +61,7 @@
           >{{ balance | currency: 'USD' }}
         </h4>
         <button 
-          *ngIf="!(isAuthenticated)"
+        
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 
@@ -70,7 +70,7 @@
           >Sign Up
         </button>
         <button 
-          *ngIf="isAuthenticated" 
+          
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 
@@ -82,3 +82,5 @@
     </div>
   </nav>
 </ng-template>
+
+<!-- *ngIf="isAuthenticated"  -->
