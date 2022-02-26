@@ -1,4 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { ItemService } from '@app/app-services/data/item.service';
+import { ItemsComponent } from '../items/items.component';
 
 @Component({
   selector: 'app-item-list',
@@ -9,13 +11,19 @@ export class ItemListComponent implements OnInit {
   @Input() itemData: any[] = [];
   public newItemMode: boolean = false;
 
-  constructor() { }
+  constructor(
+    private itemService: ItemService
+  ) { }
 
   ngOnInit(): void {
   }
 
   addNewItem() {
     this.newItemMode = !this.newItemMode;
+  }
+
+  getItemData() {
+    // this.itemService.
   }
 
   receiveAddItem($event: any) {
