@@ -59,6 +59,7 @@ export class ConfigService {
       UserId: this.app.getUserId(),
       Selection: data
     };
+    console.log(req)
     return this.http.put(url, req)
       .pipe(
         map((data => {

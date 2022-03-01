@@ -26,10 +26,6 @@ export class ItemAddNewComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  public cancelNewItem() {
-    this.sendAddItem.emit(false);
-  }
-
   public submitNewItem() {
     this.itemService.addNewItem(this.itemForm.value).subscribe(
       data => {
