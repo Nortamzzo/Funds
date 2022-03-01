@@ -58,7 +58,11 @@
             class="subCatRow"
             (click)="selectCategory(category.CategoryId)"
             >
-            <td class="col-1-2" colspan="2">{{ category.CategoryTitle }}</td>
+            <td 
+              class="col-1-2" colspan="2"
+              [title]="category.Information"
+              >{{ category.CategoryTitle }}
+            </td>
             <td 
               class="col-3"
               >
@@ -75,10 +79,15 @@
           <ng-container *ngIf="selectedCategory === category.CategoryId">
             <tr *ngFor="let subcategory of subcategoryData">
               <td class="col-1">-</td>
-              <td class="col-2">{{ subcategory.SubcategoryTitle }}</td>
+              <td 
+                class="col-2"
+                [title]="subcategory.Information"
+                >{{ subcategory.SubcategoryTitle }}
+              </td>
               <td 
                 (click)="editBudget(subcategory.SubcategoryId)"
                 class="col-3"
+                title="Set Budget"
                 >
                 <ng-container 
                   *ngIf="editSubcategory != subcategory.SubcategoryId"

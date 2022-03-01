@@ -12,6 +12,7 @@ import { InteractorService } from '@app/app-services/interactor.service';
 import { NotificationService } from '@app/app-services/notification.service';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { AutoCompleteComponent } from '../../shared/components/auto-complete/auto-complete.component';
 
 @Component({
   selector: 'app-sidebar-transaction-input',
@@ -24,7 +25,9 @@ export class SidebarTransactionInputComponent implements OnInit {
   @Input() categoryData: Category[] = [];
   @Input() subcategoryData: Subcategory[] = [];
   @Input() locationData: any[] = [];
-  transactionForm: FormGroup;
+  // TODO: Location list type
+  public locationList: any[] = [];
+  public transactionForm: FormGroup;
   public model: any;
 
   constructor(
@@ -32,7 +35,7 @@ export class SidebarTransactionInputComponent implements OnInit {
     private i: InteractorService,
     private sub: SubcategoryService,
     private tra: TransactionService,
-    private loc: LocationService,
+    private locService: LocationService,
     private notif: NotificationService,
     ta: NgbTypeaheadConfig
   ) {
@@ -49,6 +52,7 @@ export class SidebarTransactionInputComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getLocationList();
   }
   
   /**
@@ -58,6 +62,15 @@ export class SidebarTransactionInputComponent implements OnInit {
   getSubcategoryData($event: any) {
     this.notif.sendCategoryId($event.target.value);
     this.notif.sendSubcategoryNotif(true);
+  }
+
+  getLocationList() {
+    this.locService.getLocationList().subscribe(
+      data => {
+        console.log(data);
+        this.locationList = data;
+      }
+    )
   }
 
   /**
@@ -86,7 +99,7 @@ export class SidebarTransactionInputComponent implements OnInit {
     text$.pipe(
       debounceTime(200),
       distinctUntilChanged(),
-      switchMap((text) => this.loc.searchLocations(text)),
+      switchMap((text) => this.locService.searchLocations(text)),
     )
 
   /**
@@ -107,5 +120,23 @@ export class SidebarTransactionInputComponent implements OnInit {
     if (value.name)
       return value.name
     return value;
+  }
+
+  test() {
+    console.log("Test: ", this.transactionForm.controls['Location'].value)
+    // this.transactionForm.controls['Location'].setValue(this.transactionForm.controls['Location'].value)
+    console.log("test: ", this.transactionForm.value)
+  }
+
+  test2($event: any) {
+    console.log("Test 2: ", $event.target.value)
+  }
+
+  receiveLocationOption($event: any) {
+    this.transactionForm.controls['Location'].setValue($event.value);
+  }
+
+  receiveLocationText() {
+
   }
 }

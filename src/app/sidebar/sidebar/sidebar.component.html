@@ -1,76 +1,48 @@
 <div class="sidebar-container  scr-style-1">
   <div class="sidebar-content">
     <div
-    [ngSwitch]="viewMode"
-    class="sidebar-section"
-    >
+      [ngSwitch]="viewMode"
+      class="sidebar-section"
+      >
+      <div class="sb-btn-container">
+        <ng-container
+          *ngFor="let item of sidebarViews; let i = index;"
+          >
+          <button
+            class="sb-topic-btn"
+            [value]="item.Title"
+            [name]="item.DisplayTitle"
+            [title]="item.DisplayTitle"
+            (click)="setSidebarView($event)"
+            >{{ item.DisplayTitle }}
+          </button>
+        </ng-container>
+      </div>
+      <hr>
+      <ng-container ></ng-container>
 
-    <div 
-      ngi
-      class="sb-btn-container">
-      <button 
-        class="sb-topic-btn"
-        (click)="setView('transaction')"
-        >
-        Transaction
-      </button>
-    
-      <button 
-        class="sb-topic-btn"
-        (click)="setView('preset')"
-        >Preset Transactions
-      </button>
-      
-      <button 
-        class="sb-topic-btn"
-        (click)="setView('filter')"
-        >Filter Ledger
-      </button>
-      
-      <button 
-        class="sb-topic-btn"
-        (click)="setView('accounts')"
-        >Accounts
-      </button>
-      
-      <button 
-        class="sb-topic-btn" 
-        (click)="setView('categories')"
-        >Categories
-      </button>
-
-      <button 
-        class="sb-topic-btn" 
-        (click)="setView('receipts')"
-        >Receipts
-      </button>
-      
-    </div>
-
-    <hr>
-    
-    <ng-container *ngSwitchCase="'transaction'">
-      <ng-template [ngTemplateOutlet]="sidebarTransaction"></ng-template>
+    <ng-container *ngSwitchCase="'Transaction'">
+      <ng-template [ngTemplateOutlet]="Transaction"></ng-template>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'preset'">
-      <ng-template [ngTemplateOutlet]="sidebarPreset"></ng-template>
+    <ng-container *ngSwitchCase="'PresetTransaction'">
+      <ng-template [ngTemplateOutlet]="PresetTransactions"></ng-template>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'filter'">
-      <ng-template [ngTemplateOutlet]="sidebarFilter"></ng-template>
+    <ng-container *ngSwitchCase="'FilterLedger'">
+      <ng-template [ngTemplateOutlet]="FilterLedger"></ng-template>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'accounts'">
-      <ng-template [ngTemplateOutlet]="sidebarAccounts"></ng-template>
+    <ng-container *ngSwitchCase="'Accounts'">
+      <ng-template [ngTemplateOutlet]="Accounts"></ng-template>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'categories'">
-      <ng-template [ngTemplateOutlet]="sidebarCategories"></ng-template>
+    <ng-container *ngSwitchCase="'Categories'">
+      <ng-template [ngTemplateOutlet]="Categories"></ng-template>
     </ng-container>
 
-    <ng-container *ngSwitchCase="'receipts'">
-      <ng-template [ngTemplateOutlet]="sidebarReceipts"></ng-template>
+    <ng-container *ngSwitchCase="'Receipts'">
+      <ng-template [ngTemplateOutlet]="Receipts"></ng-template>
     </ng-container>
 
 
@@ -78,7 +50,7 @@
 
   <div class="sb-content">
     
-    <ng-template #sidebarTransaction>
+    <ng-template #Transaction>
       <app-sidebar-transaction-input
         [accountData]="accountData"
         [categoryData]="categoryData"
@@ -87,7 +59,7 @@
       </app-sidebar-transaction-input>
     </ng-template>
     
-    <ng-template #sidebarPreset>
+    <ng-template #PresetTransactions>
       <app-sidebar-preset-transactions
         [presetData]="presetData"
         [accountData]="accountData"
@@ -98,7 +70,7 @@
       </app-sidebar-preset-transactions>
     </ng-template>
     
-    <ng-template #sidebarFilter>
+    <ng-template #FilterLedger>
       <app-sidebar-ledger-filter
         [accountData]="accountData"
         [categoryData]="categoryData"
@@ -108,7 +80,7 @@
       </app-sidebar-ledger-filter>
     </ng-template>
     
-    <ng-template #sidebarAccounts>
+    <ng-template #Accounts>
       <app-sidebar-accounts
         [accountData]="accountData"
         [accountTypeData]="accountTypeData"
@@ -117,7 +89,7 @@
       </app-sidebar-accounts>
     </ng-template>
     
-    <ng-template #sidebarCategories>
+    <ng-template #Categories>
       <app-sidebar-categories 
         [categoryData]="categoryData"
         [subcategoryData]="subcategoryData"
@@ -125,7 +97,7 @@
       </app-sidebar-categories>
     </ng-template>
 
-    <ng-template #sidebarReceipts>
+    <ng-template #Receipts>
       <app-sidebar-receipts 
         >
       </app-sidebar-receipts>

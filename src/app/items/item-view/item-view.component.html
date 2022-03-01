@@ -1,15 +1,15 @@
 <div 
-  *ngIf="receiptView"
-  id="receipt">
+  *ngIf="itemView"
+  id="item">
   <div id="top">
     <div class="info">
       <div class="top-row">
-        <h3>{{ receiptData[0].LocationTitle ? receiptData[0].LocationTitle : '' }}</h3>
-        <h5>{{ receiptData[0].DateOf | date: 'fullDate' }}</h5>
+        <h3>{{ itemData[0].LocationTitle }}</h3>
+        <h5>{{ itemData[0].DateOf | date: 'fullDate' }}</h5>
       </div>
       <div class="info">
         <span><p>www.publix.com</p></span>
-        <span><p>{{ receiptData[0].Information }}</p></span>
+        <span><p>{{ itemData[0].Information }}</p></span>
         <span><p>Palm Beach Gardens, FL</p></span>
       </div>
     </div>
@@ -32,7 +32,7 @@
         </thead>
         <tbody>
           <tr 
-            *ngFor="let item of receiptItemData; let r = index;"  
+            *ngFor="let item of itemData; let r = index;"  
             class="item-row"
             >
             <!-- Item Title -->
@@ -52,7 +52,7 @@
                 <div class="input-group">
                   <span 
                     class="badge bg-success me-1 mb-1 add-new-item"
-                    (click)="addNewItem(item)"
+                    (click)="addNewItem()"
                     >
                     +Item
                   </span>
@@ -64,85 +64,39 @@
                   </span>
                   <span 
                     class="badge bg-danger me-1 mb-1 delete-button"
-                    (click)="deleteReceiptItemById(item.ReceiptItemId)"
+                    (click)="deleteItemById(item.itemItemId)"
                     >
                     Delete
                   </span>
                 </div>
-                <app-auto-complete
-                  class="a"
+                <!-- <app-auto-complete
                   #autocomplete
-                  [placeholder]="'Set Item...'"
                   [list]="itemList"
                   [row]="r"
                   [object]="item"
                   [value]="item.ItemTitle"
-                  (optionOutput)="updateReceiptItemTitle($event, item)"
-                  (textOutput)="this.itemTitle = $event"
                   >
-                </app-auto-complete>
+                </app-auto-complete> -->
               </ng-container>
             </td>
             <!-- Quantity -->
             <td class="item-quantity">
               {{ item.Quantity }}
             </td>
-            <!-- Amount -->
-            <td 
-              [attr.id]="'title-' + r"
-              class="item-amount"
-              >
-              <ng-container *ngIf="!(editItemRow === r && editItemCol === 3)">
-                <div
-                  (click)="setItemEdit(r, 3)"
-                  >
-                  {{ item.Amount ? item.Amount  : 0 | currency: 'USD' }}
-                </div>
-              </ng-container>
-              <ng-container *ngIf="editItemRow === r && editItemCol === 3">
-                <input 
-                  [attr.id]="'amount-input-' + r"
-                  class="item-amount-edit"
-                  type="number"
-                  [(ngModel)]="item.Amount"
-                  (change)="editAmountValue(item)"
-                  >
-              </ng-container>
-            </td>
           </tr>
           <tr class="total-row">
             <td class="new-item">
               <button 
                 id="add-item-button"
-                (click)="addNewBlankItem()"
+                (click)="addNewItem()"
                 >
                 + Item
               </button>
-              <button (click)="test()">Test</button>
             </td>
             <td class="tax-total">
               <div class="total-block">
                 <p>Tax</p>
                 <p>Total</p>
-              </div>
-            </td>
-            <td class="totals">
-              <div class="total-block">
-                <ng-container *ngIf="!(editReceiptRow === receiptData[0].ReceiptId) || !(receiptData[0].Tax === 0)">
-                  <p (click)="setReceiptEdit(receiptData[0].ReceiptId)">
-                    {{ receiptData[0].Tax }}
-                  </p>
-                </ng-container>
-                <ng-container *ngIf="(editTaxMode) || receiptData[0].Tax === null">
-                  <input 
-                    id="tax-input"
-                    class="tax-input"
-                    type="number"
-                    [(ngModel)]="receiptData[0].Tax"
-                    (change)="editTaxValue(receiptData[0])"
-                  >
-                </ng-container>
-                <p>{{ receiptData[0].Amount }}</p>
               </div>
             </td>
           </tr>
@@ -151,4 +105,3 @@
     </div>
   </div>
 </div>
-

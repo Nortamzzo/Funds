@@ -9,6 +9,7 @@ import { FooterModule } from '@app/footer/footer.module';
 import { LedgerModule } from '@app/ledger/ledger.module';
 import { BudgetModule } from '@app/budget/budget.module';
 import { ReceiptModule } from '@app/receipt/receipt.module';
+import { ItemsModule } from '@app/items/items.module';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { ReceiptModule } from '@app/receipt/receipt.module';
     FooterModule,
     LedgerModule,
     BudgetModule,
-    ReceiptModule
+    ReceiptModule,
+    ItemsModule
   ]
 })
 export class FundsModule { }

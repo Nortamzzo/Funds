@@ -105,34 +105,51 @@ td {
   border: 1px solid #EEE
 }
 
-.item-row {
-  height: 2vh;
-}
+
 
 .service {
   border-bottom: 1px solid #EEE;
 }
 
 // Item Row Style
+.item-row {
+  height: 2.5vh;
+}
+
 .item-title {
   width: 50%;
+  color: #666;
+  padding: 0;
 }
 
 .item-quantity {
-  width: 15%;
+  width: 25%;
+  text-align: center;
+  color: #666;
+  padding: 0;
 }
 
 .item-amount {
-  width: 35%;
+  width: 25%;
+  text-align: end;
+  color: #666;
+  padding: 0;
 }
 
 .item-amount-edit {
-  width: 50%;
+  width: 75%;
+  text-align: end;
 }
 
-.itemtext {
-  font-size: 1rem;
-  color: #666;
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+    -moz-appearance:textfield; /* Firefox */
 }
 
 .quantity {

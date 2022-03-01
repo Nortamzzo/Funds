@@ -39,7 +39,7 @@
       <tr 
         *ngFor="let item of receiptList; let i = index"
         class="rl-body-row"
-        (click)="setViewId(item.ReceiptId)"
+        (click)="selectReceipt(item.ReceiptId)"
         >
         <td class="rl-td col-1">{{ item.DateOf | date:'fullDate' }}</td>
         <td class="rl-td col-2">{{ item.LocationTitle }}</td>

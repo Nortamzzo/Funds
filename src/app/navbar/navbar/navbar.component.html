@@ -39,7 +39,15 @@
           class="header-button" 
           style="width: 150px; height: 35px;"
           (click)="navClick($event)"
-          >Receipt
+          >Receipts
+        </button>
+        <button 
+          id="nav-item"
+          value="items" 
+          class="header-button" 
+          style="width: 150px; height: 35px;"
+          (click)="navClick($event)"
+          >Items
         </button>
       </div>
       <div 
@@ -53,6 +61,7 @@
           >{{ balance | currency: 'USD' }}
         </h4>
         <button 
+        
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 
@@ -61,7 +70,7 @@
           >Sign Up
         </button>
         <button 
-          *ngIf="appService.isLoggedIn" 
+          
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 
@@ -73,3 +82,5 @@
     </div>
   </nav>
 </ng-template>
+
+<!-- *ngIf="isAuthenticated"  -->

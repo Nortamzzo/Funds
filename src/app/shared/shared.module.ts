@@ -1,23 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { InputTextComponent } from './input-text/input-text.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SortDirective } from './app-directives/sort.directive';
+import { MaterialModule } from '@app/mat/material/material.module';
+import { AutoCompleteComponent } from './components/auto-complete/auto-complete.component';
+import { InputAutocompleteComponent } from './components/input-autocomplete/input-autocomplete.component';
 
 
 
 @NgModule({
   declarations: [
-    InputTextComponent,
-    SortDirective
+    SortDirective,
+    AutoCompleteComponent,
+    InputAutocompleteComponent
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule,
+    MaterialModule
   ],
   exports: [
-    InputTextComponent,
-    SortDirective
+    SortDirective,
+    AutoCompleteComponent,
+    InputAutocompleteComponent
   ]
 })
 export class SharedModule { }
