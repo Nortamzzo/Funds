@@ -1,12 +1,94 @@
+.sb-trans-input-box {
+  width: 90%;
+  height: 35px;
+  margin-bottom: 25px;
+}
+
+.sb-trans-input-box-auto {
+  width: 100%;
+  height: 35px;
+  margin-bottom: 25px;
+  background-color: white;
+}
+
+.sb-trans-input-box-textarea {
+  width: 90%;
+  height: 70px;
+  margin-bottom: 5px;
+}
+
 form::placeholder {
-  color:  black;
+  color: black;
   opacity: 1;
 }
 
 input::placeholder {
-  color:  black;
+  color: black;
 }
 
 textarea::placeholder {
-  color:  black;
+  color: black;
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
+  padding: 10px;
+}
+
+::ng-deep .mat-form-field-infix {
+  padding: 0;
+  border-top: 0;
+}
+
+mat-form-field {
+  height: 50%
+}
+
+::ng-deep .mat-auto {}
+
+::ng-deep .cdk-overlay-pane {
+  /* Do you changes here */
+  min-width: 300px;
+  height: 300px;
+}
+
+::ng-deep .mat-autocomplete-panel {
+  height: 500px
+}
+
+::ng-deep .mat-form-field-wrapper {
+  width: 100%;
+  height: 100%;
+  padding: 0 !important;
+}
+
+::ng-deep .mat-form-field {
+  width: 90%;
+  height: 100%;
+  border: none;
+}
+
+::ng-deep .mat-form-field-flex {
+  width: 100%;
+  border: solid 1px black;
+  height: 100%;
+  font-size: 1rem;
+}
+
+::ng-deep .mat-form-field-flex input {
+  height: 100%;
+  width: 100%;
+}
+
+::ng-deep .mat-input-container {}
+
+::ng-deep .mat-form-field-underline {
+  display: none;
+}
+
+::ng-deep mat-form-field {
+  width: 100%;
+}
+
+::ng-deep mat-option {
+  height: 25px;
 }

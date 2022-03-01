@@ -20,6 +20,7 @@ import { SidebarBudgetComponent } from './sidebar-budget/sidebar-budget.componen
 import { SbTransactionItimizerComponent } from './sb-transaction-itimizer/sb-transaction-itimizer.component';
 import { SidebarReceiptsComponent } from './sidebar-receipts/sidebar-receipts.component';
 import { SidebarViewReceiptComponent } from './sidebar-view-receipt/sidebar-view-receipt.component';
+import { SharedModule } from '@app/shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -45,7 +46,8 @@ import { SidebarViewReceiptComponent } from './sidebar-view-receipt/sidebar-view
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NgbModule
+    NgbModule,
+    SharedModule
   ],
   exports: [
     SidebarComponent

@@ -41,7 +41,6 @@ export class ReceiptViewComponent implements OnInit {
   ) {
     this.recService.getReceiptViewId().subscribe(
       data => {
-        console.log(data)
         if (data.status) {
           this.receiptId = data.ReceiptId;
           this.getReceiptData(data.ReceiptId);
@@ -55,7 +54,7 @@ export class ReceiptViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // console.log(this.receiptData)
+    console.log('itemList: ', this.itemList)
   }
 
   /**
@@ -64,7 +63,6 @@ export class ReceiptViewComponent implements OnInit {
   addNewBlankItem() {
     this.recService.addBlankReceiptItem(this.receiptId).subscribe(
       data => {
-        console.log(data)
         this.getReceiptItemData(this.receiptId!);
       }
     )
@@ -72,7 +70,7 @@ export class ReceiptViewComponent implements OnInit {
 
   public itemTitle!: string;
   addNewItem(item: ReceiptItemData) {
-    this.autocomplete.setText();
+    // this.autocomplete.setText();
     let req = {
       ReceiptId: item.ReceiptId,
       ReceiptItemId: item.ReceiptItemId,
@@ -119,7 +117,6 @@ export class ReceiptViewComponent implements OnInit {
   getReceiptItemData(id: number) {
     this.recService.getReceiptItemData(id).subscribe(
       data => {
-        console.log("1: ", data)
         this.receiptItemData = JSON.parse(JSON.stringify(data));
       }
     )
@@ -168,7 +165,7 @@ export class ReceiptViewComponent implements OnInit {
   updateReceiptItemTitle($event: any, item: any) {
     let req = {
       ReceiptItemId: item.ReceiptItemId,
-      UpdateValue: $event
+      UpdateValue: $event.value
     }
     this.recService.updateReceiptItemTitle(req).subscribe(
       data => {
