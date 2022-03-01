@@ -23,11 +23,15 @@ export class ItemListComponent implements OnInit {
   }
 
   getItemData() {
-    // this.itemService.
+    this.itemService.getItemData().subscribe(
+      data => {
+        this.itemData = JSON.parse(JSON.stringify(data));
+      }
+    );
   }
 
   receiveAddItem($event: any) {
-    if ($event) {
+    if (!$event) {
       this.newItemMode = false;
     }
   }

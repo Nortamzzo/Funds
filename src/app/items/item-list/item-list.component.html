@@ -21,24 +21,25 @@
     </div>
   </ng-container>
   <table 
-    *ngIf="itemData.length > 0"
-    class="header-fixed rl-table">
-    <thead class="rl-head">
-      <tr class="rl-head-row">
-        <th class="rl-th col-1">Date</th>
-        <th class="rl-th col-2">Location</th>
-        <th class="rl-th col-3">Total</th>
+    class="header-fixed il-table">
+    <thead class="il-head">
+      <tr class="il-head-row">
+        <th class="il-th col-1">Item</th>
+        <th class="il-th col-2">Date</th>
+        <th class="il-th col-3">Location</th>
+        <th class="il-th col-4">Last Price</th>
       </tr>
     </thead>
-    <tbody class="rl-body">
+    <tbody class="il-body">
       <tr 
         *ngFor="let item of itemData; let i = index"
-        class="rl-body-row"
+        class="il-body-row"
         (click)="setViewId(item.itemId)"
         >
-        <td class="rl-td col-1">{{ item.DateOf | date:'fullDate' }}</td>
-        <td class="rl-td col-2">{{ item.LocationTitle }}</td>
-        <td class="rl-td col-3">{{ item.Amount | currency: 'USD' }}</td>
+        <td class="il-td col-1" [title]="(item.Information) ? item.Information : ''">{{ item.ItemTitle }}</td>
+        <td class="il-td col-2">{{ item.LastDateOf | date:'mediumDate' }}</td>
+        <td class="il-td col-3">{{ item.LastLocation }}</td>
+        <td class="il-td col-4">{{ item.LastAmount | currency: 'USD' }}</td>
       </tr>
     </tbody>
   </table>
