@@ -1,17 +1,20 @@
-<form class="example-form">
+<form 
+  class="example-form"
+  autocomplete="off"
+  >
   <mat-form-field 
     class="example-full-width inp"
     >
     <input 
       tab-directive
-      [attr.id]="'title-input-' + row"
+      id="auto-complete-input"
       type="text"
-      aria-label="Number"
       matInput
+      [placeholder]="(placeholder) ? placeholder : null"
       [(ngModel)]="value"
       [formControl]="myControl"
       [matAutocomplete]="auto"
-      (change)="setText()"
+      (change)="sendOutput($event.target)"
       >
     <button 
       *ngIf="value"
@@ -26,7 +29,8 @@
       class="mat-auto" 
       #auto="matAutocomplete"
       autoActiveFirstOption="true"
-      (optionSelected)="selectOption($event.option.value)"
+      [displayWith]="getOptionText"
+      (optionSelected)="sendOutput($event.option)"
       >
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
         {{ option }}

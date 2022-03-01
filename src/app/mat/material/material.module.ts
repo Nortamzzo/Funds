@@ -5,6 +5,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatSortModule } from '@angular/material/sort';
+import { MatOptionModule } from '@angular/material/core';
+
 
 const MaterialComponents = [
   MatAutocompleteModule,
@@ -12,7 +14,8 @@ const MaterialComponents = [
   MatInputModule,
   MatButtonModule,
   MatIconModule,
-  MatSortModule
+  MatSortModule,
+  MatOptionModule
 ]
 
 @NgModule({

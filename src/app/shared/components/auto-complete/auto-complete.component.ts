@@ -9,15 +9,40 @@ import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'r
   styleUrls: ['./auto-complete.component.scss']
 })
 export class AutoCompleteComponent implements OnInit {
-  @Output() optionOutput = new EventEmitter<any>();
-  @Output() textOutput = new EventEmitter<any>();
-  @Input() list: string[] = [];
-  @Input() row!: number;
-  @Input() object: any;
+  /**
+   * Output selected option
+   * @output $event.value
+   */
+  @Output() public optionOutput = new EventEmitter<any>();
+  /**
+   * Output new text entry
+   */
+  @Output() public textOutput = new EventEmitter<any>();
+  /**
+   * List to populate dropdown
+   */
+  @Input() public list: string[] = [];
+  /**
+   * xx
+   */
+  @Input() public value: any;
+  /**
+   * If passing in an object from ngfor, index
+   */
+  @Input() public row?: number;
+  /**
+   * If passing in an object from ngfor, iteration
+   */
+  @Input() public object: any;
+  /**
+   * Optional placeholder to display
+   */
+  @Input() public placeholder: string;
+  /**
+   * List filtered with current input
+   */
   public filteredOptions: Observable<string[]>;
   public myControl = new FormControl();
-
-  @Input() public value: any;
 
   constructor() {
     this.filteredOptions = this.myControl.valueChanges
@@ -32,10 +57,14 @@ export class AutoCompleteComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.filteredOptions = this.myControl.valueChanges.pipe(
-      startWith(''),
-      map(value => this._filter(value)),
-    );
+    setTimeout(() => {
+      this.filteredOptions = this.myControl.valueChanges.pipe(
+        startWith(''),
+        map(value => this._filter(value)),
+      );
+    }, 350);
+    
+    console.log(this.list)
   }
 
   private _filter(value: string): string[] {
@@ -43,6 +72,11 @@ export class AutoCompleteComponent implements OnInit {
     return this.list.filter(option => option.toLowerCase().includes(filterValue));
   }
 
+  /**
+   * Filters value in input box from list
+   * @param val 
+   * @returns filtered list
+   */
   filter(val: string): Observable<any[]> {
     return this.filteredOptions.pipe(
         map(response => response.filter(option => {
@@ -51,12 +85,25 @@ export class AutoCompleteComponent implements OnInit {
       )
   }
 
-  setText() {
-    this.textOutput.emit(this.value);
+  getOptionText(option: any) {
+    return option;
   }
 
-  selectOption($event: any) {
+  /**
+   * Emits selected option from dropdown
+   * @param $event $event.target / $event.option
+   */
+  sendOutput($event: any) {
     this.optionOutput.emit($event);
+  }
+
+  /**
+   * Emits text from input
+   * Used to select option that is not in list, i.e. create new
+   * @param $event value
+   */
+  setText() {
+    this.textOutput.emit(this.value);
   }
 
 }

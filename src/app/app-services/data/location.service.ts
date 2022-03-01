@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { LocationList } from '@app/app-models/location.models';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { AppService } from '../app.service';
@@ -28,15 +29,17 @@ export class LocationService {
     )
   };
 
-  getLocationList(): Observable<any> {
+  getLocationList(): Observable<any[]> {
     let UserId = this.app.getUserId();
-    return this.http.post(
+    return this.http.post<LocationList[]>(
       this.https.apiUrl + 'api/Location/GetLocationList', 
       { 
         UserId : UserId 
       })
     .pipe(
+      map(keyValue => keyValue.map(key => key.LocationTitle),
       catchError(this.app.processError)
+      )
     )
   };
 

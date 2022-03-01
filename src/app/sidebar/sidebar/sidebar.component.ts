@@ -1,11 +1,14 @@
 import { Component, Input, OnInit, ViewChild, ViewChildren } from '@angular/core';
+import { CfgSidebarView } from '@app/app-models/config.models';
 import { PresetTransaction } from '@app/app-models/preset-transaction-model';
+import { SidebarView } from '@app/app-models/sidebar.models';
 import { CategoryService } from '@app/app-services/data/category.service';
 import { ConfigService } from '@app/app-services/data/config.service';
 import { LocationService } from '@app/app-services/data/location.service';
 import { PresetTransactionService } from '@app/app-services/data/preset-transaction.service';
 import { SubcategoryService } from '@app/app-services/data/subcategory.service';
 import { TransactionService } from '@app/app-services/data/transaction.service';
+import { UserConfigService } from '@app/app-services/data/user-config.service';
 import { NotificationService } from '@app/app-services/notification.service';
 import { Account } from 'src/app/app-models/account-models';
 import { Category } from 'src/app/app-models/category-models';
@@ -21,6 +24,7 @@ import { AccountInputVerticalComponent } from '../account-input-vertical/account
 })
 export class SidebarComponent implements OnInit {
   @ViewChild(AccountInputVerticalComponent) private input!: AccountInputVerticalComponent;
+  public sidebarViews: CfgSidebarView[] = [];
   public presetData: PresetTransaction[] = [];
   public accountData: Account[] = [];
   public accountTypeData: any[] = [];
@@ -29,8 +33,10 @@ export class SidebarComponent implements OnInit {
   public locationData: Location[] = [];
   public userConfigData: any = [];
   public yearList!: number[];
+  // TODO: sidebarConfig type
+  public sidebarConfig: any[] = [];
   public content: string | null = null;
-  public viewMode: string | null = null;
+  public viewMode: string | null = 'Accounts';
   public total: number = 0;
 
   constructor(
@@ -42,7 +48,8 @@ export class SidebarComponent implements OnInit {
     private loc: LocationService,
     private preService: PresetTransactionService,
     private conService: ConfigService,
-    private transService: TransactionService
+    private transService: TransactionService,
+    private ucService: UserConfigService
   ) {
     this.notif.getTransNotif().subscribe(
       data => {
@@ -88,6 +95,7 @@ export class SidebarComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.getSidebarViews();
     this.getAccountData();
     this.getCategoryData();
     this.getSubcategoryData();
@@ -96,9 +104,11 @@ export class SidebarComponent implements OnInit {
     this.getAccountTypeData();
     this.getYearList();
     this.getUserConfigData();
-    setTimeout(() => {
-      this.viewMode = (this.userConfigData[0].SidebarSelection) ? this.userConfigData[0].SidebarSelection : 'accounts';
-    }, 500);
+    // Disabled until sidebar selection rework
+    // this.getSidebarViews();
+    // setTimeout(() => {
+    //   this.viewMode = (this.userConfigData[0].SidebarSelection) ? this.userConfigData[0].SidebarSelection : 'accounts';
+    // }, 500);
   }
 
   getUserConfigData() {
@@ -166,9 +176,25 @@ export class SidebarComponent implements OnInit {
     )
   }
 
-  setView(data: string) {
-    this.viewMode = (this.viewMode === data) ? null : data;
-    this.conService.setSidebarSelection(data).subscribe();
+  /**
+   * Populate sidebar topic buttons with sidebar view data
+   */
+  getSidebarViews() {
+    this.conService.getUserConfigSidebarViews().subscribe(
+      data => {
+        this.sidebarViews = data.Value;
+      }
+    )
+  }
+
+  /**
+   * Sets sidebar view selection in db
+   * @param $event Sidebar selection
+   */
+  setSidebarView($event: any) {
+    this.viewMode = $event.target.value;
+    // Disabled: rework
+    // this.conService.setSidebarSelection($event.target.value).subscribe();
   }
 
   submit() {
