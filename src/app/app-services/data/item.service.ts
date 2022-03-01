@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ItemData, ItemList } from '@app/app-models/item-models';
 import { Observable } from 'rxjs';
@@ -21,11 +21,21 @@ export class ItemService {
     private notif: NotificationService
   ) { }
 
-
-  getTransWithoutReceipts(): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
-    let req = { UserId: this.app.getUserId() };
-    return this.http.post(
+  /**
+  * Adds new item to db
+  * @param title New item title
+  * @param info New item information
+  * @returns ItemData for new item id
+  */
+  addNewItem(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Item/AddNewItem';
+    let req = {
+      UserId: this.app.getUserId(),
+      ItemTitle: data.Title,
+      Information: data.Information
+    };
+    console.log(req)
+    return this.http.post<any>(
       url,
       req
     ).pipe(
@@ -33,35 +43,11 @@ export class ItemService {
     );
   }
 
-  searchItems(item: string): Observable<string[]> {
-    let UserId = this.app.getUserId();
-    let url = this.https.apiUrl + 'api/Item/SearchItems';
-    let req = {
-      UserId: UserId,
-      Term: item
-    }
-    return this.http.post<any[]>(
-      url,
-      req
-    ).pipe(
-      map(keyValue => keyValue.map(key => key.ItemTitle)
-      )
-    )
-  }
-
-  opts: any = [];
-  getItemList(): Observable<any[]> {
-    let url = this.https.apiUrl + 'api/Item/GetItemList';
-    let req = { UserId: this.app.getUserId() };
-    return this.http.post<ItemList[]>(
-      url,
-      req
-    ).pipe(
-      map(keyValue => keyValue.map(key => key.ItemTitle)
-      )
-    )
-  }
-
+  /**
+   * Adds new item to receipt, from receipt view
+   * @param request 
+   * @returns 
+   */
   addNewItemFromReceipt(request: any): Observable<any> {
     let url = this.https.apiUrl + 'api/Item/AddItemFromRec';
     request.UserId = this.app.getUserId();
@@ -80,20 +66,42 @@ export class ItemService {
   }
 
   /**
-   * Adds new item to db
-   * @param title New item title
-   * @param info New item information
-   * @returns ItemData for new item id
+   * Gets item data from db
+   * @returns Item[]
    */
-  addNewItem(data: any): Observable<any> {
-    let url = this.https.apiUrl + 'api/Item/AddNewItem';
-    let req = {
-      UserId: this.app.getUserId(),
-      ItemTitle: data.Title,
-      Information: data.Information
-    };
-    console.log(req)
-    return this.http.post<any>(
+  getItemData() {
+    let url = this.https.apiUrl + 'api/Item/GetItemData';
+    let params = new HttpParams()
+      .set("UserId", this.app.getUserId())
+    return this.http.get(url, { params })
+      .pipe(
+        catchError(this.app.processError)
+      );
+  }
+
+  /**
+   * Get list of items for autocomplete
+   * @returns Array of items
+   */
+  getItemList(): Observable<any[]> {
+    let url = this.https.apiUrl + 'api/Item/GetItemList';
+    let params = new HttpParams()
+      .set("UserId", this.app.getUserId())
+    return this.http.get<ItemList[]>(url, { params })
+      .pipe(
+        map(keyValue => keyValue.map(key => key.ItemTitle)
+        )
+      )
+  }
+
+  /**
+   * Get list of transactions with HasReceipt == 0
+   * @returns 
+   */
+  getTransWithoutReceipts(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
+    let req = { UserId: this.app.getUserId() };
+    return this.http.post(
       url,
       req
     ).pipe(
@@ -102,20 +110,26 @@ export class ItemService {
   }
 
   /**
-   * Gets item data from db
-   * @returns Item[]
-   */
-  getItemData() {
-    let url = this.https.apiUrl + 'api/Item/GetItemData';
+  * 
+  * @param item 
+  * @returns 
+  */
+  searchItems(item: string): Observable<string[]> {
+    let UserId = this.app.getUserId();
+    let url = this.https.apiUrl + 'api/Item/SearchItems';
     let req = {
-      UserId: this.app.getUserId(),
-    };
-    return this.http.post(
+      UserId: UserId,
+      Term: item
+    }
+    return this.http.post<any[]>(
       url,
       req
     ).pipe(
-      catchError(this.app.processError)
-    );
+      map(keyValue => keyValue.map(key => key.ItemTitle)
+      )
+    )
   }
+
+
 
 }
