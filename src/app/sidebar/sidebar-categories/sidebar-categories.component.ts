@@ -80,6 +80,19 @@ export class SidebarCategoriesComponent implements OnInit {
   //   )
   // };
 
+  getAction($event: any) {
+    switch ($event) {
+      case 'clear':
+        this.addMode = false;
+        this.addCatMode = false;
+        this.addSubMode = false;
+        this.view = 'table';
+        break;
+      default:
+        break;
+    }
+  }
+
   /**
    * Resets filter
    */

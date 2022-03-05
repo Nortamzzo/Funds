@@ -5,13 +5,11 @@
   <mat-form-field 
     class="example-full-width inp"
     >
-    <input 
-      tab-directive
+    <input
       id="auto-complete-input"
       type="text"
       matInput
-      [placeholder]="(placeholder) ? placeholder : null"
-      [(ngModel)]="value"
+      [placeholder]="(placeholder) ? placeholder : 'Set'"
       [formControl]="myControl"
       [matAutocomplete]="auto"
       (change)="sendOutput($event.target)"
@@ -25,11 +23,11 @@
       >
       <mat-icon>close</mat-icon>
     </button>
-    <mat-autocomplete 
+    <mat-autocomplete
       class="mat-auto" 
       #auto="matAutocomplete"
       autoActiveFirstOption="true"
-      [displayWith]="getOptionText"
+      [displayWith]="(getOptionText)"
       (optionSelected)="sendOutput($event.option)"
       >
       <mat-option *ngFor="let option of filteredOptions | async" [value]="option">

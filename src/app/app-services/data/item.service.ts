@@ -65,7 +65,6 @@ export class ItemService {
   addNewItemFromReceipt(request: any): Observable<any> {
     let url = this.https.apiUrl + 'api/Item/AddItemFromRec';
     request.UserId = this.app.getUserId();
-    console.log(request)
     return this.http.post<any>(
       url,
       request

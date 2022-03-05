@@ -22,11 +22,12 @@
 .sb-btn-container {
   display: flex;
   flex-wrap: wrap;
+  margin: auto;
 }
 
 .sb-topic-btn {
-  height: 110px !important;
-  width: 110px !important;
+  height: 75px !important;
+  width: 75px !important;
   margin: 5px 0px 0px 5px;
   border: solid 3px rgb(136, 136, 136);
   border-radius: 7px;

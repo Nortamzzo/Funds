@@ -125,6 +125,7 @@
     <ng-container *ngIf="addSubMode">
       <app-subcategory-input-vertical
         [categoryData]="categoryData"
+        (sendAction)="getAction($event)"
         >
       </app-subcategory-input-vertical>
     </ng-container>

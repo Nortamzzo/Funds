@@ -1,0 +1,52 @@
+<div 
+  id="container"
+  *ngIf="access"
+  >
+  <div class="header">
+    <app-navbar></app-navbar>
+  </div>
+  <div id="content-wrapper">
+    <div class="sidebar">
+      <app-sidebar></app-sidebar>
+    </div>
+    <div class="content">
+      <div class="admin-toolbar">
+        <div class="adm-btn-container">
+          <ng-container *ngFor="let item of adminTopics"
+            >
+            <button
+              class="adm-topic-btn"
+              [value]="item.Id"
+              [name]="item.Title"
+              [title]="item.DisplayTitle"
+              (click)="setControl($event)"
+              >{{ item.DisplayTitle }} 
+            </button>
+          </ng-container>
+        </div>
+      </div>
+      <div 
+        class="admin-controls"
+        [ngSwitch]="selectedControl"
+        >
+        <ng-container *ngSwitchCase="'1'">
+          <ng-template [ngTemplateOutlet]="Navbar"></ng-template>
+        </ng-container>
+        <ng-container *ngSwitchCase="'2'">
+          <ng-template [ngTemplateOutlet]="Sidebar"></ng-template>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <app-footer></app-footer>
+</div>
+
+<ng-template #Navbar>
+  <app-navbar-settings></app-navbar-settings>
+</ng-template>
+
+<ng-template #Sidebar>
+  <app-sidebar-settings></app-sidebar-settings>
+</ng-template>

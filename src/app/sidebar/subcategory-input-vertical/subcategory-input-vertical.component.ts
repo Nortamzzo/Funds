@@ -10,6 +10,7 @@ import { SubcategoryService } from 'src/app/app-services/data/subcategory.servic
 })
 export class SubcategoryInputVerticalComponent implements OnInit {
   @Output() output = new EventEmitter<any>();
+  @Output() sendAction = new EventEmitter<any>();
   @Input() categoryData: Category[] = [];
 
   subcategoryForm: FormGroup;
@@ -32,6 +33,7 @@ export class SubcategoryInputVerticalComponent implements OnInit {
     this.sub.submitSubcategory(this.subcategoryForm.value).subscribe();
     this.subcategoryForm.reset();
     this.output.emit(false);
+    this.sendAction.emit('clear')
   }
 
 }

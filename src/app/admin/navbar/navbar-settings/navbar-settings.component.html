@@ -1,0 +1,23 @@
+<div class="toolbar">
+  <ng-container *ngFor="let item of navbarTopics">
+    <button
+      class="adm-topic-btn"
+      [value]="item.Id"
+      [name]="item.DisplayTitle"
+      [title]="item.DisplayTitle"
+      (click)="setTopic($event)"
+      >{{ item.DisplayTitle }} 
+    </button>
+  </ng-container>
+</div>
+<div class="settings">
+  <ng-container [ngSwitch]="selectedTopic">
+    <ng-container *ngSwitchCase="'1'">
+      <ng-template [ngTemplateOutlet]="Links"></ng-template>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #Links>
+  <app-navbar-links-settings></app-navbar-links-settings>
+</ng-template>

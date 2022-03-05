@@ -18,6 +18,14 @@ export class ConfigService {
     private notif: NotificationService
   ) { }
 
+  getNavbarLinks(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Config/GetNavbarLinks';
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.app.processError)
+      );
+  };
+
   /**
    * Gets UserConfig Data
    * Created: 2/17/22

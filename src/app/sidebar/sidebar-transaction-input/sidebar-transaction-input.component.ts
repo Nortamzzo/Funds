@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { NgbTypeaheadConfig } from '@ng-bootstrap/ng-bootstrap';
 
 import { Account } from '@app/app-models/account-models';
@@ -20,6 +20,7 @@ import { AutoCompleteComponent } from '../../shared/components/auto-complete/aut
   styleUrls: ['./sidebar-transaction-input.component.scss']
 })
 export class SidebarTransactionInputComponent implements OnInit {
+  @ViewChild (AutoCompleteComponent) autocomplete: AutoCompleteComponent;
   @Output() output = new EventEmitter<any>();
   @Input() accountData: Account[] = [];
   @Input() categoryData: Category[] = [];
@@ -28,7 +29,10 @@ export class SidebarTransactionInputComponent implements OnInit {
   // TODO: Location list type
   public locationList: any[] = [];
   public transactionForm: FormGroup;
-  public model: any;
+  public LocationValue: any;
+
+  public filteredLocationOptions: Observable<string[]>;
+  public myControl = new FormControl();
 
   constructor(
     private formBuilder: FormBuilder,
@@ -42,7 +46,6 @@ export class SidebarTransactionInputComponent implements OnInit {
     this.transactionForm = formBuilder.group({
       DateOf: ['', Validators.required],
       AccountId: ['', Validators.compose([Validators.required, Validators.min(1)])],
-      Location: [''],
       CategoryId: [''],
       SubcategoryId: [''],
       Information: [''],
@@ -67,7 +70,6 @@ export class SidebarTransactionInputComponent implements OnInit {
   getLocationList() {
     this.locService.getLocationList().subscribe(
       data => {
-        console.log(data);
         this.locationList = data;
       }
     )
@@ -90,19 +92,11 @@ export class SidebarTransactionInputComponent implements OnInit {
     // this.i.transactionInput(mode);
   }
 
-  /**
-   * Filters location by text value
-   * @param text$ 
-   * @returns Location list
-   */
-  searchLocations = (text$: Observable<string>) =>
-    text$.pipe(
-      debounceTime(200),
-      distinctUntilChanged(),
-      switchMap((text) => this.locService.searchLocations(text)),
-    )
+  getOptionText(option: any) {
+    return option;
+  }
 
-  /**
+   /**
    * Removes everything from location data except Title
    * @param value Location Data
    * @returns Location Title Array
@@ -133,10 +127,13 @@ export class SidebarTransactionInputComponent implements OnInit {
   }
 
   receiveLocationOption($event: any) {
-    this.transactionForm.controls['Location'].setValue($event.value);
+    this.transactionForm.addControl('Location', new FormControl('', Validators.required));
+    this.transactionForm.controls['Location'].setValue($event);
   }
 
   receiveLocationText() {
 
   }
+
+
 }
