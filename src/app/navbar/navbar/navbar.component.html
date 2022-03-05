@@ -17,38 +17,17 @@
         class="header-left" 
         style="width: 50vw;"
         >
-        <button 
-          id="nav-ledger"
-          value="ledger" 
-          class="header-button" 
-          style="width: 150px; height: 35px;"
-          (click)="navClick($event)"
-          >Ledger
+        <ng-container *ngFor="let item of navbarLinks">
+          <button 
+            [attr.id]="'navbutton-' + item.Title"
+            [value]="item.LinkText" 
+            class="header-button" 
+            style="width: 150px; height: 35px;"
+            (click)="navClick($event)"
+            >
+            {{ item.DisplayTitle }}
         </button>
-        <button 
-          id="nav-budget"
-          value="budget" 
-          class="header-button" 
-          style="width: 150px; height: 35px;"
-          (click)="navClick($event)"
-          >Budget
-        </button>
-        <button 
-          id="nav-receipt"
-          value="receipt" 
-          class="header-button" 
-          style="width: 150px; height: 35px;"
-          (click)="navClick($event)"
-          >Receipts
-        </button>
-        <button 
-          id="nav-item"
-          value="items" 
-          class="header-button" 
-          style="width: 150px; height: 35px;"
-          (click)="navClick($event)"
-          >Items
-        </button>
+        </ng-container>
       </div>
       <div 
         class="header-right" 
@@ -60,8 +39,22 @@
           style="width: 10vw;"
           >{{ balance | currency: 'USD' }}
         </h4>
+        <button
+          *ngIf="admin && !(router.url === '/admin')"
+          id="nav-admin-button"
+          routerLink="/admin"
+          >
+          Admin
+        </button>
+        <button
+          *ngIf="router.url === '/admin'"
+          id="nav-admin-button"
+          routerLink="/funds"
+          >
+          Return
+        </button>
         <button 
-        
+          *ngIf="!isAuthenticated"
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 
@@ -70,7 +63,7 @@
           >Sign Up
         </button>
         <button 
-          
+          *ngIf="isAuthenticated"
           id="button-nav-logout-button" 
           comp="navbar" 
           action="doLogout" 

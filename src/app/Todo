@@ -1,0 +1,3 @@
+- When creating new transaction:
+  if account is filtered, set account to that account
+- Add This month / Last month to accounts

@@ -17,6 +17,7 @@ import { FooterModule } from './footer/footer.module';
 import { ShellModule } from './shell/shell.module';
 import { OrdinalDatePipe } from './app-utils/ordinal-dates';
 import { MaterialModule } from './mat/material/material.module';
+import { AdminModule } from './admin/admin.module';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { MaterialModule } from './mat/material/material.module';
     SidebarModule,
     SharedModule,
     LedgerModule,
-    ShellModule
+    ShellModule,
+    AdminModule
   ],
   providers: [
     DatePipe,

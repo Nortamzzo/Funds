@@ -19,7 +19,6 @@
         </ng-container>
       </div>
       <hr>
-      <ng-container ></ng-container>
 
     <ng-container *ngSwitchCase="'Transaction'">
       <ng-template [ngTemplateOutlet]="Transaction"></ng-template>
@@ -44,6 +43,15 @@
     <ng-container *ngSwitchCase="'Receipts'">
       <ng-template [ngTemplateOutlet]="Receipts"></ng-template>
     </ng-container>
+
+    <ng-container *ngSwitchCase="'RecurringPayments'">
+      <ng-template [ngTemplateOutlet]="RecurringPayments"></ng-template>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'Transactions'">
+      <ng-template [ngTemplateOutlet]="Transactions"></ng-template>
+    </ng-container>
+
 
 
   </div>
@@ -101,6 +109,18 @@
       <app-sidebar-receipts 
         >
       </app-sidebar-receipts>
+    </ng-template>
+
+    <ng-template #RecurringPayments>
+      <app-sidebar-recurring-payments 
+        >
+      </app-sidebar-recurring-payments>
+    </ng-template>
+
+    <ng-template #Transactions>
+      <app-sidebar-recurring-payments 
+        >
+      </app-sidebar-recurring-payments>
     </ng-template>
 
 

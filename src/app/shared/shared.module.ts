@@ -23,7 +23,8 @@ import { InputAutocompleteComponent } from './components/input-autocomplete/inpu
   exports: [
     SortDirective,
     AutoCompleteComponent,
-    InputAutocompleteComponent
+    InputAutocompleteComponent,
+    MaterialModule
   ]
 })
 export class SharedModule { }

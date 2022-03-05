@@ -21,6 +21,7 @@ import { SbTransactionItimizerComponent } from './sb-transaction-itimizer/sb-tra
 import { SidebarReceiptsComponent } from './sidebar-receipts/sidebar-receipts.component';
 import { SidebarViewReceiptComponent } from './sidebar-view-receipt/sidebar-view-receipt.component';
 import { SharedModule } from '@app/shared/shared.module';
+import { SidebarRecurringPaymentsComponent } from './sidebar-recurring-payments/sidebar-recurring-payments.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { SharedModule } from '@app/shared/shared.module';
     SidebarBudgetComponent,
     SbTransactionItimizerComponent,
     SidebarReceiptsComponent,
-    SidebarViewReceiptComponent
+    SidebarViewReceiptComponent,
+    SidebarRecurringPaymentsComponent
   ],
   imports: [
     CommonModule,

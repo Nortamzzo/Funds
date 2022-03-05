@@ -4,6 +4,7 @@ export class User {
     public Email: string,
     public FirstName: string,
     public LastName: string,
-    public Created: Date
+    public Created: Date,
+    public UserRole: number
   ) { }
 }

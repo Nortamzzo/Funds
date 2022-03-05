@@ -171,7 +171,6 @@ export class LedgerTableComponent implements OnInit {
       column: column,
       value: value
     }
-    console.log(data)
     this.transService.updateTransaction(data).subscribe();
     this.editRow = null;
     this.editCol = null;

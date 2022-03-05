@@ -63,8 +63,6 @@ export class AutoCompleteComponent implements OnInit {
         map(value => this._filter(value)),
       );
     }, 350);
-    
-    console.log(this.list)
   }
 
   private _filter(value: string): string[] {
@@ -86,6 +84,7 @@ export class AutoCompleteComponent implements OnInit {
   }
 
   getOptionText(option: any) {
+    let result = (this.value) ? option : 'set'
     return option;
   }
 
@@ -94,7 +93,7 @@ export class AutoCompleteComponent implements OnInit {
    * @param $event $event.target / $event.option
    */
   sendOutput($event: any) {
-    this.optionOutput.emit($event);
+    this.optionOutput.emit($event.value);
   }
 
   /**

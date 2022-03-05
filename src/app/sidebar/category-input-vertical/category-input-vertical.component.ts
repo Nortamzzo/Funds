@@ -9,7 +9,7 @@ import { CategoryService } from 'src/app/app-services/data/category.service';
 })
 export class CategoryInputVerticalComponent implements OnInit {
   @Output() output = new EventEmitter<any>();
-
+  @Output() sendAction = new EventEmitter<any>();
   categoryForm: FormGroup;
 
   constructor(
@@ -30,6 +30,7 @@ export class CategoryInputVerticalComponent implements OnInit {
     this.cat.submitCategory(this.categoryForm.value).subscribe();
     this.categoryForm.reset();
     this.output.emit(false);
+    this.sendAction.emit('clear');
   }
 
 }
