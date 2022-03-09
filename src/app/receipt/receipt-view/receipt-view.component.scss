@@ -20,27 +20,6 @@
   }
 }
 
-// h1 {
-//   font-size: 1.5em;
-//   color: #222;
-// }
-
-// h2 {
-//   font-size: .9em;
-// }
-
-// h3 {
-//   font-size: 1.2em;
-//   font-weight: 300;
-//   line-height: 2em;
-// }
-
-// p {
-//   font-size: .7em;
-//   color: #666;
-//   line-height: 1.2em;
-// }
-
 #top,
 #mid,
 #bot {
@@ -114,23 +93,26 @@ td {
 // Item Row Style
 .item-row {
   height: 2.5vh;
+  width: 100%;
 }
 
 .item-title {
-  width: 50%;
+  width: 60%;
   color: #666;
   padding: 0;
 }
 
 .item-quantity {
-  width: 25%;
+  width: 15%;
+  max-width: 15%;
   text-align: center;
   color: #666;
   padding: 0;
 }
 
 .item-amount {
-  width: 25%;
+  width: 30%;
+  min-width: 30%;
   text-align: end;
   color: #666;
   padding: 0;
@@ -143,17 +125,19 @@ td {
 
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
-    /* display: none; <- Crashes Chrome on hover */
-    -webkit-appearance: none;
-    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0;
+  /* <-- Apparently some margin are still there even though it's hidden */
 }
 
 input[type=number] {
-    -moz-appearance:textfield; /* Firefox */
+  -moz-appearance: textfield;
+  /* Firefox */
 }
 
 .quantity {
-  width: 15%;
+  width: 10%;
 }
 
 .cost {
@@ -172,7 +156,7 @@ input[type=number] {
 }
 
 .tax-total {
-  width: 25%;
+  width: 15%;
   text-align: end;
   color: #666;
 }
@@ -193,61 +177,40 @@ input[type=number] {
   width: 100%;
 }
 
-.dropdown-menu::ng-deep {
-  background-color: rebeccapurple;
-}
-
-ngb-highlight {
-  width: 100%;
-}
-
-ngb-typeahead-window ::ng-deep {
-  background-color: rebeccapurple !important;
-}
-
-#scrollable-dropdown-menu .tt-menu {
-  max-height: 150px;
-  overflow-y: auto;
-}
-
-.dropdown-menu { 
-  width: 300px;
-  
-  max-height: 500px;
-  overflow: hidden;
-}
-
 .title-input {
   max-width: 300px;
   max-height: 500px;
 }
 
+// ?
 mat-form-field {
   height: 50%
 }
 
-::ng-deep .mat-auto {
-  
-}
+// ?
+::ng-deep .mat-auto {}
 
+// Dropdown container
 ::ng-deep .cdk-overlay-pane {
-  /* Do you changes here */
-    min-width: 300px;
-    height: 300px;
+  min-width: 300px;
+  height: 300px;
 }
 
+// Dropdown
 ::ng-deep .mat-autocomplete-panel {
   height: 500px
 }
 
+// Input
 ::ng-deep .mat-form-field-wrapper {
   width: 100%;
   height: 100%;
   padding: 0 !important;
 }
 
+// Input
 ::ng-deep .mat-form-field {
-  width: 90%;
+  width: 75%;
   height: 100%;
   border: none;
 }
@@ -260,11 +223,10 @@ mat-form-field {
 }
 
 ::ng-deep .mat-form-field-flex input {
- height: 100%;
+  height: 100%;
 }
 
-::ng-deep .mat-input-container {
-}
+::ng-deep .mat-input-container {}
 
 ::ng-deep .mat-form-field-underline {
   display: none;
@@ -299,9 +261,10 @@ mat-form-field {
 ::ng-deep .mat-form-field-appearance-outline .mat-form-field-infix {
   padding: 10px;
 }
+
 ::ng-deep .mat-form-field-infix {
-    padding:0;
-    border-top: 0;
+  padding: 0;
+  border-top: 0;
 }
 
 .input-row {

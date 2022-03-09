@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ItemService } from '@app/app-services/data/item.service';
+import { ItemService } from '@app/items/item.service';
 
 @Component({
   selector: 'app-item-add-new',

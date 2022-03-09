@@ -42,6 +42,7 @@
               >
               <ng-container *ngIf="!(editItemRow === r && editItemCol === 1)">
                 <div 
+                  [attr.id]="'receiptItemTitle-' + r"
                   class="itemtext"
                   (click)="setItemEdit(r, 1)"
                   >
@@ -52,7 +53,7 @@
                 <div class="input-group">
                   <span 
                     class="badge bg-success me-1 mb-1 add-new-item"
-                    (click)="addNewItem(item)"
+                    (click)="addNewItemToItems()"
                     >
                     +Item
                   </span>
@@ -69,16 +70,16 @@
                     Delete
                   </span>
                 </div>
-                <app-auto-complete
-                  class="a"
+                <app-auto-complete 
                   #autocomplete
+                  class="a"
                   [placeholder]="'Set Item...'"
-                  [list]="itemList"
+                  [optionList]="itemList"
                   [row]="r"
                   [object]="item"
                   [value]="item.ItemTitle"
-                  (optionOutput)="updateReceiptItemTitle($event, item)"
-                  (textOutput)="this.itemTitle = $event"
+                  (sendOption)="updateReceiptItemTitle($event, item)"
+                  (sendText)="this.itemTitle = $event"
                   >
                 </app-auto-complete>
               </ng-container>
@@ -122,11 +123,11 @@
             </td>
             <td class="tax-total">
               <div class="total-block">
-                <p>Tax</p>
-                <p>Total</p>
+                <span>Tax</span>
+                <span>Total</span>>
               </div>
             </td>
-            <td class="totals">
+            <td class="item-amount">
               <div class="total-block">
                 <ng-container *ngIf="!(editReceiptRow === receiptData[0].ReceiptId) || !(receiptData[0].Tax === 0)">
                   <p (click)="setReceiptEdit(receiptData[0].ReceiptId)">

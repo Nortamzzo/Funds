@@ -11,19 +11,17 @@
     </div>
     <div class="content">
       <div class="admin-toolbar">
-        <div class="adm-btn-container">
           <ng-container *ngFor="let item of adminTopics"
             >
             <button
               class="adm-topic-btn"
-              [value]="item.Id"
+              [value]="item.AdminTopicsId"
               [name]="item.Title"
               [title]="item.DisplayTitle"
               (click)="setControl($event)"
               >{{ item.DisplayTitle }} 
             </button>
           </ng-container>
-        </div>
       </div>
       <div 
         class="admin-controls"

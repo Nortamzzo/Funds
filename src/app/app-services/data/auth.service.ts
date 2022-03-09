@@ -90,10 +90,11 @@ export class AuthService {
     const user = new User(
       data.UserId,
       data.Email,
+      data.Username,
       data.FirstName,
       data.LastName,
       data.Created,
-      data.UserRole
+      data.UserRoleId
     );
     this.user.next(user);
     this.loggedIn.next(true);
@@ -115,10 +116,11 @@ export class AuthService {
     const autoData: {
       UserId: number,
       Email: string,
+      Username: string,
       FirstName: string,
       LastName: string,
       Created: Date,
-      UserRole: number
+      UserRoleId: number
     } = JSON.parse(
       sessionStorage.getItem('userData') as string
     );
@@ -128,10 +130,11 @@ export class AuthService {
     const autoUser = new User(
       autoData.UserId,
       autoData.Email,
+      autoData.Username,
       autoData.FirstName,
       autoData.LastName,
       autoData.Created,
-      autoData.UserRole
+      autoData.UserRoleId
     );
     this.user.next(autoUser);
     // this.router.navigate(['/application/main']);

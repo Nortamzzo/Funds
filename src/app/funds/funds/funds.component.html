@@ -1,4 +1,4 @@
-<div id="container">
+<!-- <div id="container">
   <div class="header">
     <app-navbar
       (navEmit)="setContent($event)">
@@ -27,6 +27,50 @@
   </div>
 </div>
 <div class="footer">
+  <app-footer></app-footer>
+</div>
+
+<ng-template #ledger>
+  <app-ledger></app-ledger>
+</ng-template>
+
+<ng-template #budget>
+  <app-budget></app-budget>
+</ng-template>
+
+<ng-template #receipt>
+  <app-receipt></app-receipt>
+</ng-template>
+
+<ng-template #items>
+  <app-items></app-items>
+</ng-template> -->
+
+<div id="header">
+  <app-navbar
+      (navEmit)="setContent($event)">
+    </app-navbar>
+</div>
+<div id="sidebar">
+  <app-sidebar></app-sidebar>
+</div>
+<div id="content">
+  <ng-container [ngSwitch]="content">
+    <ng-container *ngSwitchCase="'ledger'">
+      <ng-template [ngTemplateOutlet]="ledger"></ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="'budget'">
+      <ng-template [ngTemplateOutlet]="budget"></ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="'receipts'">
+      <ng-template [ngTemplateOutlet]="receipt"></ng-template>
+    </ng-container>
+    <ng-container *ngSwitchCase="'items'">
+      <ng-template [ngTemplateOutlet]="items"></ng-template>
+    </ng-container>
+  </ng-container>
+</div>
+<div id="footer">
   <app-footer></app-footer>
 </div>
 

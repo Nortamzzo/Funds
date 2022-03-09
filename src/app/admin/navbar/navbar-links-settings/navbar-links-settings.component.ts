@@ -6,7 +6,10 @@ import { ConfigService } from '@app/app-services/data/config.service';
 @Component({
   selector: 'app-navbar-links-settings',
   templateUrl: './navbar-links-settings.component.html',
-  styleUrls: ['./navbar-links-settings.component.scss']
+  styleUrls: [
+    './navbar-links-settings.component.scss',
+    '../../../../app/styles/toggle-button.scss'
+  ]
 })
 export class NavbarLinksSettingsComponent implements OnInit {
   public navbarLinks: NavbarLink[] = [];
@@ -24,9 +27,12 @@ export class NavbarLinksSettingsComponent implements OnInit {
     this.configService.getNavbarLinks().subscribe(
       data => {
         this.navbarLinks = JSON.parse(JSON.stringify(data.Value));
-        console.log(data)
       }
     )
+  }
+
+  toggleItem($event: any) {
+    console.log($event.checked)
   }
 
 }

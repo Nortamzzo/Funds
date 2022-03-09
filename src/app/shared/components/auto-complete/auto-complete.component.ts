@@ -13,15 +13,15 @@ export class AutoCompleteComponent implements OnInit {
    * Output selected option
    * @output $event.value
    */
-  @Output() public optionOutput = new EventEmitter<any>();
+  @Output() public sendOption = new EventEmitter<any>();
   /**
    * Output new text entry
    */
-  @Output() public textOutput = new EventEmitter<any>();
+  @Output() public sendText = new EventEmitter<any>();
   /**
    * List to populate dropdown
    */
-  @Input() public list: string[] = [];
+  @Input() public optionList: string[] = [];
   /**
    * xx
    */
@@ -67,7 +67,7 @@ export class AutoCompleteComponent implements OnInit {
 
   private _filter(value: string): string[] {
     const filterValue = value.toLowerCase();
-    return this.list.filter(option => option.toLowerCase().includes(filterValue));
+    return this.optionList.filter(option => option.toLowerCase().includes(filterValue));
   }
 
   /**
@@ -93,7 +93,7 @@ export class AutoCompleteComponent implements OnInit {
    * @param $event $event.target / $event.option
    */
   sendOutput($event: any) {
-    this.optionOutput.emit($event.value);
+    this.sendOption.emit($event.value);
   }
 
   /**
@@ -102,7 +102,11 @@ export class AutoCompleteComponent implements OnInit {
    * @param $event value
    */
   setText() {
-    this.textOutput.emit(this.value);
+    this.sendText.emit(this.value);
+  }
+
+  sendNewText() {
+    console.log("Working")
   }
 
 }

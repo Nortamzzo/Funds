@@ -18,10 +18,12 @@ import { ShellModule } from './shell/shell.module';
 import { OrdinalDatePipe } from './app-utils/ordinal-dates';
 import { MaterialModule } from './mat/material/material.module';
 import { AdminModule } from './admin/admin.module';
+import { TestComponent } from './test/test.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestComponent
   ],
   imports: [
     BrowserModule,

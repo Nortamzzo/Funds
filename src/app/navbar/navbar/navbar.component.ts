@@ -39,7 +39,7 @@ export class NavbarComponent implements OnInit {
     setTimeout(() => {
       this.auth.user.subscribe(
         data => {
-          if (data.UserRole === 2) {
+          if (data.UserRoleId === 2) {
             // console.log("true")
             this.admin =  true;
           } else {
@@ -79,7 +79,6 @@ export class NavbarComponent implements OnInit {
   }
 
   navClick($event: any) {
-    console.log($event.target.value)
     this.navEmit.emit($event.target.value);
   }
 }

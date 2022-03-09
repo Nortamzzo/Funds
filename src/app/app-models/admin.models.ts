@@ -11,25 +11,25 @@ export interface AdminLogin {
 }
 
 export interface AdminTopics {
-  Id: number;
+  AdminTopicsId: number;
   Title: string;
   DisplayTitle: string;
   Information: string;
 }
 
 export interface NavbarTopics {
-  Id: number;
+  NavbarSettingsId: number;
   Title: string;
   DisplayTitle: string;
   Information: string;
 }
 
 export interface NavbarLink {
-  Id: number;
+  NavbarLinkId: number;
   Title: string;
   DisplayTitle: string;
   Information: string;
   LinkText: string;
-  Disabled: boolean; 
+  Enabled: boolean; 
 }
 

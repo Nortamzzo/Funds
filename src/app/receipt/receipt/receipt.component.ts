@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ItemData, ItemList } from '@app/app-models/item-models';
 import { ReceiptData, ReceiptItemData } from '@app/app-models/receipt-models';
 import { NoReceiptList } from '@app/app-models/transaction-models';
-import { ItemService } from '@app/app-services/data/item.service';
-import { ReceiptService } from '@app/app-services/data/receipt.service';
+import { ItemService } from '@app/items/item.service';
+import { ReceiptService } from '@app/receipt/receipt.service';
 import { TransactionService } from '@app/app-services/data/transaction.service';
 import { NotificationService } from '@app/app-services/notification.service';
 

@@ -49,26 +49,17 @@ body {
   top: 5vh;
 }
 
-.adm-btn-contaienr {
-  display: flex;
-}
-
 .admin-toolbar {
   height: 25%;
   width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  // margin: auto;
 }
 
 .admin-controls {
   height: 75%;
   width: 100%;
-}
-
-
-.footer {
-  height: 3vh;
-  width: 100%;
-  position: fixed;
-  bottom: 0;
 }
 
 .adm-topic-btn {
@@ -77,6 +68,13 @@ body {
   margin: 5px 0px 0px 5px;
   border: solid 3px rgb(136, 136, 136);
   border-radius: 7px;
-  flex-shrink: 1;
+  // flex-shrink: 1;
   min-width: 100px;
+}
+
+.footer {
+  height: 3vh;
+  width: 100%;
+  position: fixed;
+  bottom: 0;
 }

@@ -3,10 +3,10 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { TransactionDataRequest, TransactionFilter, TransactionSubmission } from 'src/app/app-models/transaction-models';
-import { AppService } from '../app.service';
-import { FilterService } from '../filter.service';
-import { HttpService } from '../http.service';
-import { NotificationService } from '../notification.service';
+import { AppService } from '../app-services/app.service';
+import { FilterService } from '../app-services/filter.service';
+import { HttpService } from '../app-services/http.service';
+import { NotificationService } from '../app-services/notification.service';
 
 @Injectable({
   providedIn: 'root'
