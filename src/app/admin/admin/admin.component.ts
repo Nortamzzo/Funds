@@ -25,7 +25,7 @@ export class AdminComponent implements OnInit {
     setTimeout(() => {
       this.authService.user.subscribe(
         data => {
-          if (data.UserRole === 2) {
+          if (data.UserRoleId === 2) {
             // console.log("true")
             this.access =  true;
           } else {
@@ -43,6 +43,7 @@ export class AdminComponent implements OnInit {
   getAdminTopics() {
     this.adminService.getAdminTopics().subscribe(
       data => {
+        console.log(data)
         this.adminTopics = JSON.parse(JSON.stringify(data));
       }
     )

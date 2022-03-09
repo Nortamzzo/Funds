@@ -14,7 +14,13 @@
       <td>{{ item.DisplayTitle }}</td>
       <td>{{ item.Information }}</td>
       <td>{{ item.LinkText }}</td>
-      <td>{{ item.Disabled }}</td>
+      <td>
+        <mat-slide-toggle
+          [(ngModel)]="item.Enabled"
+          (change)="toggleItem($event)"
+          >
+        </mat-slide-toggle>
+      </td>
     </tr>
   </tbody>
 </table>

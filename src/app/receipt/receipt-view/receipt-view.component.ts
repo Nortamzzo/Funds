@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { ItemData } from '@app/app-models/item-models';
 import { ReceiptData, ReceiptItemData } from '@app/app-models/receipt-models';
-import { ItemService } from '@app/app-services/data/item.service';
+import { ItemService } from '@app/items/item.service';
 import { AutoCompleteComponent } from '../../shared/components/auto-complete/auto-complete.component';
-import { ReceiptService } from '@app/app-services/data/receipt.service';
+import { ReceiptService } from '@app/receipt/receipt.service';
 
 @Component({
   selector: 'app-receipt-view',
@@ -69,18 +69,21 @@ export class ReceiptViewComponent implements OnInit {
   }
 
   public itemTitle!: string;
-  addNewItem(item: ReceiptItemData) {
+  addNewItemToItems() {
+    console.log("Adding new item");
+    // console.log()
     // this.autocomplete.setText();
-    let req = {
-      ReceiptId: item.ReceiptId,
-      ReceiptItemId: item.ReceiptItemId,
-      itemTitle: this.itemTitle
-    };
-    this.sendNewItem.emit(req);
-    this.titleRow = null;
-    setTimeout(() => {
-      this.getReceiptItemData(item.ReceiptId);
-    }, 250);
+    // let req = {
+    //   ReceiptId: receiptData.ReceiptId,
+    //   ReceiptItemId: receiptData.ReceiptItemId,
+    //   itemTitle: this.itemTitle
+    // };
+    // console.log(req)
+    // this.sendNewItem.emit(req);
+    // this.titleRow = null;
+    // setTimeout(() => {
+    //   this.getReceiptItemData(item.ReceiptId);
+    // }, 250);
   }
 
   /**

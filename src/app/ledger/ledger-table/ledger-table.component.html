@@ -134,6 +134,7 @@
   <tbody class="scr-style-1">
 
     <ng-container *ngFor="let row of transactionData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let r = index">
+      <ng-container *ngIf="!row.Hidden">
       <div 
         [ngClass]="focusedRow === row.TransactionId ? 'focused-row' : 'row-border'"
         >
@@ -517,6 +518,7 @@
         </tr>
       </div>
       </ng-container>
+    </ng-container>
   </tbody>
   <tfoot>
     <tr class="footer-container">

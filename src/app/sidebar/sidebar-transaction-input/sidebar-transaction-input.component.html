@@ -50,7 +50,7 @@
     <div class="sb-trans-input-box-auto">
       <app-auto-complete
         #autocomplete
-        [list]="locationList"
+        [optionList]="locationList"
         (change)="test()"
         [placeholder]="'Location...'"
         [value]="transactionForm.controls['Location']"

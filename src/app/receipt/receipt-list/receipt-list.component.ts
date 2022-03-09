@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NoReceiptList, ReceiptList } from '@app/app-models/transaction-models';
-import { ReceiptService } from '@app/app-services/data/receipt.service';
+import { ReceiptService } from '@app/receipt/receipt.service';
 import { TransactionService } from '@app/app-services/data/transaction.service';
 import { NotificationService } from '@app/app-services/notification.service';
 
