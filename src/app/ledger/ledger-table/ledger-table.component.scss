@@ -246,61 +246,62 @@ input[type=date] {
 }
 
 .del-button {
-	transform: scale(0.5);
-	width: 150px;
-	height: 50px;
-	cursor: pointer;
-	display: flex;
-	align-items: center;
-	background: red;
-	border: none;
-	border-radius: 5px;
-	box-shadow: 1px 1px 3px rgba(0,0,0,0.15);
-	background: #e62222;
+  transform: scale(0.5);
+  width: 150px;
+  height: 50px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background: red;
+  border: none;
+  border-radius: 5px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.15);
+  background: #e62222;
 }
 
-.del-button, .del-button span {
-	transition: 200ms;
+.del-button,
+.del-button span {
+  transition: 200ms;
 }
 
 .del-button .text {
-	transform: translateX(35px);
-	color: white;
-	font-weight: bold;
+  transform: translateX(35px);
+  color: white;
+  font-weight: bold;
 }
 
 .del-button .icon {
-	position: absolute;
-	border-left: 1px solid #c41b1b;
-	transform: translateX(100px);
-	height: 30px;
-	width: 30px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
+  position: absolute;
+  border-left: 1px solid #c41b1b;
+  transform: translateX(100px);
+  height: 30px;
+  width: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .del-button svg {
-	width: 15px;
-	fill: #eee;
+  width: 15px;
+  fill: #eee;
 }
 
 .del-button:hover {
-	background: #ff3636;
+  background: #ff3636;
 }
 
 .del-button:hover .text {
-	color: transparent;
+  color: transparent;
 }
 
 .del-button:hover .icon {
-	width: 50px;
-	border-left: none;
-	transform: translateX(0);
+  width: 50px;
+  border-left: none;
+  transform: translateX(0);
 }
 
 .del-button:focus {
-	outline: none;
+  outline: none;
 }
 
 .upd-row {
@@ -311,7 +312,7 @@ input[type=date] {
 .upd-btns-grp {
   width: 100%;
   display: flex;
-  justify-content: space-between; 
+  justify-content: space-between;
 }
 
 .upd-btn {
@@ -325,4 +326,40 @@ input[type=date] {
 
 .s-button {
   cursor: pointer;
+}
+
+// Mat Menu
+::ng-deep .account-filter-button {
+  height: 31px;
+  max-height: 31px;
+}
+
+::ng-deep .account-filter-trigger {
+  line-height: 31px;
+  max-height: 31px;
+}
+
+.account-reset {
+  text-align: start;
+  width: 15px;
+  max-height: 31px;
+}
+
+::ng-deep .mat-focus-indicator {
+  text-align: start;
+  max-height: 31px;
+}
+
+::ng-deep .mat-menu-wrapper {
+  max-height: 31px;
+  background-color: red;
+}
+
+::ng-deep .mat-menu-content {
+  height: 500px;
+}
+
+.reset-filter-button {
+  cursor: pointer;
+  color: #c41b1b;
 }

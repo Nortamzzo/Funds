@@ -46,8 +46,8 @@ export interface TransactionSubmission {
 export interface TransactionFilter {
     UserId?: number | null;
     DateOf?: Date | null;
-    DateMin?: Date | null;
-    DateMax?: Date | null;
+    DateMin?: string | null;
+    DateMax?: string | null;
     DateMonth?: string | null;
     DateYear?: number | null;
     AccountId?: number | null;

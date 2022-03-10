@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./funds.component.scss']
 })
 export class FundsComponent implements OnInit {
-  public content: string | null = 'items';
+  public content: string | null = 'ledger';
 
   constructor() { }
 

@@ -1,13 +1,16 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { Account } from '@app/app-models/account-models';
 import { Category } from '@app/app-models/category-models';
 import { ColumnData } from '@app/app-models/response.model';
 import { Subcategory } from '@app/app-models/subcategory-models';
 import { Transaction } from '@app/app-models/transaction-models';
+import { Location } from '@app/app-models/location.models';
 import { CategoryService } from '@app/app-services/data/category.service';
 import { SubcategoryService } from '@app/app-services/data/subcategory.service';
 import { TransactionService } from '@app/app-services/data/transaction.service';
+import { FilterService } from '@app/app-services/filter.service';
 import { NotificationService } from '@app/app-services/notification.service';
+import { DatePipe } from '@angular/common';
 
 export interface header {
   name: string;
@@ -20,6 +23,7 @@ export interface header {
   styleUrls: ['./ledger-table.component.scss']
 })
 export class LedgerTableComponent implements OnInit {
+  @ViewChild('picker') picker: any;
   @Output() callDeleteTransaction = new EventEmitter();
   @Output() callGetSubcategoryData = new EventEmitter();
   @Output() callUpdateTransaction = new EventEmitter();
@@ -45,6 +49,16 @@ export class LedgerTableComponent implements OnInit {
   public sortedCol: string | null = null;
   public sortUp: boolean = true;
   public hoveredIndex: number | null = null;
+  public dateRangeMin: Date | null = null;
+  public dateRangeMax: Date | null = null;
+  public dateMin: string | null = null;
+  public dateMax: string | null = null;
+  public dateFiltered: boolean = false;
+  public accountFiltered: boolean = false;
+  public locationFiltered: boolean = false;
+  public categoryFiltered: boolean = false;
+  public subcategoryFiltered: boolean = false;
+  
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
     if (event.key === 'Escape' && this.focusedRow) {
@@ -60,7 +74,9 @@ export class LedgerTableComponent implements OnInit {
     private notif: NotificationService,
     private transService: TransactionService,
     private catService: CategoryService,
-    private subService: SubcategoryService
+    private subService: SubcategoryService,
+    private filterService: FilterService,
+    private datePipe: DatePipe
   ) {
     this.notif.getSortStatus().subscribe(
       data => {
@@ -76,6 +92,7 @@ export class LedgerTableComponent implements OnInit {
       this.maxSize = this.transactionData.length;
       this.collectionSize = (this.transactionData.length / 10);
     }, 250);
+    this.getDateRange();
   }
 
   /**
@@ -107,6 +124,15 @@ export class LedgerTableComponent implements OnInit {
     this.catService.getCategoryData().subscribe(
       data => {
         this.categoryData = data.Value;
+      }
+    )
+  }
+
+  getDateRange() {
+    this.transService.getDateRange().subscribe(
+      data => {
+        this.dateRangeMin = new Date(data[0].MinDate);
+        this.dateRangeMax = new Date(data[0].MaxDate);
       }
     )
   }
@@ -212,5 +238,97 @@ export class LedgerTableComponent implements OnInit {
   unreconcileTransaction(transactionId: number) {
     this.transService.unreconcileTransaction(transactionId).subscribe();
   }
+
+  setMinDate(value: string) {
+    this.dateMin = value;
+    if (this.dateMax) {
+      this.filterDates(this.dateMin, this.dateMax);
+    } else {
+      this.filterDates(this.dateMin, this.dateMin);
+    }
+  }
+
+  setMaxDate(value: string) {
+    this.dateMax = value;
+    if (this.dateMin) {
+      this.filterDates(this.dateMin, this.dateMax);
+    } else {
+      this.filterDates(this.dateMax, this.dateMax)
+    }
+  }
+
+  filterDates(dateFrom: string, dateTo: string) {
+    let dateMin = new Date(dateFrom);
+    let dateMax = new Date(dateTo);
+    this.datePipe.transform(dateMin, "yyyy-MM-dd");
+    this.datePipe.transform(dateMax, "yyyy-MM-dd");
+    this.filterService.setDateRange(this.datePipe.transform(dateMin, "yyyy-MM-dd"), this.datePipe.transform(dateMax, "yyyy-MM-dd"));
+    this.filterService.filterDateStatus.subscribe(
+      data => {
+        this.dateFiltered = data;
+      }
+    )
+  }
+
+  resetFilterDates() {
+    this.dateMin = null;
+    this.dateMax = null;
+    this.filterService.resetDateMin();
+    this.filterService.resetDateMax()
+  }
+
+  filterAccounts(accountId: number, accountTitle: string) {
+    this.filterService.setAccountId(accountId);
+    this.filterService.filterAccountStatus.subscribe(
+      data => {
+        this.accountFiltered = data;
+      }
+    )
+  }
+
+  resetFilterAccounts() {
+    this.filterService.resetAccountId();
+  }
+
+  filterLocations(locationId: number, locationTitle: string) {
+    this.filterService.setLocation(locationTitle);
+    this.filterService.filterLocationStatus.subscribe(
+      data => {
+        this.locationFiltered = data;
+      }
+    )
+  }
+
+  resetFilterLocations() {
+    this.filterService.resetLocation();
+  }
+
+  filterCategories(categoryId: number, categoryTitle: string) {
+    this.filterService.setCategoryId(categoryId);
+    this.filterService.filterCategoryStatus.subscribe(
+      data => {
+        this.categoryFiltered = data;
+      }
+    )
+  }
+
+  resetFilterCategories() {
+    this.filterService.resetCategoryId();
+  }
+
+  filterSubcategories(subcategoryId: number, subcategoryTitle: string) {
+    this.filterService.setSubcategoryId(subcategoryId);
+    this.filterService.filterSubcategoryStatus.subscribe(
+      data => {
+        this.subcategoryFiltered = data;
+      }
+    )
+  }
+
+  resetFilterSubcategories() {
+    this.filterService.resetSubcategoryId();
+  }
+
+
 
 }

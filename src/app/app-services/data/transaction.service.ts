@@ -49,6 +49,7 @@ export class TransactionService {
     transaction.LocationTitle = (transaction.LocationTitle) ? transaction.LocationTitle : "";
     transaction.CategoryId = (transaction.CategoryId) ? transaction.CategoryId : 1;
     transaction.SubcategoryId = (transaction.SubcategoryId) ? transaction.SubcategoryId : 1;
+    transaction.Information = (transaction.Information) ? transaction.Information : " ";
     return this.http.post<TransactionSubmission>(
       this.https.apiUrl + 'api/Transaction/CreateTransaction',
       transaction

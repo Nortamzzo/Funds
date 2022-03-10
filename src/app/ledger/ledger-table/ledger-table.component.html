@@ -3,8 +3,9 @@
   on-mouseleave="hoveredIndex = null"
   >
   <thead class="header-border">
-    <tr class="row">
+    <tr class="thead-row">
       <!-- Col 1 -->
+      <!-- (click)="setSort('date')" -->
       <th 
         class="col-1"
         scope="col" 
@@ -12,36 +13,65 @@
         data-order="desc"
         data-name="DateOf"
         data-type=”date”
-        (click)="setSort('date')"
         >Date
-        <span>
-          <i
-            *ngIf="sortedCol === 'date' && sortUp"
-            class="bi bi-sort-up">
-          </i>
-          <i
-            *ngIf="sortedCol === 'date' && !sortUp" 
-            class="bi bi-sort-down"></i>
-        </span>
+        <button mat-icon-button [matMenuTriggerFor]="DateMenu" aria-label="Account Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <ng-container *ngIf="dateFiltered">
+          <span>
+            <i 
+              class="reset-filter-button"
+              (click)="resetFilterDates()">x</i>
+          </span>
+        </ng-container>
+        <mat-menu #DateMenu="matMenu">
+          <div>
+            <mat-form-field appearance="fill" class="example-form-field">
+              <mat-label>Enter a date range</mat-label>
+              <mat-date-range-input [rangePicker]="rangePicker" [min]="dateRangeMin" [max]="dateRangeMax" >
+                <input #minDate matStartDate placeholder="Start date" (dateChange)="setMinDate(minDate.value)">
+                <input #maxDate matEndDate placeholder="End date" (dateChange)="setMaxDate(maxDate.value)">
+              </mat-date-range-input>
+              <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+              <mat-date-range-picker #rangePicker>
+                <mat-date-range-picker-actions>
+                  <button mat-button matDateRangePickerCancel>Cancel</button>
+                  <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                </mat-date-range-picker-actions>
+              </mat-date-range-picker>
+            
+            </mat-form-field>
+          </div>
+        </mat-menu>
       </th>
-      <!-- Col 2 -->
+      <!-- Col 2 Account -->
       <th class="col-2"
         scope="col" 
         [appSort]="transactionData" 
         data-order="desc" 
         data-name="AccountName"
-        (click)="setSort('account')"
-        >Account
-        <span>
-          <i
-            *ngIf="sortedCol === 'account' && sortUp"
-            class="bi bi-sort-up">
-          </i>
-          <i
-            *ngIf="sortedCol === 'account' && !sortUp" 
-            class="bi bi-sort-down">
-          </i>
-        </span>
+        >
+        Account     
+        <button mat-icon-button [matMenuTriggerFor]="AccountMenu" aria-label="Account Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <ng-container *ngIf="accountFiltered">
+          <span>
+            <i 
+              class="reset-filter-button"
+              (click)="resetFilterAccounts()">x</i>
+          </span>
+        </ng-container>
+        <mat-menu #AccountMenu="matMenu">
+          <button 
+            *ngFor="let account of accountData"
+            mat-menu-item
+            [value]="account.AccountTitle"
+            (click)="filterAccounts(account.AccountId, account.AccountTitle)"
+            >
+            {{ account.AccountTitle }}
+          </button>
+        </mat-menu>
       </th>
       <!-- Col 3 -->
       <th class="col-3"
@@ -50,17 +80,28 @@
         data-order="desc" 
         data-name="Location"
         (click)="setSort('location')"
-        >Location
-        <span>
-          <i
-            *ngIf="sortedCol === 'location' && sortUp"
-            class="bi bi-sort-up">
-          </i>
-          <i
-            *ngIf="sortedCol === 'location' && !sortUp" 
-            class="bi bi-sort-down">
-          </i>
-        </span>
+        >
+        Location
+        <button mat-icon-button [matMenuTriggerFor]="LocationMenu" aria-label="Location Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <ng-container *ngIf="locationFiltered">
+          <span>
+            <i 
+              class="reset-filter-button"
+              (click)="resetFilterLocations()">x</i>
+          </span>
+        </ng-container>
+        <mat-menu #LocationMenu="matMenu">
+          <button 
+            *ngFor="let location of locationData"
+            mat-menu-item
+            [value]="location.LocationTitle"
+            (click)="filterLocations(location.LocationId, location.LocationTitle)"
+            >
+            {{ location.LocationTitle }}
+          </button>
+        </mat-menu>
       </th>
       <!-- Col 4 -->
       <th class="col-4"
@@ -70,16 +111,26 @@
         data-name="CategoryName"
         (click)="setSort('category')"
         >Category
-        <span>
-          <i
-            *ngIf="sortedCol === 'category' && sortUp"
-            class="bi bi-sort-up">
-          </i>
-          <i
-            *ngIf="sortedCol === 'category' && !sortUp" 
-            class="bi bi-sort-down">
-          </i>
-        </span>
+        <button mat-icon-button [matMenuTriggerFor]="CategoryMenu" aria-label="Location Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <ng-container *ngIf="categoryFiltered">
+          <span>
+            <i 
+              class="reset-filter-button"
+              (click)="resetFilterCategories()">x</i>
+          </span>
+        </ng-container>
+        <mat-menu #CategoryMenu="matMenu">
+          <button 
+            *ngFor="let category of categoryData"
+            mat-menu-item
+            [value]="category.CategoryId"
+            (click)="filterCategories(category.CategoryId, category.CategoryTitle)"
+            >
+            {{ category.CategoryTitle }}
+          </button>
+        </mat-menu>
       </th>
       <!-- Col 5 -->
       <th class="col-5"
@@ -89,16 +140,26 @@
         data-name="SubcategoryName"
         (click)="setSort('subcategory')"
         >Subcategory
-        <span>
-          <i
-            *ngIf="sortedCol === 'subcategory' && sortUp"
-            class="bi bi-sort-up">
-          </i>
-          <i
-            *ngIf="sortedCol === 'subcategory' && !sortUp" 
-            class="bi bi-sort-down">
-          </i>
-        </span>
+        <button mat-icon-button [matMenuTriggerFor]="SubcategoryMenu" aria-label="Location Menu">
+          <mat-icon>more_vert</mat-icon>
+        </button>
+        <ng-container *ngIf="subcategoryFiltered">
+          <span>
+            <i 
+              class="reset-filter-button"
+              (click)="resetFilterSubcategories()">x</i>
+          </span>
+        </ng-container>
+        <mat-menu #SubcategoryMenu="matMenu">
+          <button 
+            *ngFor="let subcategory of subcategoryData"
+            mat-menu-item
+            [value]="subcategory.SubcategoryId"
+            (click)="filterSubcategories(subcategory.SubcategoryId, subcategory.SubcategoryTitle)"
+            >
+            {{ subcategory.SubcategoryTitle }}
+          </button>
+        </mat-menu>
       </th>
       <!-- Col 6 -->
       <th class="col-6 te" 
@@ -130,6 +191,7 @@
         </button>
       </th>
     </tr>
+    <tr>
   </thead>
   <tbody class="scr-style-1">
 
@@ -138,7 +200,7 @@
         [ngClass]="focusedRow === row.TransactionId ? 'focused-row' : 'row-border'"
         >
         <tr 
-          class="row"
+          class="tbody-row"
           on-mouseover="hoveredIndex = r"
           [id]="r"
           >

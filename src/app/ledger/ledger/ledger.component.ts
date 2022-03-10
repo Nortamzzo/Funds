@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Account } from '@app/app-models/account-models';
 import { Category } from '@app/app-models/category-models';
+import { Location } from '@app/app-models/location.models';
 import { Subcategory } from '@app/app-models/subcategory-models';
 import { Transaction, TransactionFilter } from '@app/app-models/transaction-models';
 import { AppService } from '@app/app-services/app.service';
@@ -101,6 +102,7 @@ export class LedgerComponent implements OnInit {
     this.getAccountData();
     this.getCategoryData();
     this.getLocationData();
+    this.getSubcategoryData();
   }
 
   getTransactionData() {
@@ -116,6 +118,10 @@ export class LedgerComponent implements OnInit {
     )
   };
 
+  getDateRange() {
+
+  }
+
   getAccountData() {
     let AccountId = 0;
     this.acctService.getAccountData(AccountId).subscribe(
@@ -126,6 +132,14 @@ export class LedgerComponent implements OnInit {
   };
 
   getLocationData() {
+    this.locService.getLocationData().subscribe(
+      data => {
+        this.locationData = JSON.parse(JSON.stringify(data));
+      }
+    )
+  }
+
+  getLocationList() {
     this.locService.getLocationList().subscribe(
       data => {
         this.locationData = JSON.parse(JSON.stringify(data));
@@ -141,8 +155,7 @@ export class LedgerComponent implements OnInit {
     )
   };
 
-  getSubcategoryData(data: number) {
-    this.subService.setCategoryId(data);
+  getSubcategoryData() {
     this.subService.getSubcategoryData().subscribe(
       data => {
         this.subcategoryData = JSON.parse(JSON.stringify(data.Value));

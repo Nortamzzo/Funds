@@ -8,6 +8,12 @@ import { NotificationService } from './notification.service';
   providedIn: 'root'
 })
 export class FilterService {
+  public filterDateStatus = new BehaviorSubject<boolean>(false);
+  public filterAccountStatus = new BehaviorSubject<boolean>(false);
+  public filterLocationStatus = new BehaviorSubject<boolean>(false);
+  public filterCategoryStatus = new BehaviorSubject<boolean>(false);
+  public filterSubcategoryStatus = new BehaviorSubject<boolean>(false);
+
 
   constructor(
     private app: AppService,
@@ -75,23 +81,40 @@ export class FilterService {
   }
 
   // DateMin
-  setDateMin(data: Date) {
+  setDateMin(data: string) {
     this.filterBase.DateMin = data;
     this.notif.sendTransNotif(true);
+    this.filterDateStatus.next(true);
   }
   resetDateMin() {
     this.filterBase.DateMin = null;
     this.notif.sendTransNotif(true);
+    this.filterDateStatus.next(false);
   }
 
   // DateMax
-  setDateMax(data: Date) {
+  setDateMax(data: string) {
     this.filterBase.DateMax = data;
     this.notif.sendTransNotif(true);
   }
   resetDateMax() {
     this.filterBase.DateMax = null;
     this.notif.sendTransNotif(true);
+  }
+
+  setDateRange(dateMin: string, dateMax: string) {
+    console.log(dateMin, ' : ', dateMax)
+    this.filterBase.DateMin = dateMin;
+    this.filterBase.DateMax = dateMax;
+    this.notif.sendTransNotif(true);
+    this.filterDateStatus.next(true);
+  }
+
+  resetDateRange() {
+    this.filterBase.DateMin = null;
+    this.filterBase.DateMax = null;
+    this.notif.sendTransNotif(true);
+    this.filterDateStatus.next(false);
   }
 
   // Month
@@ -136,6 +159,7 @@ export class FilterService {
   setAccountId(data: number | null) {
     this.filterBase.AccountId = data;
     this.notif.sendTransNotif(true);
+    this.filterAccountStatus.next(true);
   }
   /**
    * set AccountId to null
@@ -143,6 +167,7 @@ export class FilterService {
   resetAccountId() {
     this.filterBase.AccountId = null;
     this.notif.sendTransNotif(true);
+    this.filterAccountStatus.next(false);
   }
 
   // Location
@@ -153,6 +178,7 @@ export class FilterService {
   setLocation(data: string | null) {
     this.filterBase.Location = data;
     this.notif.sendTransNotif(true);
+    this.filterLocationStatus.next(true);
   }
   /**
    * set Location to null
@@ -160,6 +186,7 @@ export class FilterService {
   resetLocation() {
     this.filterBase.Location = null;
     this.notif.sendTransNotif(true);
+    this.filterLocationStatus.next(false);
   }
 
   // CategoryId
@@ -170,6 +197,8 @@ export class FilterService {
   setCategoryId(data: number) {
     this.filterBase.CategoryId = data;
     this.notif.sendTransNotif(true);
+    this.filterCategoryStatus.next(true);
+    
   }
   /**
    * set CategoryId to null
@@ -177,6 +206,7 @@ export class FilterService {
   resetCategoryId() {
     this.filterBase.CategoryId = null;
     this.notif.sendTransNotif(true);
+    this.filterCategoryStatus.next(false);
   }
 
   // SubcategoryId
@@ -187,6 +217,7 @@ export class FilterService {
   setSubcategoryId(data: number) {
     this.filterBase.SubcategoryId = data;
     this.notif.sendTransNotif(true);
+    this.filterSubcategoryStatus.next(true);
   }
   /**
    * set SubcategoryId to null
@@ -194,6 +225,7 @@ export class FilterService {
   resetSubcategoryId() {
     this.filterBase.SubcategoryId = null;
     this.notif.sendTransNotif(true);
+    this.filterSubcategoryStatus.next(false);
   }
 
   // Information

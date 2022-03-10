@@ -40,7 +40,7 @@ export class SubcategoryService {
     let CategoryId = this.CategoryId;
 
     return this.http.post<SubcategoryDataRequest>(
-      this.https.apiUrl + 'api/Subcategory/GetSubcategoryDataById',
+      this.https.apiUrl + 'api/Subcategory/GetSubcategoryData',
       {
         UserId: UserId,
         CategoryId: CategoryId
