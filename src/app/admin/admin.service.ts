@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { Admin, AdminLogin, AdminTopics } from '@app/app-models/admin.models';
+import { Admin, AdminLogin, AdminTopics, NavbarTopics, SidebarTopics } from '@app/app-models/admin.models';
 import { AppService } from '@app/app-services/app.service';
 import { HttpService } from '@app/app-services/http.service';
 import { BehaviorSubject, Observable, throwError } from 'rxjs';
@@ -110,7 +110,7 @@ export class AdminService {
     // implement security check 
     // let params = new HttpParams()
     //   .set("AdminName", this.admin.value.AdminName)
-    return this.http.get<AdminTopics>(url)
+    return this.http.get<NavbarTopics>(url)
     .pipe(
       catchError(this.app.processError)
     )
@@ -122,6 +122,17 @@ export class AdminService {
     // let params = new HttpParams()
     //   .set("AdminName", this.admin.value.AdminName)
     return this.http.get<AdminTopics>(url)
+    .pipe(
+      catchError(this.app.processError)
+    )
+  }
+
+  getSidebarTopics(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Admin/GetSidebarTopics';
+    // implement security check 
+    // let params = new HttpParams()
+    //   .set("AdminName", this.admin.value.AdminName)
+    return this.http.get<SidebarTopics>(url)
     .pipe(
       catchError(this.app.processError)
     )

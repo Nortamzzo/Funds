@@ -40,16 +40,63 @@
               [attr.id]="'title-row-' + r"
               class="item-title"
               >
-              <ng-container *ngIf="!(editItemRow === r && editItemCol === 1)">
-                <div 
-                  class="itemtext"
-                  (click)="setItemEdit(r, 1)"
-                  >
-                  {{ item.ItemTitle ? item.ItemTitle : 'Set Item...' }}
+              <ng-container *ngIf="!(editItemRow === r && editItemCol === 1) && newItemRow != r">
+                <div class="item-title-container">
+                  <div 
+                    class="itemtext"
+                    (click)="setEditItemMode(r, 1)"
+                    >
+                    {{ item.ItemTitle ? item.ItemTitle : 'Set Item...' }}
+                  </div>
+                  <button 
+                    *ngIf="!(item.ItemTitle)"
+                    class="item-title-new-button"
+                    (click)="setNewItemMode(r)"
+                    >+New
+                  </button>
                 </div>
               </ng-container>
-              <ng-container *ngIf="(editItemRow === r && editItemCol === 1)">
-                <div class="input-group">
+              <ng-container *ngIf="newItemRow === r">
+                <div class="item-title-container">
+                  <input 
+                    type="text"
+                    [(ngModel)]="item.ItemTitle"
+                    >
+                  <div class="new-item-actions">
+                    <button
+                      (click)="addNewItem(item)"
+                      >Add
+                    </button>
+                    <button
+                      (click)="cancelNewItem()"
+                      >Cancel
+                    </button>
+                  </div>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="(editItemRow === r && editItemCol === 1 && newItemRow != r)">
+                <div class="item-title-container">
+                  <select
+                  [(ngModel)]="item.ItemId"
+                  (change)="updateItem(item)"
+                  >
+                  <option *ngFor="let item of itemData" [value]="item.ItemId">{{ item.ItemTitle }}</option>
+                </select>
+                <button 
+                  (click)="cancelSelect()"
+                  >Cancel
+                </button>
+                <button
+                  [value]="item.ReceiptItemId"
+                  (click)="deleteReceiptItem(item)"
+                  >Delete
+                </button>
+                </div>
+                
+
+
+
+                <!-- <div class="input-group">
                   <span 
                     class="badge bg-success me-1 mb-1 add-new-item"
                     (click)="addNewItem(item)"
@@ -68,8 +115,8 @@
                     >
                     Delete
                   </span>
-                </div>
-                <app-auto-complete
+                </div> -->
+                <!-- <app-auto-complete
                   class="a"
                   #autocomplete
                   [placeholder]="'Set Item...'"
@@ -77,10 +124,10 @@
                   [row]="r"
                   [object]="item"
                   [value]="item.ItemTitle"
-                  (optionOutput)="updateReceiptItemTitle($event, item)"
+                  (output)="updateReceiptItemTitle($event)"
                   (textOutput)="this.itemTitle = $event"
                   >
-                </app-auto-complete>
+                </app-auto-complete> -->
               </ng-container>
             </td>
             <!-- Quantity -->
@@ -94,7 +141,7 @@
               >
               <ng-container *ngIf="!(editItemRow === r && editItemCol === 3)">
                 <div
-                  (click)="setItemEdit(r, 3)"
+                  (click)="setEditItemMode(r, 3)"
                   >
                   {{ item.Amount ? item.Amount  : 0 | currency: 'USD' }}
                 </div>

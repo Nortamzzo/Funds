@@ -2,8 +2,8 @@
   <ng-container *ngFor="let item of navbarTopics">
     <button
       class="adm-topic-btn"
-      [value]="item.Id"
-      [name]="item.DisplayTitle"
+      [value]="item.NavbarSettingsId"
+      [name]="item.Title"
       [title]="item.DisplayTitle"
       (click)="setTopic($event)"
       >{{ item.DisplayTitle }} 

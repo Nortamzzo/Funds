@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -42,46 +42,33 @@ export class SubcategoryService {
     return this.http.post<SubcategoryDataRequest>(
       this.https.apiUrl + 'api/Subcategory/GetSubcategoryData',
       {
-        UserId: UserId,
-        CategoryId: CategoryId
+        UserId: UserId
       })
       .pipe(catchError(this.app.processError));
   }
 
-  /**
-   * Gets subcategory data for cateogry
-   * @param request UserId, Categoryid
-   * @returns subcategory object
-   */
-  getSubcategoryDataByCatId(request?: any): Observable<any> {
-    let req = {
-      UserId : this.app.getUserId(),
-      CategoryId : request ? request : this.CategoryId
-    }
-    return this.http.post<SubcategoryDataRequest>(
-      this.https.apiUrl + 'api/Subcategory/GetSubcategoryDataById',
-      req
+
+  getSubcategoryDataByCatId(categoryId: number): Observable<any> {
+    let url = this.https.apiUrl + 'api/Subcategory/GetSubcategoryDataById';
+    let params = new HttpParams()
+      .set("UserId", this.app.getUserId())
+      .set("CategoryId", categoryId)
+    return this.http.get(url, { params })
+      .pipe(
+        catchError(this.app.processError)
       )
-      .pipe(catchError(this.app.processError));
   }
 
-
-
-
-
-  
   /**
    * Add new subcategory to user
    * @param subcategory 
    * @returns bool
    */
   submitSubcategory(subcategory: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Subcategory/CreateNewSubcategory';
     let UserId = this.app.getUserId();
     subcategory.UserId = UserId;
-    return this.http.post<any>(
-      this.https.apiUrl + 'api/Subcategory/CreateNewSubcategory',
-      subcategory
-      )
+    return this.http.post<any>(url, subcategory)
       .pipe(
         map((data => {
           this.notif.sendSubcategoryNotif(true);
@@ -101,13 +88,13 @@ export class SubcategoryService {
       this.https.apiUrl + 'api/Subcategory/UpdateSubcategoryBudget',
       request
     )
-    .pipe(
-      map((data => {
-        this.notif.sendCategoryNotif(true);
-        this.notif.sendSubcategoryNotif(true);
-      })),
-      catchError(this.app.processError)
-    );
+      .pipe(
+        map((data => {
+          this.notif.sendCategoryNotif(true);
+          this.notif.sendSubcategoryNotif(true);
+        })),
+        catchError(this.app.processError)
+      );
   }
 
   /**
@@ -117,13 +104,13 @@ export class SubcategoryService {
    */
   getBudgetDataFull(year: number): Observable<any> {
     let request = {
-      UserId : this.app.getUserId(),
-      YearOf : year
+      UserId: this.app.getUserId(),
+      YearOf: year
     };
     return this.http.post(
       this.https.apiUrl + 'api/Subcategory/GetBudgetDataFull',
       request
     )
-    .pipe(catchError(this.app.processError));
+      .pipe(catchError(this.app.processError));
   }
 }

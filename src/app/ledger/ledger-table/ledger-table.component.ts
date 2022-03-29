@@ -1,4 +1,4 @@
-import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, HostListener, Input, OnInit, Output, ViewChild, ViewEncapsulation } from '@angular/core';
 import { Account } from '@app/app-models/account-models';
 import { Category } from '@app/app-models/category-models';
 import { ColumnData } from '@app/app-models/response.model';
@@ -12,6 +12,9 @@ import { FilterService } from '@app/app-services/filter.service';
 import { NotificationService } from '@app/app-services/notification.service';
 import { DatePipe } from '@angular/common';
 
+import {NgbModal, ModalDismissReasons, NgbModalOptions} from '@ng-bootstrap/ng-bootstrap';
+import { NewTransactionModalComponent } from '../new-transaction-modal/new-transaction-modal.component';
+
 export interface header {
   name: string;
   width: number;
@@ -20,7 +23,8 @@ export interface header {
 @Component({
   selector: 'app-ledger-table',
   templateUrl: './ledger-table.component.html',
-  styleUrls: ['./ledger-table.component.scss']
+  styleUrls: ['./ledger-table.component.scss'],
+  // encapsulation: ViewEncapsulation.None
 })
 export class LedgerTableComponent implements OnInit {
   @ViewChild('picker') picker: any;
@@ -58,6 +62,8 @@ export class LedgerTableComponent implements OnInit {
   public locationFiltered: boolean = false;
   public categoryFiltered: boolean = false;
   public subcategoryFiltered: boolean = false;
+  private modalOptions: NgbModalOptions;
+  private closeResult: string;
   
 
   @HostListener('document:keydown', ['$event']) onKeydownHandler(event: KeyboardEvent) {
@@ -76,7 +82,8 @@ export class LedgerTableComponent implements OnInit {
     private catService: CategoryService,
     private subService: SubcategoryService,
     private filterService: FilterService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private modalService: NgbModal
   ) {
     this.notif.getSortStatus().subscribe(
       data => {
@@ -84,7 +91,11 @@ export class LedgerTableComponent implements OnInit {
           this.sort = true;
         }
       }
-    )
+    ),
+    this.modalOptions = {
+      backdrop:'static',
+      backdropClass:'customBackdrop'
+    }
   }
 
   ngOnInit(): void {
@@ -329,6 +340,15 @@ export class LedgerTableComponent implements OnInit {
     this.filterService.resetSubcategoryId();
   }
 
+  openModal(data: any) {
+    const modalRef = this.modalService.open(NewTransactionModalComponent, { 
+      size: 'xl',
+      animation: true,
+      windowClass: 'trans-modal'
+     });
+    modalRef.componentInstance.my_modal_title = 'New Transaction';
+    modalRef.componentInstance.my_modal_content = 'Content';
+  }
 
 
 }

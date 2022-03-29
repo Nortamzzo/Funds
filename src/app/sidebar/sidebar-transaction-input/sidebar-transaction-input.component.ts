@@ -37,7 +37,7 @@ export class SidebarTransactionInputComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private i: InteractorService,
-    private sub: SubcategoryService,
+    private subService: SubcategoryService,
     private tra: TransactionService,
     private locService: LocationService,
     private notif: NotificationService,
@@ -65,6 +65,15 @@ export class SidebarTransactionInputComponent implements OnInit {
   getSubcategoryData($event: any) {
     this.notif.sendCategoryId($event.target.value);
     this.notif.sendSubcategoryNotif(true);
+  }
+
+  getSubcategoryDataById($event: any) {
+    this.subService.getSubcategoryDataByCatId($event.target.value).subscribe(
+      data => {
+        console.log(data.Value)
+        this.subcategoryData = JSON.parse(JSON.stringify(data.Value));
+      }
+    )
   }
 
   getLocationList() {

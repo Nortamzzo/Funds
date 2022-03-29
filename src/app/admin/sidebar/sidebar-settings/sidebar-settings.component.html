@@ -1,1 +1,23 @@
-<p>sidebar-settings works!</p>
+<div class="toolbar">
+  <ng-container *ngFor="let item of sidebarTopics">
+    <button
+      class="adm-topic-btn"
+      [value]="item.SidebarSettingsId"
+      [name]="item.Title"
+      [title]="item.DisplayTitle"
+      (click)="setTopic($event)"
+      >{{ item.DisplayTitle }} 
+    </button>
+  </ng-container>
+</div>
+<div class="settings">
+  <ng-container [ngSwitch]="selectedTopic">
+    <ng-container *ngSwitchCase="'1'">
+      <ng-template [ngTemplateOutlet]="Topics"></ng-template>
+    </ng-container>
+  </ng-container>
+</div>
+
+<ng-template #Topics>
+  <app-sidebar-section-buttons></app-sidebar-section-buttons>
+</ng-template>

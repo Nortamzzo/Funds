@@ -4,6 +4,7 @@ import { ReceiptData, ReceiptItemData } from '@app/app-models/receipt-models';
 import { ItemService } from '@app/app-services/data/item.service';
 import { AutoCompleteComponent } from '../../shared/components/auto-complete/auto-complete.component';
 import { ReceiptService } from '@app/app-services/data/receipt.service';
+import { viewClassName } from '@angular/compiler';
 
 @Component({
   selector: 'app-receipt-view',
@@ -18,10 +19,10 @@ export class ReceiptViewComponent implements OnInit {
   @Output() public sendUpdateAmount = new EventEmitter<any>();
   @Output() public sendUpdateTax = new EventEmitter<any>();
   @Input() public receiptView: boolean = false;
+  @Input() public itemData: ItemData[] = [];
+  @Input() public itemList: any[] = [];
   public receiptData: ReceiptData[] = [];
   public receiptItemData: ReceiptItemData[] = [];
-  @Input() public itemData: ItemData[] = [];
-  @Input() public itemList: string[] = [];
   public receiptId: number | null = null;
   public model: any;
   public titleRow: number | null = null;
@@ -32,8 +33,7 @@ export class ReceiptViewComponent implements OnInit {
   public editItemRow: number | null = null;
   public editItemCol: number | null = null;
   public editReceiptRow: number | null = null;
-
-
+  public newItemRow: number | null = null;
 
   constructor(
     private itemService: ItemService,
@@ -43,8 +43,8 @@ export class ReceiptViewComponent implements OnInit {
       data => {
         if (data.status) {
           this.receiptId = data.ReceiptId;
-          this.getReceiptData(data.ReceiptId);
-          this.getReceiptItemData(data.ReceiptId);
+          this.getReceiptData(this.receiptId);
+          this.getReceiptItemData(this.receiptId);
           setTimeout(() => {
             this.receiptView = true;
           }, 250);
@@ -54,7 +54,7 @@ export class ReceiptViewComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log('itemList: ', this.itemList)
+    this.getItemData();
   }
 
   /**
@@ -63,24 +63,72 @@ export class ReceiptViewComponent implements OnInit {
   addNewBlankItem() {
     this.recService.addBlankReceiptItem(this.receiptId).subscribe(
       data => {
-        this.getReceiptItemData(this.receiptId!);
+        setTimeout(() => {
+          this.getReceiptItemData(this.receiptId);
+        }, 250);
       }
     )
   }
 
   public itemTitle!: string;
-  addNewItem(item: ReceiptItemData) {
-    // this.autocomplete.setText();
-    let req = {
-      ReceiptId: item.ReceiptId,
-      ReceiptItemId: item.ReceiptItemId,
-      itemTitle: this.itemTitle
-    };
-    this.sendNewItem.emit(req);
+  addNewItem(item: any) {
     this.titleRow = null;
     setTimeout(() => {
       this.getReceiptItemData(item.ReceiptId);
     }, 250);
+  }
+
+  cancelEdit() {
+    this.editItemCol = 0;
+    this.editItemRow = 0;
+    this.editReceiptRow = null
+  }
+
+  editTaxValue(data: any) {
+    this.sendUpdateTax.emit(data);
+  }
+
+  cancelNewItem() {
+    this.addNewItem = null;
+  }
+
+  cancelSelect() {
+    this.editItemCol = null;
+    this.editItemRow = null;
+  }
+
+  clearSearchField(item: any) {
+  }
+
+  deleteReceiptItem(item: ReceiptItemData) {
+    this.recService.deleteReceiptItem(item.ReceiptItemId).subscribe(
+      data => {
+        this.getReceiptItemData(data[0].ReceiptId);
+      }
+    );
+  }
+
+  editTitleValue($event: any) {
+    // console.log($event.target.value)
+  }
+
+  editQuantityValue(data: any) {
+    this.sendUpdateQuantity.emit(data);
+  }
+
+  editAmountValue(data: any) {
+    this.sendUpdateAmount.emit(data);
+  }
+
+  /**
+   * Get itemList
+   */
+  getItemData() {
+    this.itemService.getItemData().subscribe(
+      data => {
+        this.itemData = JSON.parse(JSON.stringify(data));
+      }
+    )
   }
 
   /**
@@ -92,14 +140,16 @@ export class ReceiptViewComponent implements OnInit {
         this.itemList = data;
         this.getReceiptData(this.receiptId!);
         this.getReceiptItemData(this.receiptId!);
-
       }
     )
   }
 
+  getNewItem() {
+
+  }
+
   /**
    * Gets receipt data
-   * 2/20/22
    * @param data 
    */
   getReceiptData(data: number) {
@@ -110,10 +160,10 @@ export class ReceiptViewComponent implements OnInit {
     )
   }
 
-/**
- * Get receiptItemData
- * @param id ReceiptId
- */
+  /**
+   * Get receiptItemData
+   * @param id ReceiptId
+   */
   getReceiptItemData(id: number) {
     this.recService.getReceiptItemData(id).subscribe(
       data => {
@@ -122,39 +172,32 @@ export class ReceiptViewComponent implements OnInit {
     )
   }
 
-  setReceiptEdit(row: number) {
-    this.editReceiptRow = row;
-  }
-
-  setItemEdit(row: number, col: number) {
+  setEditItemMode(row: number, col: number) {
+    this.newItemRow = null;
     this.editItemRow = row;
     this.editItemCol = col;
   }
 
-  cancelEdit() {
-    this.editItemCol = 0;
-    this.editItemRow = 0;
-    this.editReceiptRow = null
+  setReceiptEdit(row: number) {
+    this.editReceiptRow = row;
   }
 
-  editTitleValue($event: any) {
-    console.log($event.target.value)
+  setNewItemMode(row: number) {
+    if (!(this.newItemRow === row)) {
+      this.newItemRow = row;
+    } else {
+      this.newItemRow = null;
+    }
   }
 
-  editQuantityValue(data: any) {
-    this.sendUpdateQuantity.emit(data);
-  }
-
-  editAmountValue(data: any) {
-    this.sendUpdateAmount.emit(data);
-  }
-
-  editTaxValue(data: any) {
-    this.sendUpdateTax.emit(data);
-  }
-
-  clearSearchField(item: any) {
-    console.log(item);
+  updateItem(item: ItemData) {
+    this.recService.updateReceiptItem(item).subscribe(
+      data => {
+        setTimeout(() => {
+        }, 350);
+        this.getReceiptItemData(data.receiptId)
+      }
+    );
   }
 
   /**
@@ -162,41 +205,43 @@ export class ReceiptViewComponent implements OnInit {
    * Set ReceiptItem ItemId from ItemTitle
    * @param $event 
    */
-  updateReceiptItemTitle($event: any, item: any) {
-    let req = {
-      ReceiptItemId: item.ReceiptItemId,
-      UpdateValue: $event.value
-    }
-    this.recService.updateReceiptItemTitle(req).subscribe(
-      data => {
-        setTimeout(() => {
-        }, 350);
-        this.getReceiptItemData(data[0].ReceiptId)
-      }
-    );
-    setTimeout(() => {
-      this.editItemCol = null;
-      this.editItemRow = null;
-    }, 350)
+  updateReceiptItemTitle($event: any) {
+    // console.log($event)
+    // if ($event.exist) {
+    //   this.recService.updateReceiptItemTitle($event).subscribe(
+    //     data => {
+    //       setTimeout(() => {
+    //       }, 350);
+    //       // this.getReceiptItemData(data[0].ReceiptId)
+    //     }
+    //   );
+    // } else {
+    // 
+    // }
+    // this.recService.updateReceiptItemTitle($event).subscribe(
+    //   data => {
+    //     setTimeout(() => {
+    //     }, 350);
+    //     console.log(data)
+    //     this.getReceiptItemData(data.ReceiptId)
+    //   }
+    // );
+    // let req = {
+    //   ReceiptItemId: item.ReceiptItemId,
+    //   UpdateValue: $event.value
+    // }
+    // this.recService.updateReceiptItemTitle(req).subscribe(
+    //   data => {
+    //     setTimeout(() => {
+    //     }, 350);
+    //     this.getReceiptItemData(data[0].ReceiptId)
+    //   }
+    // );
+    // setTimeout(() => {
+    //   this.editItemCol = null;
+    //   this.editItemRow = null;
+    // }, 350)
 
-  }
-
-
-
-  deleteItem($event: any) {
-    console.log("Delete", $event);
-  }
-
-  deleteReceiptItemById(id: number) {
-    console.log("dddddd")
-    this.recService.deleteReceiptItem(id).subscribe(
-      // data => {
-      //   if (data) {
-      //     console.log(data)
-      //     this.getReceiptItemData(data);
-      //   }
-      // }
-    )
   }
 
   test() {

@@ -3,49 +3,39 @@ import { FormControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map, startWith, switchMap } from 'rxjs/operators';
 
+export interface AutoList {
+  Id: number;
+  Title: string;
+}
+
 @Component({
   selector: 'app-auto-complete',
   templateUrl: './auto-complete.component.html',
   styleUrls: ['./auto-complete.component.scss']
 })
 export class AutoCompleteComponent implements OnInit {
-  /**
-   * Output selected option
-   * @output $event.value
-   */
+  // New output: text only
+  @Output() public output = new EventEmitter<any>();
+  // Output selected option
   @Output() public optionOutput = new EventEmitter<any>();
-  /**
-   * Output new text entry
-   */
+  // Output new text
   @Output() public textOutput = new EventEmitter<any>();
-  /**
-   * List to populate dropdown
-   */
-  @Input() public list: string[] = [];
-  /**
-   * xx
-   */
+  // List to populate dropdown
+  @Input() public list: AutoList[] = [];
+  @Input() public idKey: string = 'ItemId';
   @Input() public value: any;
-  /**
-   * If passing in an object from ngfor, index
-   */
+  // If passing in an object from ngfor, index
   @Input() public row?: number;
-  /**
-   * If passing in an object from ngfor, iteration
-   */
+  // If passing in an object from ngfor, iteration
   @Input() public object: any;
-  /**
-   * Optional placeholder to display
-   */
+  // Optional placeholder to display
   @Input() public placeholder: string;
-  /**
-   * List filtered with current input
-   */
-  public filteredOptions: Observable<string[]>;
-  public myControl = new FormControl();
+  // List filtered with current input
+  public filteredOptions: Observable<any[]>;
+  public autoControl = new FormControl();
 
   constructor() {
-    this.filteredOptions = this.myControl.valueChanges
+    this.filteredOptions = this.autoControl.valueChanges
       .pipe(
         startWith(''),
         debounceTime(400),
@@ -54,20 +44,30 @@ export class AutoCompleteComponent implements OnInit {
           return this.filter(val || '')
         })
       );
-   }
+  }
 
   ngOnInit(): void {
     setTimeout(() => {
-      this.filteredOptions = this.myControl.valueChanges.pipe(
+      this.filteredOptions = this.autoControl.valueChanges.pipe(
         startWith(''),
         map(value => this._filter(value)),
       );
     }, 350);
   }
 
-  private _filter(value: string): string[] {
-    const filterValue = value.toLowerCase();
-    return this.list.filter(option => option.toLowerCase().includes(filterValue));
+  private _filter(value: any): any[] {
+    // const filterValue = value.Title.toLowerCase();
+    // return this.list.filter(option => option.Title.toLowerCase().includes(filterValue));
+    let filterValue = '';
+    if (typeof value === "string") {
+      filterValue = value.toLowerCase();
+    } else {
+      filterValue = value.Title.toLowerCase();
+    };
+
+    return this.list.filter(
+      option => option.Title.toLowerCase().indexOf(filterValue) === 0
+    );
   }
 
   /**
@@ -75,12 +75,28 @@ export class AutoCompleteComponent implements OnInit {
    * @param val 
    * @returns filtered list
    */
-  filter(val: string): Observable<any[]> {
+  filter(val: any): Observable<any[]> {
     return this.filteredOptions.pipe(
-        map(response => response.filter(option => {
-          return option.toLowerCase().indexOf(val.toLowerCase()) === 0
-        }))
-      )
+      map(response => response.filter(option => {
+        return option.toLowerCase().indexOf(val.toLowerCase()) === 0
+      }))
+    )
+  }
+
+  handleAutoComplete(value: any) {
+    let exist: boolean = false;
+    if (this.list.includes(value)) {
+      exist = true;
+    };
+    let data = {
+      value: value,
+      exist: exist
+    };
+    this.output.emit(data);
+    setTimeout(() => {
+      // this.autoControl.reset();
+    }, 250);
+
   }
 
   getOptionText(option: any) {
@@ -92,7 +108,8 @@ export class AutoCompleteComponent implements OnInit {
    * Emits selected option from dropdown
    * @param $event $event.target / $event.option
    */
-  sendOutput($event: any) {
+  sendOption($event: any) {
+    console.log($event.value)
     this.optionOutput.emit($event.value);
   }
 
@@ -101,8 +118,9 @@ export class AutoCompleteComponent implements OnInit {
    * Used to select option that is not in list, i.e. create new
    * @param $event value
    */
-  setText() {
-    this.textOutput.emit(this.value);
+  sendText() {
+    console.log()
+    // this.textOutput.emit(this.value);
   }
 
 }

@@ -105,32 +105,36 @@ td {
   border: 1px solid #EEE
 }
 
-
-
 .service {
   border-bottom: 1px solid #EEE;
 }
 
 // Item Row Style
+.item-title-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
 .item-row {
   height: 2.5vh;
 }
 
 .item-title {
-  width: 50%;
+  width: 65%;
   color: #666;
   padding: 0;
 }
 
 .item-quantity {
-  width: 25%;
+  width: 15%;
   text-align: center;
   color: #666;
   padding: 0;
 }
 
 .item-amount {
-  width: 25%;
+  width: 20%;
   text-align: end;
   color: #666;
   padding: 0;
@@ -172,7 +176,7 @@ input[type=number] {
 }
 
 .tax-total {
-  width: 25%;
+  width: 15%;
   text-align: end;
   color: #666;
 }
@@ -199,10 +203,6 @@ input[type=number] {
 
 ngb-highlight {
   width: 100%;
-}
-
-ngb-typeahead-window ::ng-deep {
-  background-color: rebeccapurple !important;
 }
 
 #scrollable-dropdown-menu .tt-menu {
@@ -247,7 +247,7 @@ mat-form-field {
 }
 
 ::ng-deep .mat-form-field {
-  width: 90%;
+  width: 75%;
   height: 100%;
   border: none;
 }

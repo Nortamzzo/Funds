@@ -39,7 +39,6 @@
                   <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
                 </mat-date-range-picker-actions>
               </mat-date-range-picker>
-            
             </mat-form-field>
           </div>
         </mat-menu>
@@ -183,20 +182,23 @@
       <!-- Col 7 -->
       <th class="col-7 te">Balance</th>
       <!-- Col 8 -->
-      <th class="col-8 ts">
+      <th 
+        colspan="2"
+        class="col-8-h"
+        >
         <button 
-          *ngIf="sort"
-          (click)="resetSort()">
-          Reset
+        (click)="openModal(mymodal)"
+        >
+          +Transaction
         </button>
       </th>
     </tr>
     <tr>
   </thead>
   <tbody class="scr-style-1">
-
     <ng-container *ngFor="let row of transactionData | slice: (page-1) * pageSize : (page-1) * pageSize + pageSize; let r = index">
       <div 
+        *ngIf="!row.Hidden"
         [ngClass]="focusedRow === row.TransactionId ? 'focused-row' : 'row-border'"
         >
         <tr 
@@ -601,3 +603,6 @@
   </tfoot>
 </table>
 
+<ng-template #mymodal let-modal>
+  <app-new-transaction-modal></app-new-transaction-modal>
+</ng-template>

@@ -11,6 +11,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavbarLinksSettingsComponent } from './navbar/navbar-links-settings/navbar-links-settings.component';
 import { NavbarSettingsComponent } from './navbar/navbar-settings/navbar-settings.component';
 import { SidebarSettingsComponent } from './sidebar/sidebar-settings/sidebar-settings.component';
+import { MaterialModule } from '@app/mat/material/material.module';
+import { SidebarSectionButtonsComponent } from './sidebar/sidebar-section-buttons/sidebar-section-buttons.component';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import { SidebarSettingsComponent } from './sidebar/sidebar-settings/sidebar-set
     AdminLoginComponent,
     NavbarLinksSettingsComponent,
     NavbarSettingsComponent,
-    SidebarSettingsComponent
+    SidebarSettingsComponent,
+    SidebarSectionButtonsComponent
   ],
   imports: [
     CommonModule,
@@ -28,7 +31,8 @@ import { SidebarSettingsComponent } from './sidebar/sidebar-settings/sidebar-set
     ReactiveFormsModule,
     NavbarModule,
     SidebarModule,
-    FooterModule
+    FooterModule,
+    MaterialModule
   ]
 })
 export class AdminModule { }

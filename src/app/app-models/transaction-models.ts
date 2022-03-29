@@ -26,6 +26,7 @@ export interface Transaction {
     Reconcile: boolean;
     HasReceipt: boolean;
     Future: string;
+    Hidden: boolean;
 }
 
 export interface TransactionTableHeaders {

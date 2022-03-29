@@ -1,0 +1,156 @@
+<div class="modal-header modal-xl modal-container">
+  <div class="modal-header-section">
+    <div class="mhs-left">
+      <h4 class="modal-title">{{my_modal_title}}</h4>
+    </div>
+  </div>
+  <div class="modal-header-section">
+    <div class="mhs-right">
+      <div>
+        <!-- Submit -->
+        <input
+          class="btn btn-outline-success text-center m-auto"
+          style="width: 100px; height: 35px; margin: auto;"
+          tabindex="1007"
+          type="submit"
+          >
+        <!-- Cancel -->
+        <input
+          class="btn btn-outline-secondary text-center m-auto"
+          type="reset"
+          style="width: 100px; height: 35px; margin: auto;"
+          (click)="activeModal.close('Close click')"
+          tabindex="1008"
+          value="Cancel"
+          >
+      </div>
+    </div>
+  </div>
+  <!-- <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button> -->
+</div>
+<div class="modal-body">
+  <div class="trans-form">
+    <form
+      [formGroup]="transactionForm"
+      (ngSubmit)="submitTransaction()"
+      >
+  
+      <div class="trans-row">
+        <!-- DateOf -->
+      <input
+      class="trans-modal-input-medium"
+      type="date"
+      id="date"
+      formControlName="DateOf"
+      tabindex="1000"
+      >
+
+      <!-- Account -->
+      <select
+        class="trans-modal-input-medium"
+        id="account"
+        formControlName="AccountId"
+        data-input="account"
+        tabindex="1001"
+        >
+        <option 
+          value="" 
+          disabled 
+          selected 
+          hidden
+          >Account...
+        </option>
+        <option
+          *ngFor="let account of accountData; let i = index;"
+          [value]="account.AccountId"
+          >{{ account.AccountTitle }}
+        </option>
+      </select>
+
+      <!-- Amount -->
+      <input
+        class="trans-modal-input-small"
+        type="number"
+        step="0.01"
+        placeholder="Amount"
+        id="amount"
+        formControlName="Amount"
+        tabindex="1002"
+        >
+
+      <!-- Location -->
+      <div class="strans-modal-input-medium">
+        <!-- <app-auto-complete
+          #autocomplete
+          tabindex="1003"
+          [list]="locationList"
+          (change)="test()"
+          [placeholder]="'Location...'"
+          [value]="transactionForm.controls['Location']"
+          (optionOutput)="receiveLocationOption($event)"
+          (textOutput)="receiveLocationText()"
+          >
+        </app-auto-complete> -->
+      </div>
+
+      <!-- Category -->
+      <select
+        class="strans-modal-input-medium"
+        id="cat"
+        formControlName="CategoryId"
+        #category
+        tabindex="1004"
+        (change)="getSubcategoryDataById($event)"
+        >
+        <option 
+          value="" 
+          disabled 
+          selected 
+          hidden
+          >Category...
+        </option>
+        <option
+          *ngFor="let cat of categoryData; let i = index;"
+          [value]="cat.CategoryId"
+          >{{ cat.CategoryTitle }}
+        </option>
+      </select>
+
+      <!-- Subcategory -->
+      <select
+        class="trans-modal-input-medium"
+        id="sub"
+        formControlName="SubcategoryId"
+        tabindex="1005">
+        <option 
+          value="" 
+          disabled 
+          selected 
+          hidden
+          >Subcategory...
+        </option>
+        <option
+          *ngFor="let sub of subcategoryData; let i = index;"
+          [value]="sub.SubcategoryId"
+          >{{ sub.SubcategoryTitle }}
+        </option>
+      </select>
+    </div>
+      
+    <div class="trans-row">
+      <!-- Information -->
+      <textarea
+        class="trans-modal-input-xlarge"
+        name="text"
+        placeholder="Information"
+        id="info"
+        formControlName="Information"
+        tabindex="1006"
+        >
+      </textarea>
+    </div> 
+    </form>
+  </div>
+</div>

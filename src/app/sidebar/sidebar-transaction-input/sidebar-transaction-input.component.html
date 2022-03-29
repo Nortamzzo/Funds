@@ -50,6 +50,7 @@
     <div class="sb-trans-input-box-auto">
       <app-auto-complete
         #autocomplete
+        tabindex="1003"
         [list]="locationList"
         (change)="test()"
         [placeholder]="'Location...'"
@@ -60,32 +61,6 @@
       </app-auto-complete>
     </div>
 
-    <!-- <mat-form-field 
-      class="example-full-width inp"
-      >
-      <input
-        id="auto-complete-input"
-        type="text"
-        matInput
-        formControlName="Location"
-        [formControl]="LocationValue"
-        [matAutocomplete]="auto"
-        (change)="receiveLocationOption($event.target)"
-        >
-      <mat-autocomplete
-        auto-tab
-        class="mat-auto" 
-        #auto="matAutocomplete"
-        autoActiveFirstOption="true"
-        [displayWith]="(getOptionText)"
-        (optionSelected)="receiveLocationOption($event.option)"
-        >
-        <mat-option *ngFor="let option of filteredLocationOptions | async" [value]="option">
-          {{ option }}
-        </mat-option>
-      </mat-autocomplete>
-    </mat-form-field> -->
-
     <!-- Category -->
     <select
       class="sb-trans-input-box"
@@ -93,7 +68,7 @@
       formControlName="CategoryId"
       #category
       tabindex="1004"
-      (change)="getSubcategoryData($event)"
+      (change)="getSubcategoryDataById($event)"
       >
       <option 
         value="" 

@@ -1,4 +1,5 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { calcPossibleSecurityContexts } from '@angular/compiler/src/template_parser/binding_parser';
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
@@ -49,16 +50,10 @@ export class ReceiptService {
     if (!data) {
       return of(false)
     };
-    console.log("rs: ", req)
-    return this.http.post(
-      url,
-      req
-    ).pipe(
-      map((data => {
-        this.notif.sendReceiptItemNotif(true);
-      })),
-      catchError(this.app.processError)
-    );
+    return this.http.post(url, req)
+      .pipe(
+        catchError(this.app.processError)
+      );
   }
 
   /**
@@ -84,20 +79,70 @@ export class ReceiptService {
     );
   }
 
+  addNewItemFromReceipt(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/AddNewReceiptFromItem';
+    let req = {
+      UserId: this.app.getUserId(),
+      ReceiptId: data.Receiptid,
+      ReceiptItemId: data.ReceiptItemId,
+      ItemTitle: data.ItemTitle
+    };
+    return this.http.post<any>(url, req)
+      .pipe(
+        catchError(this.app.processError)
+      );
+  }
+
   /**
-   * Gets list of transactions without receipts
-   * 2/20/22
-   * @returns Transaction No Receipt List
+   * Disable rectipItem by id
+   * @param data 
+   * @returns ReceiptId
    */
-  getTransWithoutReceipts(): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
-    let req = { UserId: this.app.getUserId() };
-    return this.http.post(
-      url,
-      req
-    ).pipe(
-      catchError(this.app.processError)
-    );
+  deleteReceiptItem(data: number): Observable<any> {
+    console.log("receipt.service.ts(deleteReceiptItem): ", data)
+    let url = this.https.apiUrl + 'api/Receipt/DeleteReceiptItem';
+    let req = {
+      UserId: this.app.getUserId(),
+      ReceiptItemId: data
+    }
+    return this.http.put<any>(url, req).
+      pipe(
+        catchError(this.app.processError)
+      );
+  }
+
+  /**
+   * Gets Receipt data
+   * 2/20/22
+   * @param data UserId, ReceiptId
+   * @returns ReceiptData 
+   */
+  getReceiptData(data: number) {
+    let url = this.https.apiUrl + 'api/Receipt/GetReceiptData';
+    let params = new HttpParams()
+      .set("UserId", this.app.getUserId())
+      .set("ReceiptId", data)
+    return this.http.get(url, { params })
+      .pipe(
+        catchError(this.app.processError)
+      );
+  }
+
+  /**
+   * Gets ReceiptItem data
+   * 2/20/22
+   * @param data UserId, ReceiptId
+   * @returns ReceiptItemData object
+   */
+  getReceiptItemData(data: number) {
+    let url = this.https.apiUrl + 'api/Receipt/GetReceiptItemData';
+    let params = new HttpParams()
+      .set("UserId", this.app.getUserId())
+      .set("ReceiptId", data)
+    return this.http.get(url, { params })
+      .pipe(
+        catchError(this.app.processError)
+      );
   }
 
   /**
@@ -117,37 +162,13 @@ export class ReceiptService {
   }
 
   /**
-   * Gets Receipt data
+   * Gets list of transactions without receipts
    * 2/20/22
-   * @param data UserId, ReceiptId
-   * @returns ReceiptData 
+   * @returns Transaction No Receipt List
    */
-  getReceiptData(data: number) {
-    let url = this.https.apiUrl + 'api/Receipt/GetReceiptData';
-    let req = {
-      UserId: this.app.getUserId(),
-      ReceiptId: data
-    }
-    return this.http.post(
-      url,
-      req
-    ).pipe(
-      catchError(this.app.processError)
-    );
-  }
-
-  /**
-   * Gets ReceiptItem data
-   * 2/20/22
-   * @param data UserId, ReceiptId
-   * @returns ReceiptItemData object
-   */
-  getReceiptItemData(data: number) {
-    let url = this.https.apiUrl + 'api/Receipt/GetReceiptItemData';
-    let req = {
-      UserId: this.app.getUserId(),
-      ReceiptId: data
-    }
+  getTransWithoutReceipts(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/GetTransactionsWithoutReceipts';
+    let req = { UserId: this.app.getUserId() };
     return this.http.post(
       url,
       req
@@ -161,12 +182,12 @@ export class ReceiptService {
  * @param data 
  * @returns ReceiptId
  */
-   updateReceiptItemTitle(data: any): Observable<any> {
-    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItemTitle';
+  updateReceiptItem(data: any): Observable<any> {
+    let url = this.https.apiUrl + 'api/Receipt/UpdateReceiptItem';
     let req = {
-      UserId :this.app.getUserId(),
-      ReceiptItemId : data.ReceiptItemId,
-      UpdateValue : data.UpdateValue
+      UserId: this.app.getUserId(),
+      ReceiptItemId: (data.exist) ? data.value.Id : null,
+      UpdateValue: data.value.Title
     };
     return this.http.put(
       url,
@@ -213,31 +234,5 @@ export class ReceiptService {
       catchError(this.app.processError)
     );
   }
-
-  /**
-   * Disable rectipItem by id
-   * @param data 
-   * @returns ReceiptId
-   */
-  deleteReceiptItem(data: number): Observable<any> {
-    console.log("Data: ", data)
-    let url = this.https.apiUrl + 'api/Receipt/DeleteReceiptItem';
-    let req = {
-      UserId: this.app.getUserId(),
-      ReceiptItemId: data
-    }
-    console.log(req)
-    return this.http.put<any>(
-      url,
-      req
-    ).pipe(
-      map((data => {
-        this.notif.sendReceiptItemNotif(true);
-      })),
-      catchError(this.app.processError)
-    );
-  }
-
-
 
 }

@@ -79,7 +79,6 @@ export class NavbarComponent implements OnInit {
   }
 
   navClick($event: any) {
-    console.log($event.target.value)
     this.navEmit.emit($event.target.value);
   }
 }

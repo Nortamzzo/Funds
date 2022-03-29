@@ -78,4 +78,13 @@ export class ConfigService {
         )
       );
   };
+
+  getSidebarTopicButtons(): Observable<any> {
+    let url = this.https.apiUrl + 'api/Config/GetSidebarViews';
+    return this.http.get<any>(url)
+      .pipe(
+        catchError(this.app.processError)
+      );
+  };
+
 }

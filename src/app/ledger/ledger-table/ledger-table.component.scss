@@ -167,6 +167,12 @@ $widthB: 175px;
   min-width: $widthB;
 }
 
+.col-8-h {
+  width: 250px;
+  display: flex;
+  margin: auto;
+}
+
 .col-info {
   width: 50%;
 }
@@ -362,4 +368,9 @@ input[type=date] {
 .reset-filter-button {
   cursor: pointer;
   color: #c41b1b;
+}
+
+// Transaction Modal
+.trans-modal {
+  width: 100%;
 }

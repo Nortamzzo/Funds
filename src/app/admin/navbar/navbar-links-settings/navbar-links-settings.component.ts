@@ -29,4 +29,8 @@ export class NavbarLinksSettingsComponent implements OnInit {
     )
   }
 
+  toggleItem($event: any) {
+    console.log($event.checked)
+  }
+
 }

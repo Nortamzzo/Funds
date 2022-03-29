@@ -1,20 +1,22 @@
 <form 
   class="example-form"
   autocomplete="off"
+  (ngSubmit)="handleAutoComplete(autoControl.value)"
   >
   <mat-form-field 
     class="example-full-width inp"
     >
+    <!-- (focusout)="sendOption($event.target)" -->
     <input
       id="auto-complete-input"
       type="text"
       matInput
       [placeholder]="(placeholder) ? placeholder : 'Set'"
-      [formControl]="myControl"
+      [formControl]="autoControl"
       [matAutocomplete]="auto"
-      (change)="sendOutput($event.target)"
+      
       >
-    <button 
+    <!-- <button 
       *ngIf="value"
       mat-button
       mat-icon-button 
@@ -22,16 +24,25 @@
       (click)="value = ''" 
       >
       <mat-icon>close</mat-icon>
+    </button> -->
+    <button
+      mat-button
+      mat-icon-button 
+      matSuffix
+      (click)="sendText()"
+      >+
     </button>
     <mat-autocomplete
       class="mat-auto" 
       #auto="matAutocomplete"
       autoActiveFirstOption="true"
       [displayWith]="(getOptionText)"
-      (optionSelected)="sendOutput($event.option)"
+      (optionSelected)="handleAutoComplete(autoControl.value)"
       >
-      <mat-option *ngFor="let option of filteredOptions | async" [value]="option">
-        {{ option }}
+      <mat-option 
+        *ngFor="let option of filteredOptions | async" [value]="option"
+        >
+        {{ option.Title }}
       </mat-option>
     </mat-autocomplete>
   </mat-form-field>

@@ -16,7 +16,7 @@ export class ReceiptComponent implements OnInit {
   public receiptData!: ReceiptData[];
   public receiptItemData!: ReceiptItemData[];
   public transactionList: NoReceiptList[] = [];
-  public itemData: ItemData[] = [];
+  public itemData: any[] = [];
   public itemList!: any;
   public receiptView: boolean = false;
   public receiptViewId: number | null = null;
@@ -81,15 +81,18 @@ export class ReceiptComponent implements OnInit {
   }
 
   /**
-   * Gets list of transactions without receipts
-   * 2/21/22
+   * Add ReceiptItem with null Itemid
+   * @param $event 
    */
-  getNoReceiptList() {
-    this.recService.getTransWithoutReceipts().subscribe(
-      data => {
-        this.transactionList = JSON.parse(JSON.stringify(data));
-      }
-    )
+  addNewBlankReceiptItem($event: number | null) {
+    console.log(this.receiptViewId)
+    if ($event) {
+      this.recService.addBlankReceiptItem(this.receiptViewId!).subscribe(
+        data => {
+          this.getReceiptItemData(this.receiptViewId!);
+        }
+      )
+    }
   }
 
   /**
@@ -108,6 +111,29 @@ export class ReceiptComponent implements OnInit {
     setTimeout(() => {
       this.receiptView = true;
     }, 250);
+  }
+
+  /**
+   * Get itemList
+   */
+  getItemList() {
+    this.itemService.getItemList().subscribe(
+      data => {
+        this.itemList = data;
+      }
+    )
+  }
+
+  /**
+   * Gets list of transactions without receipts
+   * 2/21/22
+   */
+  getNoReceiptList() {
+    this.recService.getTransWithoutReceipts().subscribe(
+      data => {
+        this.transactionList = JSON.parse(JSON.stringify(data));
+      }
+    )
   }
 
   /**
@@ -132,32 +158,6 @@ export class ReceiptComponent implements OnInit {
     this.recService.getReceiptItemData(data).subscribe(
       data => {
         this.receiptItemData = JSON.parse(JSON.stringify(data));
-      }
-    )
-  }
-
-  /**
-   * Add ReceiptItem with null Itemid
-   * @param $event 
-   */
-  addNewBlankReceiptItem($event: number | null) {
-    console.log(this.receiptViewId)
-    if ($event) {
-      this.recService.addBlankReceiptItem(this.receiptViewId!).subscribe(
-        data => {
-          this.getReceiptItemData(this.receiptViewId!);
-        }
-      )
-    }
-  }
-
-  /**
-   * Get itemList
-   */
-  getItemList() {
-    this.itemService.getItemList().subscribe(
-      data => {
-        this.itemList = data;
       }
     )
   }

@@ -1,0 +1,47 @@
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+}
+
+.modal-header-section {
+  width: 50%;
+}
+
+.mhs-left {
+  text-align: start;
+}
+
+.mhs-right {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  justify-content: flex-end;
+}
+
+.modal-body {
+  width: 100%;
+  display: inline-block;
+}
+
+.trans-row {
+  width: 100%;
+  display: flex;
+}
+
+.trans-modal-input-medium {
+  width: 20%;
+}
+
+.trans-modal-input-small {
+  width: 10%;
+}
+
+.trans-modal-input-xlarge {
+  width: 50%;
+}
+
+.trans-action {
+  width: 50%;
+  display: inline-block;
+  justify-content: flex-end;
+}
